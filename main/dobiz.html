@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DOBIZ | DOTGROUP</title>
+<style>
+:root{--blue:#0756a8;--blue2:#063d7a;--dark:#082b50;--red:#e52335;--bg:#f3f6fb;--card:#fff;--muted:#666;--green:#0a8a4b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:var(--bg);color:#111;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+header{position:relative;background:linear-gradient(180deg,#0756a8 0%,#063d7a 100%)}
+.header-row1{display:flex;justify-content:center;align-items:center;padding:8px 12px;height:58px;border-bottom:1px solid #ffffff22}
+.logo-box{display:flex;align-items:center;gap:10px;color:white}.logo-img{height:42px;width:42px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0756a8;font-weight:900;font-size:14px}
+.logo{font-size:20px;font-weight:900}.header-row2{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:#063d7a;height:44px}
+.dropdown{position:relative}.dropdown-btn{background:white;color:#0756a8;padding:8px 14px;border-radius:20px;font-weight:bold;font-size:13px;border:none;cursor:pointer}.dropdown-btn.primary{background:var(--red);color:white}
+.dropdown-content{display:none;position:absolute;left:0;top:42px;background:white;min-width:220px;box-shadow:0 8px 20px #0003;border-radius:8px;z-index:1001;overflow:hidden}.dropdown-content.right{left:auto;right:0}
+.dropdown-content a{padding:12px 16px;display:block;font-size:14px;color:#252b35;border-bottom:1px solid #f0f0f0}.show{display:block!important}
+@media(max-width:768px){.dropdown-content{position:fixed;left:8px;right:8px;top:108px}}
+.top{position:relative;background:#fff;border-bottom:1px solid #E5EAF1;display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
+.logo2{font-weight:900;font-size:20px}.logo2 span{color:var(--blue)}.logo2 i{color:var(--red);font-style:normal}
+.badge{background:#EAF1FF;color:var(--blue);padding:4px 8px;border-radius:99px;font-size:12px;font-weight:700}
+.wrap{max-width:1180px;margin:auto;padding:14px}
+.hero{background:linear-gradient(140deg,#0756a8,#06366b);color:#fff;border-radius:18px;padding:20px;margin-top:12px}
+.hero h1{margin:6px 0;font-size:30px;line-height:1.1}.hero p{opacity:.9}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:12px 18px;border-radius:12px;font-weight:800;border:0;cursor:pointer}
+.btn.red{background:var(--red)}.btn.white{background:#fff;color:#111}.btn.ghost{background:#EEF2F7;color:#111}.btn.green{background:var(--green);color:#fff}
+.grid{display:grid;gap:12px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+@media(max-width:800px){.g4,.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.hero h1{font-size:26px}}
+.card{background:var(--card);border-radius:16px;padding:16px;border:1px solid #eef2f7;box-shadow:0 4px 15px #0001}
+.small{font-size:13px;color:var(--muted)}.big{font-size:28px;font-weight:900}
+input,select,textarea{width:100%;padding:12px;border:1px solid #D9E1EC;border-radius:12px;margin:6px 0;background:#fff;font-size:14px}
+label{font-size:13px;font-weight:700}
+.tabs{display:flex;gap:8px;overflow:auto;padding:6px 0;white-space:nowrap}.tab{padding:10px 14px;background:#fff;border:1px solid #E5EAF1;border-radius:99px;cursor:pointer;font-weight:700}
+.pill{padding:4px 8px;border-radius:99px;font-size:12px;font-weight:700}.ok{background:#D1FAE5}.warn{background:#FEF3C7}.bad{background:#FEE2E2}
+.flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;align-items:center}
+.prod{display:flex;gap:12px}.prod img{width:64px;height:64px;object-fit:cover;border-radius:12px;background:#EEE}
+.hidden{display:none}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #E5EAF1;display:flex;justify-content:space-around;padding:10px;z-index:20}.nav button{border:0;background:none;font-weight:800;cursor:pointer}
+footer{background:#082b50;color:white;padding:20px 14px;text-align:center;margin-top:20px}
+.curBox{background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.curBox select{width:auto;min-width:170px;margin:0}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row1"><a href="index.html" class="logo-box"><div class="logo-img">DOT</div><div class="logo">DOTGROUP</div></a></div>
+  <div class="header-row2">
+    <div class="dropdown"><button onclick="toggleDD('menuDropdown')" class="dropdown-btn">Menu ☰</button>
+      <div id="menuDropdown" class="dropdown-content">
+        <a href="index.html">🏠 Home</a><a href="dashboard.html">📊 My Dashboard</a><a href="dobiz.html">💼 DOBIZ - My Business</a><a href="docart.html">🛒 DOCART</a><a href="dolearn.html">📚 DOLEARN</a><a href="dotv.html">📺 DOTV</a>
+      </div></div>
+    <div class="dropdown"><button onclick="toggleDD('accountDropdown')" class="dropdown-btn primary" id="accountBtn">Account ▼</button>
+      <div id="accountDropdown" class="dropdown-content right">
+        <div id="accountGuest"><a href="index.html">Sign In / Sign Up</a></div>
+        <div id="accountMember" style="display:none"><a href="#" id="welcomeUser">Welcome</a><a href="dashboard.html">My Dashboard</a><a href="dobiz.html">My DOBIZ</a><a href="#" onclick="return doLogout()">Logout</a></div>
+      </div></div>
+  </div>
+</header>
+
+<div class="top" id="dobizTop"><div class="logo2">DO<span>BIZ</span> <i>•</i> <small>by DOTGROUP</small></div><span class="badge" id="bizUrl">peter.dobiz</span><span class="small" id="loginInfo">Not logged in</span></div>
+
+<div id="notLogged" class="wrap" style="display:none"><div class="card" style="text-align:center"><h3>🔒 Please Sign In</h3><p class="small">Go to homepage and sign in, then come back here.</p><br><a href="index.html" class="btn">Go to Home</a></div></div>
+
+<div id="dobizMain">
+<div class="wrap">
+
+<!-- CURRENCY CONVERSION - ALL CURRENCIES + DOCOIN + DOT -->
+<div class="curBox"><b>💱 Currency:</b>
+<select id="curSel" onchange="setCurrency(this.value)">
+<option value="NGN">🇳🇬 NGN - Naira ₦</option>
+<option value="USD">🇺🇸 USD - Dollar $</option>
+<option value="DOCOIN">🪙 DOCOIN - DOTGROUP Coin</option>
+<option value="DOT">⭐ DOT - DOT Coin</option>
+<option value="GHS">🇬🇭 GHS - Ghana Cedi ₵</option>
+<option value="KES">🇰🇪 KES - Kenya Shilling</option>
+<option value="ZAR">🇿🇦 ZAR - Rand R</option>
+<option value="GBP">🇬🇧 GBP - Pounds £</option>
+<option value="EUR">🇪🇺 EUR - Euro €</option>
+<option value="CAD">🇨🇦 CAD - Canada $</option>
+<option value="AUD">🇦🇺 AUD - Australia $</option>
+<option value="INR">🇮🇳 INR - Rupee ₹</option>
+<option value="BRL">🇧🇷 BRL - Real R$</option>
+<option value="CNY">🇨🇳 CNY - Yuan ¥</option>
+<option value="JPY">🇯🇵 JPY - Yen ¥</option>
+<option value="AED">🇦🇪 AED - Dirham</option>
+<option value="XAF">🇨🇲 XAF - Central Africa</option>
+<option value="XOF">🇸🇳 XOF - West Africa</option>
+</select>
+<span class="small" id="curRate">1 USD = ₦1,500</span>
+<button class="btn ghost" onclick="showConverter()">🧮 Convert Any Amount</button>
+</div>
+<div id="converterBox" class="card hidden" style="margin-top:10px"><h3>🧮 Currency Converter</h3><div class="grid g2"><div><label>Amount</label><input id="convAmt" type="number" value="5000" oninput="doConvert()"><label>From</label><select id="convFrom" onchange="doConvert()"></select></div><div><label>To</label><select id="convTo" onchange="doConvert()"></select><label>Result</label><input id="convResult" readonly style="font-weight:900;font-size:18px"></div></div><p class="small" id="convNote"></p></div>
+
+<section id="sec-home">
+<div class="hero"><span class="badge" style="background:#fff;color:#111">DOTGROUP ECOSYSTEM • DOBOT = Build • DOBIZ = Manage • DOCART = Marketplace • DOSPACE = Promote</span>
+<h1>Your Complete Business Manager<br>Inside Your Phone.</h1>
+<p>DOBIZ — Your Shop Manager, Business Assistant and Business Operating System. Prices go change to any currency you pick.</p>
+<div class="flex"><button class="btn red" onclick="show('setup')">Create My Business →</button><button class="btn white" onclick="show('shop')">View My Shop</button><span class="small" style="color:#fff">Short: <b id="shortId">peter.dobiz</b> → Full: <b id="fullTop">peter.dobiz.dotgroup.top</b> • Main: <b id="mainDot">dotgroup.top/peter</b> • Sponsor: <b id="mySponsor">@-</b></span></div></div>
+
+<div class="grid g4" style="margin-top:14px">
+<div class="card"><div class="small">Today Sales</div><div class="big" id="kpiSales">₦0</div><div class="small">Orders: <span id="kpiOrders">0</span></div></div>
+<div class="card"><div class="small">Wallet Balance</div><div class="big" id="kpiWallet">₦0</div><div class="small" id="kpiRef">Referral: ₦0 • Pending: ₦0</div></div>
+<div class="card"><div class="small">Profit = Sales - Expenses</div><div class="big" id="kpiProfit">₦0</div><div class="small">Expenses: <span id="kpiExp">₦0</span></div></div>
+<div class="card"><div class="small">Customers</div><div class="big" id="kpiCust">0</div><div class="small">Views Today: <span id="kpiViews">128</span></div></div>
+</div>
+
+<div class="tabs" id="mainTabs"></div>
+<div id="tabContent"></div>
+</section>
+
+<section id="sec-setup" class="hidden">
+<div class="card"><h2>1. Create Business Profile • Guided Setup</h2>
+<div class="grid g2">
+<div><label>Business Name</label><input id="bName" value="Peter Fresh Fish"><label>Username (for URL)</label><input id="bUser" value="peter" oninput="updateUrl()"><div class="small">Your URL: <b id="fullUrl">peter.dobiz.dotgroup.top</b> • Short: <b id="shortUrl">peter.dobiz</b></div>
+<label>Category</label><select id="bCat" onchange="suggestTools()"><option>Fish and Seafood</option><option>Restaurant</option><option>Boutique / Fashion</option><option>Salon / Beauty</option><option>School / Education</option><option>Hotel</option><option>Supermarket</option><option>Pharmacy / Health</option><option>Services / Freelancer</option></select><div id="suggest" class="card" style="background:#FFF7ED">For Fish: Product Catalogue, Inventory, Checkout, Delivery, WhatsApp Ordering, Stock Alert</div>
+<label>Phone / WhatsApp</label><input id="bPhone" value="+234 800 000 0000"><label>Currency (Your Shop Currency)</label><select id="bCurr" onchange="setCurrency(this.value)"><option value="NGN">NGN ₦ - Naira</option><option value="USD">USD $ - Dollar</option><option value="DOCOIN">DOCOIN 🪙</option><option value="DOT">DOT ⭐</option><option value="GHS">GHS ₵ - Cedi</option><option value="KES">KES - Kenya</option><option value="ZAR">ZAR - Rand</option><option value="GBP">GBP £</option><option value="EUR">EUR €</option></select></div>
+<div><label>Description</label><textarea id="bDesc">Fresh catfish and tilapia, delivered same day in Abuja.</textarea><label>Address</label><input id="bAddr" value="Wuse 2, Abuja"><label>Opening Hours</label><input value="8am - 8pm Daily"><label>Logo / Cover (upload)</label><input type="file"><button class="btn" onclick="saveBiz()">Save Business & Generate URL ✓</button><button class="btn ghost" onclick="aiHelp()">Ask DOBIZ AI to Setup For Me</button><p id="aiBox" class="small"></p></div>
+</div></div>
+</section>
+
+<section id="sec-shop" class="hidden">
+<div class="between"><h2>Products • Catalogue</h2><button class="btn" onclick="show('addProduct')">+ Add Product</button></div>
+<div class="flex"><input id="searchProd" placeholder="Search products..." oninput="renderProducts()" style="max-width:300px"><select id="filterCat" onchange="renderProducts()" style="max-width:200px"><option>All Categories</option><option>Fish</option><option>Food</option><option>Clothes</option><option>Services</option></select><button class="btn ghost" onclick="alert('QR / Barcode Scanner: Use phone camera to scan. Demo in this HTML file.')">📷 Scan Barcode / QR</button></div>
+<div id="prodList" class="grid g3" style="margin-top:12px"></div>
+<div class="card" style="margin-top:12px"><h3>Cart & Checkout</h3><div id="cartBox" class="small">Cart empty. Add product to cart.</div><div class="flex"><button class="btn" onclick="checkout()">Checkout • Pay with Paystack (Demo)</button><button class="btn ghost" onclick="whatsappOrder()">Order via WhatsApp</button></div><p class="small">Price go show for currency you pick for top. Real payment go use live rate for backend.</p></div>
+<div class="card"><h3>Expenses — For Real Profit</h3><input id="expAmt" type="number" placeholder="Expense amount (in your currency)"><input id="expNote" placeholder="e.g. Fish feed / Transport"><button class="btn red" onclick="addExpense()">Add Expense</button><div id="expList" class="small"></div></div>
+</section>
+
+<section id="sec-addProduct" class="hidden">
+<div class="card"><h2>Add Product</h2><div class="grid g2"><div><label>Product Name</label><input id="pName" placeholder="e.g. Fresh Catfish"><label id="pPriceLabel">Price (₦ NGN)</label><input id="pPrice" type="number" value="5000"><label>Stock</label><input id="pStock" type="number" value="20"><label>Category</label><select id="pCat"><option>Fish</option><option>Food</option><option>Clothes</option><option>Services</option></select></div><div><label>Variants</label><input id="pVar" placeholder="e.g. Small, Medium, Large"><label>Description</label><textarea id="pDesc" placeholder="Fresh, cleaned..."></textarea><label>Picture / Video</label><input type="file" id="pImg"><button class="btn" onclick="addProduct()">Add Product ✓</button></div></div></div>
+</section>
+
+<section id="sec-dash" class="hidden"><div id="dashGrid" class="grid g3"></div></section>
+<section id="sec-publish" class="hidden"><div class="card"><h2>Pay and Publish</h2><p>Publishing Fee: <b id="pubFee">₦6,000</b> • You get <b>1 Month FREE</b> after successful publication.</p><button class="btn red" onclick="alert('Paystack (Demo) - Real version must use Paystack webhook.')">Pay with Paystack (Demo)</button></div></section>
+<section id="sec-ai" class="hidden"><div class="card"><h2>DOBIZ AI Assistant</h2><input id="aiInput" placeholder="e.g. I sell fresh fish... Help me setup"><button class="btn" onclick="askAI()">Ask AI</button><div id="aiAns" class="card" style="margin-top:10px">Hi! Tell me wetin you sell. I go help you setup profile, categories, sizes, prices, stock, delivery, WhatsApp ordering and promo message.</div></div></section>
+</div>
+
+<div class="wrap"><div class="card"><h2>All 60 DOBIZ Features — Click Any One</h2><div id="allFeatures" class="grid g3"></div></div>
+<p style="text-align:center" class="small">DOBIZ — Your Shop Manager, Business Assistant and Business Operating System Inside Your Phone.<br>DOTGROUP — Let's DO it together! • Rates na demo rates. Real backend go use live rate.</p></div>
+</div>
+
+<div class="nav" id="bottomNav"><button onclick="show('home')">🏠 Home</button><button onclick="show('shop')">🛍️ Shop</button><button onclick="show('dash')">📊 Dashboard</button><button onclick="show('ai')">🤖 AI</button><button onclick="show('setup')">⚙️ Business</button></div>
+<footer id="dobizFooter">© 2026 DOTGROUP — DOBIZ reads dot_users_db (read-only) • DOBIZ saves to dobiz_* keys only</footer>
+
+<script>
+function toggleDD(id){const el=document.getElementById(id);const o=el.classList.contains('show');document.querySelectorAll('.dropdown-content').forEach(d=>d.classList.remove('show'));if(!o)el.classList.add('show');}
+window.addEventListener('click',e=>{if(!e.target.closest('.dropdown'))document.querySelectorAll('.dropdown-content').forEach(d=>d.classList.remove('show'));});
+
+// ===== CURRENCY CONVERSION - BASE IS NGN, CONVERT TO ANY =====
+// Rates = how many of that currency = 1 USD. Demo rates. Backend go replace with live.
+const RATES={NGN:1500,USD:1,DOCOIN:1,DOT:1,GHS:15,KES:130,ZAR:18,GBP:0.79,EUR:0.92,CAD:1.36,AUD:1.52,INR:83,BRL:5.0,CNY:7.2,JPY:149,AED:3.67,XAF:600,XOF:600};
+const SYMBOLS={NGN:'₦',USD:'$',DOCOIN:'🪙 DOCOIN ',DOT:'⭐ DOT ',GHS:'₵',KES:'KSh ',ZAR:'R',GBP:'£',EUR:'€',CAD:'$',AUD:'$',INR:'₹',BRL:'R$',CNY:'¥',JPY:'¥',AED:'AED ',XAF:'FCFA ',XOF:'FCFA '};
+function getCur(){return localStorage.getItem('dobiz_currency')||'NGN';}
+function setCurrency(c){localStorage.setItem('dobiz_currency',c);document.getElementById('curSel').value=c;let bc=document.getElementById('bCurr');if(bc)bc.value=c;applyCurrency();}
+function fmt(amountNGN){let cur=getCur();let usd=amountNGN/1500;let val=usd*RATES[cur];let sym=SYMBOLS[cur]||cur+' ';if(cur==='DOCOIN'||cur==='DOT'){return sym+val.toFixed(2);}if(cur==='JPY'){return sym+Math.round(val).toLocaleString();}return sym+val.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fromDisplayToNGN(amount,cur){let usd=amount/RATES[cur];return usd*1500;}
+function applyCurrency(){let cur=getCur();document.getElementById('curRate').innerText='1 USD = '+RATES['NGN'].toLocaleString()+' NGN = '+RATES[cur]+' '+cur+' • 1 DOCOIN = $1 • 1 DOT = $1 (demo)';let pl=document.getElementById('pPriceLabel');if(pl)pl.innerText='Price ('+SYMBOLS[cur]+' '+cur+')';let pf=document.getElementById('pubFee');if(pf)pf.innerText=fmt(6000);renderAll();}
+function showConverter(){let box=document.getElementById('converterBox');box.classList.toggle('hidden');let from=document.getElementById('convFrom'),to=document.getElementById('convTo');if(!from.options.length){Object.keys(RATES).forEach(k=>{let o1=document.createElement('option');o1.value=k;o1.text=k;from.appendChild(o1);let o2=document.createElement('option');o2.value=k;o2.text=k;to.appendChild(o2);});from.value='NGN';to.value='USD';}doConvert();}
+function doConvert(){let amt=+document.getElementById('convAmt').value||0;let f=document.getElementById('convFrom').value,t=document.getElementById('convTo').value;let usd=amt/RATES[f];let res=usd*RATES[t];document.getElementById('convResult').value=(SYMBOLS[t]||'')+res.toLocaleString(undefined,{maximumFractionDigits:2});document.getElementById('convNote').innerText=amt.toLocaleString()+' '+f+' = '+res.toLocaleString(undefined,{maximumFractionDigits:2})+' '+t+' • 1 '+f+' = '+(RATES[t]/RATES[f]).toFixed(4)+' '+t;}
+
+function getCurrent(){return (localStorage.getItem('dot_current_user')||'').toLowerCase();}
+function getDB(){try{return JSON.parse(localStorage.getItem('dot_users_db')||'[]')}catch(e){return []}}
+function applyAuth(){let cur=getCurrent();let reg=!!cur;document.getElementById('notLogged').style.display=reg?'none':'block';document.getElementById('dobizMain').style.display=reg?'block':'none';document.getElementById('dobizTop').style.display=reg?'flex':'none';document.getElementById('bottomNav').style.display=reg?'flex':'none';document.getElementById('dobizFooter').style.display=reg?'block':'none';document.getElementById('accountGuest').style.display=reg?'none':'block';document.getElementById('accountMember').style.display=reg?'block':'none';if(reg){document.getElementById('welcomeUser').innerText='Welcome '+cur;document.getElementById('accountBtn').innerText=cur+' ▼';document.getElementById('loginInfo').innerText='Logged in as @'+cur;let me=getDB().find(u=>(u.username||'').toLowerCase()===cur);if(me){document.getElementById('mySponsor').innerText='@'+(me.sponsor_username||'-');document.getElementById('bUser').value=cur;document.getElementById('bName').value=(me.full_name||cur)+"'s Business";document.getElementById('bPhone').value=me.whatsapp_full||me.whatsapp_contact||document.getElementById('bPhone').value;document.getElementById('bAddr').value=((me.city||'')+' '+(me.state_region||'')+' '+(me.country||'')).trim()||document.getElementById('bAddr').value;}document.getElementById('mainDot').innerText='dotgroup.top/'+cur;updateUrl();}}
+applyAuth();
+function doLogout(){let cur=getCurrent();if(confirm('Logout @'+cur+'?')){localStorage.removeItem('dot_current_user');localStorage.removeItem('dot_logged_in');location.href='index.html';}return false;}
+let products=JSON.parse(localStorage.getItem('dobiz_products')||'[]');if(!products.length){products=[{name:'Fresh Catfish',price:5000,stock:20,cat:'Fish',desc:'Fresh, cleaned catfish 1kg',img:'https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=400',var:'Small,Medium,Large'},{name:'Tilapia',price:4500,stock:15,cat:'Fish',desc:'Fresh tilapia',img:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400',var:'Medium,Large'}];}
+let cart=[];let orders=JSON.parse(localStorage.getItem('dobiz_orders')||'[]');let customers=JSON.parse(localStorage.getItem('dobiz_customers')||'[]');if(!customers.length){customers=[{name:'Mama Ngozi',phone:'+234...',total:15000},{name:'Ahmed',phone:'+234...',total:5000}];}
+let expenses=JSON.parse(localStorage.getItem('dobiz_expenses')||'[]');
+function saveAll(){localStorage.setItem('dobiz_products',JSON.stringify(products));localStorage.setItem('dobiz_orders',JSON.stringify(orders));localStorage.setItem('dobiz_customers',JSON.stringify(customers));localStorage.setItem('dobiz_expenses',JSON.stringify(expenses));}
+function show(id){['home','setup','shop','addProduct','dash','publish','ai'].forEach(x=>{let el=document.getElementById('sec-'+x);if(el)el.classList.toggle('hidden',x!==id)});if(id==='home')renderTabs();if(id==='dash')renderDash();if(id==='shop'){renderProducts();renderExpenses();}window.scrollTo(0,0)}
+function updateUrl(){let u=document.getElementById('bUser').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'')||'peter';document.getElementById('fullUrl').innerText=u+'.dobiz.dotgroup.top';document.getElementById('shortUrl').innerText=u+'.dobiz';document.getElementById('bizUrl').innerText=u+'.dobiz';document.getElementById('shortId').innerText=u+'.dobiz';document.getElementById('fullTop').innerText=u+'.dobiz.dotgroup.top';}
+function suggestTools(){let c=document.getElementById('bCat').value;let m={Restaurant:'Menu, Table Reservations, Food Ordering, Delivery',Salon:'Appointments, Service Pricing, Staff, Bookings',Boutique:'Catalogue, Variants Size/Colour, Inventory, Checkout'};document.getElementById('suggest').innerText='For '+c+': '+(m[c]||'Product Catalogue, Inventory, Checkout, Delivery, WhatsApp Ordering, Stock Alert')}
+function saveBiz(){let u=document.getElementById('bUser').value.trim().toLowerCase();let biz={owner:getCurrent(),name:document.getElementById('bName').value,username:u,short:u+'.dobiz',full:u+'.dobiz.dotgroup.top',cat:document.getElementById('bCat').value,phone:document.getElementById('bPhone').value,desc:document.getElementById('bDesc').value,addr:document.getElementById('bAddr').value,curr:getCur(),created:Date.now()};localStorage.setItem('dobiz_businesses',JSON.stringify([biz]));alert('Business saved! URL: '+biz.full+' | Short: '+biz.short+' | Currency: '+getCur());show('shop')}
+function aiHelp(){document.getElementById('aiBox').innerText='DOBIZ AI: I see you sell fish. I suggest: Categories: Catfish, Tilapia. Sizes: Small/Medium/Large. Add delivery option + WhatsApp ordering. Price go show for '+getCur()+'.'}
+function renderProducts(){let q=(document.getElementById('searchProd').value||'').toLowerCase();let f=document.getElementById('filterCat').value;let list=products.filter(p=>(p.name.toLowerCase().includes(q))&&(f==='All Categories'||p.cat===f));document.getElementById('prodList').innerHTML=list.map((p,i)=>`<div class="card"><div class="prod"><img src="${p.img}"><div><b>${p.name}</b><div class="small">${p.cat} • ${p.var||''} • Stock: ${p.stock} ${p.stock<5?'<span class="pill bad">Low Stock!</span>':''}</div><div><b>${fmt(p.price)}</b> <small>(${fmt(p.price)} - was ₦${p.price.toLocaleString()})</small></div></div></div><p class="small">${p.desc}</p><div class="flex"><button class="btn" onclick="addCart(${products.indexOf(p)})">Add to Cart</button><button class="btn ghost" onclick="shareProd(${products.indexOf(p)})">Share</button><button class="btn ghost" onclick="delProd(${products.indexOf(p)})">Delete</button></div></div>`).join('')||'No products yet. Add one.';updateKPI()}
+function addProduct(){let raw=+document.getElementById('pPrice').value||0;let ngn=fromDisplayToNGN(raw,getCur());let n=document.getElementById('pName').value||'New Product';products.push({name:n,price:Math.round(ngn),stock:+document.getElementById('pStock').value||0,cat:document.getElementById('pCat').value,desc:document.getElementById('pDesc').value,var:document.getElementById('pVar').value,img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'});saveAll();show('shop')}
+function delProd(i){products.splice(i,1);saveAll();renderProducts()}
+function addCart(i){cart.push(products[i]);let total=cart.reduce((a,c)=>a+c.price,0);document.getElementById('cartBox').innerHTML=cart.map(c=>c.name+' - '+fmt(c.price)).join('<br>')+'<br><b>Total: '+fmt(total)+' • Delivery: '+fmt(1000)+' • In NGN: ₦'+(total+1000).toLocaleString()+'</b>';updateKPI()}
+function checkout(){if(!cart.length)return alert('Cart empty');let total=cart.reduce((a,c)=>a+c.price,0)+1000;cart.forEach(item=>{let p=products.find(x=>x.name===item.name);if(p&&p.stock>0)p.stock-=1;});orders.push({total,items:cart.length,date:new Date().toLocaleDateString(),status:'Pending Verification'});cart=[];saveAll();document.getElementById('cartBox').innerText='Order placed! Invoice: '+fmt(total)+' (NGN ₦'+total.toLocaleString()+'). Payment must be verified by backend before marking PAID.';renderProducts();updateKPI();alert('Invoice: '+fmt(total))}
+function whatsappOrder(){let msg=encodeURIComponent('Hello, I want to order from '+document.getElementById('fullUrl').innerText+' Price in '+getCur());window.open('https://wa.me/2348000000000?text='+msg)}
+function shareProd(i){let p=products[i];window.open('https://wa.me/?text='+encodeURIComponent(p.name+' - '+fmt(p.price)+' from '+document.getElementById('fullUrl').innerText))}
+function addExpense(){let raw=+document.getElementById('expAmt').value||0;if(!raw)return alert('Enter expense amount');let ngn=Math.round(fromDisplayToNGN(raw,getCur()));expenses.push({amt:ngn,note:document.getElementById('expNote').value||'Expense',date:new Date().toLocaleDateString()});saveAll();renderExpenses();updateKPI()}
+function renderExpenses(){document.getElementById('expList').innerHTML=expenses.length?expenses.map(e=>e.date+' - '+e.note+' - '+fmt(e.amt)+' (₦'+e.amt.toLocaleString()+')').join('<br>'):'No expenses yet.'}
+function updateKPI(){let sales=orders.reduce((a,o)=>a+o.total,0);let exp=expenses.reduce((a,e)=>a+e.amt,0);document.getElementById('kpiSales').innerText=fmt(sales);document.getElementById('kpiOrders').innerText=orders.length;document.getElementById('kpiWallet').innerText=fmt(sales);document.getElementById('kpiRef').innerText='Referral: '+fmt(0)+' • Pending: '+fmt(0);document.getElementById('kpiProfit').innerText=fmt(sales-exp);document.getElementById('kpiExp').innerText=fmt(exp);document.getElementById('kpiCust').innerText=customers.length}
+const feats=["1 Product Catalogue","2 Order Manager","3 Cart & Checkout","4 Invoice & Receipt","5 Payment Link","6 Business Wallet","7 Daily Sales Report","8 Expense Tracker","9 Pay & Publish","10 Customer List","11 Follow-up Reminder","12 Customer Reviews","13 Loyalty Points","14 Broadcast Messages","15 Referral System 5 Levels","16 Share Button","17 Discount & Offers","18 Promotional Banner","19 Views & Analytics","20 Stock Alert","21 Booking Tool","22 Delivery Tracking","23 Team Login","24 WhatsApp Button","25 Global & Country Settings","26 Google Search Visibility","27 Sponsor System","28 Help Centre","29 Renewal Reminder","30 AI Business Assistant","31 Barcode / QR Scanner","32 Supplier Management","33 Purchase & Restocking","34 Variants & Bundles","35 Returns & Refunds","36 Profit & Loss Dashboard","37 Tax & VAT","38 Credit & Debt Manager","39 Cash Flow Forecasting","40 Financial Export PDF/Excel","41 AI Shopping Assistant","42 Product Comparison","43 Abandoned Cart Recovery","44 Support Tickets","45 Segmentation & CRM","46 Multi-Branch","47 Staff Attendance","48 Task Manager","49 Documents Vault","50 Goals & Targets","51 AI Business Insights","52 Competitor Research","53 Multi-Language","54 Wholesale & Retail Pricing","55 Subscription Billing","56 Accounting Integration","57 Delivery Partner Integration","58 Automated Workflows","59 Advanced Security 2FA","60 Backup & Recovery"];
+function renderTabs(){document.getElementById('mainTabs').innerHTML=['Overview','Products','Orders','Customers','Payments','Wallet','Marketing','Staff','Reports','AI'].map(t=>`<div class="tab" onclick="show('dash')">${t}</div>`).join('');document.getElementById('allFeatures').innerHTML=feats.map(f=>`<div class="card"><b>${f}</b><p class="small">Tap to activate.</p><button class="btn ghost" onclick="alert('${f} activated for demo.')">Activate</button></div>`).join('');document.getElementById('tabContent').innerHTML=`<div class="grid g3" style="margin-top:12px"><div class="card"><b>Orders</b><p class="small">${orders.length} orders • ${orders.map(o=>o.date+' - '+fmt(o.total)).join('<br>')||'No orders'}</p></div><div class="card"><b>Referral</b><p class="small">Your link: dotgroup.top/r/${getCurrent()||'peter'} • L1 ${fmt(1500)} • L2 ${fmt(150)}</p></div><div class="card"><b>Customers</b><p class="small">${customers.map(c=>c.name+' - '+fmt(c.total)).join('<br>')}</p></div></div>`}
+function renderDash(){let items=["Overview","My Business","My Website","Products","Categories","Orders","Customers","Payments","Wallet","Sales","Expenses","Profit & Loss","Inventory","Suppliers","Purchases","Invoices","Bookings","Deliveries","Staff","Marketing","Referrals","Loyalty","Reviews","Reports","AI Assistant","Settings","Subscription","Help Centre"];document.getElementById('dashGrid').innerHTML=items.map(i=>`<div class="card"><b>${i}</b><p class="small">Manage ${i} here. Amounts show in ${getCur()}.</p><button class="btn ghost" onclick="alert('${i} - Demo view.')">Open</button></div>`).join('')}
+function askAI(){let q=document.getElementById('aiInput').value;document.getElementById('aiAns').innerText='DOBIZ AI: For "'+q+'" in '+getCur()+' — 1) Setup profile, 2) Add 3 products, 3) Set stock, 4) Add WhatsApp button, 5) Promo: Buy 2 Get 1 Free.'}
+function renderAll(){renderTabs();renderProducts();renderExpenses();updateKPI();}
+document.getElementById('curSel').value=getCur();
+saveAll();applyCurrency();
+</script>
+</body>
+</html>

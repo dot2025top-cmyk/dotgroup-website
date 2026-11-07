@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0759a5">
+<title>DOHEALTH | AI-Powered Healthcare</title>
+
+<style>
+:root{
+  --blue:#0759a5;
+  --deep:#073b70;
+  --red:#e63946;
+  --white:#fff;
+  --bg:#f3f7fc;
+  --text:#172b4d;
+  --muted:#718096;
+  --green:#16865c;
+  --border:#e3eaf3;
+  --shadow:0 10px 35px rgba(12,54,100,.09);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid #90c8ff;
+  outline-offset:2px;
+}
+header{
+  background:linear-gradient(125deg,var(--deep),var(--blue));
+  color:white;
+  padding:22px 5%;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  display:grid;place-items:center;
+  height:48px;width:48px;
+  border-radius:15px;
+  background:white;color:var(--blue);
+  font-size:24px;font-weight:900;
+}
+.brand h1{margin:0;font-size:25px;letter-spacing:1px}
+.brand p{margin:4px 0 0;color:#dcecff;font-size:12px}
+.member-status{
+  border:1px solid #ffffff55;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:13px;
+}
+.hero{
+  padding:32px 0 18px;
+  max-width:900px;
+}
+.hero h2{font-size:clamp(28px,5vw,43px);margin:0 0 12px;line-height:1.12}
+.hero p{line-height:1.7;color:#e3efff;max-width:680px}
+.container{max-width:1400px;margin:auto;padding:24px 5% 50px}
+.notice{
+  border:1px solid #b8d9ff;
+  background:#eaf4ff;
+  color:#164878;
+  border-radius:14px;
+  padding:15px 17px;
+  line-height:1.6;
+  margin-bottom:22px;
+  font-size:13px;
+}
+.emergency{
+  border:1px solid #ffc7cc;
+  background:#fff0f1;
+  color:#8e1d2b;
+  border-radius:14px;
+  padding:15px 17px;
+  margin-bottom:24px;
+  line-height:1.6;
+}
+.emergency strong{display:block;margin-bottom:5px}
+.section-title{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:12px;flex-wrap:wrap;
+  margin:28px 0 15px;
+}
+.section-title h2{font-size:21px;margin:0}
+.section-title p{color:var(--muted);font-size:13px;margin:6px 0 0}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+}
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+.stat-label{color:var(--muted);font-size:13px}
+.stat-value{font-size:25px;font-weight:800;margin:12px 0 7px}
+.stat-note{font-size:12px;color:var(--muted);line-height:1.5}
+.icon{
+  display:grid;place-items:center;
+  height:43px;width:43px;
+  border-radius:13px;
+  background:#eaf4ff;font-size:21px;
+  margin-bottom:15px;
+}
+.actions-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.action-card{
+  text-align:left;width:100%;height:100%;
+  border:1px solid var(--border);
+  background:white;border-radius:17px;padding:20px;
+  box-shadow:var(--shadow);color:var(--text);
+  transition:.2s;
+}
+.action-card:hover{transform:translateY(-3px);border-color:#94c5fa}
+.action-card h3{margin:10px 0;font-size:17px}
+.action-card p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:7px;border:0;border-radius:10px;padding:12px 16px;
+  background:var(--blue);color:white;font-weight:700;
+  font-size:13px;text-decoration:none;
+}
+.btn:hover{filter:brightness(.94)}
+.btn.secondary{background:#eaf2fb;color:var(--blue)}
+.btn.red{background:var(--red)}
+.btn.green{background:var(--green)}
+.btn.outline{background:white;color:var(--blue);border:1px solid #bdd5ef}
+.btn.small{padding:8px 11px;font-size:12px}
+.panel{
+  display:none;background:white;
+  border:1px solid var(--border);
+  border-radius:18px;padding:24px;
+  margin:22px 0;box-shadow:var(--shadow);
+}
+.panel.active{display:block}
+.panel h2{margin-top:0}
+.form-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-weight:700;font-size:13px}
+input,select,textarea{
+  width:100%;border:1px solid #d6e1ee;
+  border-radius:10px;padding:12px;
+  background:white;color:var(--text);
+}
+textarea{min-height:110px;resize:vertical}
+.helper{font-size:12px;color:var(--muted);line-height:1.5}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.result{
+  display:none;margin-top:18px;padding:17px;
+  border-radius:12px;background:#edf8f3;
+  border:1px solid #c4ead8;line-height:1.65;
+}
+.result.show{display:block}
+.result.warning{background:#fff5e8;border-color:#f4d2a1}
+.result.error{background:#fff0f1;border-color:#ffc7cc}
+.chatbox{
+  background:#f6f9fd;border:1px solid var(--border);
+  border-radius:14px;padding:15px;margin:15px 0;
+  min-height:110px;max-height:340px;overflow-y:auto;
+}
+.chat-message{
+  padding:11px 13px;border-radius:12px;
+  margin:8px 0;max-width:90%;font-size:13px;line-height:1.6;
+  white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.chat-message.bot{background:#e6f1ff}
+.chat-message.user{background:#dff6e9;margin-left:auto}
+.list{display:grid;gap:11px}
+.list-item{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:15px;padding:15px 0;border-bottom:1px solid var(--border);
+}
+.list-item:last-child{border-bottom:0}
+.list-item h4{margin:0 0 5px;font-size:14px}
+.list-item p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.badge{
+  display:inline-block;padding:5px 9px;border-radius:30px;
+  background:#e9f8ef;color:#176c44;font-size:11px;font-weight:800;
+}
+.badge.pending{background:#fff2d8;color:#805700}
+.badge.info{background:#eaf4ff;color:#0759a5}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:13px}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+footer{
+  background:#092e52;color:#d8e7f7;
+  text-align:center;padding:26px 5%;
+  font-size:12px;line-height:1.8;
+}
+footer strong{color:white}
+.disclaimer{max-width:850px;margin:auto}
+.hidden{display:none!important}
+@media(max-width:1000px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .actions-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  header{padding:18px 5%}
+  .container{padding:18px 4% 35px}
+  .grid,.actions-grid,.form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .card,.panel{padding:17px}
+  .hero{padding-top:27px}
+  .hero h2{font-size:30px}
+  .list-item{flex-direction:column}
+  .member-status{width:100%}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">+</div>
+      <div>
+        <h1>DOHEALTH</h1>
+        <p>A DOTGROUP healthcare initiative</p>
+      </div>
+    </div>
+    <div class="member-status" id="memberStatus">
+      Member benefit: Verify eligibility through your DOTGROUP account
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2>Better Health.<br>Smarter Support. Stronger Communities.</h2>
+    <p>
+      Connect with healthcare professionals, organise appointments,
+      understand health information and manage your healthcare journey
+      through one AI-powered platform.
+    </p>
+    <button class="btn" onclick="showPanel('eligibilityPanel')">
+      Check Treatment Benefits →
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="emergency">
+    <strong>🚨 Medical emergency?</strong>
+    If you have severe difficulty breathing, chest pain, signs of stroke,
+    severe bleeding, loss of consciousness or another life-threatening
+    emergency, seek immediate emergency medical care. Do not wait for an
+    AI response. Use your local emergency service or go to the nearest
+    appropriate emergency facility.
+  </div>
+
+  <div class="notice">
+    <strong>About DOHEALTH:</strong> The benefits displayed here are not proof
+    of insurance or guaranteed free treatment. Your actual eligibility,
+    covered services, participating providers, limits and exclusions must be
+    confirmed by DOTGROUP and the healthcare provider. Medicines are separate
+    from treatment benefits unless an authorised programme explicitly says
+    otherwise. Never stop prescribed medication based on AI advice.
+  </div>
+
+  <div class="section-title">
+    <div>
+      <h2>Healthcare Dashboard</h2>
+      <p>Your healthcare tools and service overview</p>
+    </div>
+    <button class="btn secondary" onclick="showPanel('eligibilityPanel')">
+      Verify Benefits
+    </button>
+  </div>
+
+  <section class="grid" aria-label="Healthcare dashboard statistics">
+    <div class="card">
+      <div class="icon">🩺</div>
+      <div class="stat-label">Treatment Benefit</div>
+      <div class="stat-value" id="benefitStat">Unconfirmed</div>
+      <div class="stat-note">Connect your verified DOTGROUP account to check eligibility.</div>
+    </div>
+    <div class="card">
+      <div class="icon">📅</div>
+      <div class="stat-label">Appointments Requested</div>
+      <div class="stat-value" id="appointmentCount">0</div>
+      <div class="stat-note">Requests saved in this browser prototype.</div>
+    </div>
+    <div class="card">
+      <div class="icon">📋</div>
+      <div class="stat-label">Health Notes</div>
+      <div class="stat-value" id="recordCount">0</div>
+      <div class="stat-note">Local notes only; not a clinical medical record.</div>
+    </div>
+    <div class="card">
+      <div class="icon">🤖</div>
+      <div class="stat-label">AI Health Assistant</div>
+      <div class="stat-value">Available</div>
+      <div class="stat-note">General guidance only. Not a diagnosis or prescription.</div>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <div>
+      <h2>DOHEALTH Services</h2>
+      <p>Choose a service to continue</p>
+    </div>
+  </div>
+
+  <section class="actions-grid">
+    <button class="action-card" onclick="showPanel('aiPanel')">
+      <div class="icon">🤖</div>
+      <h3>AI Health Assistant</h3>
+      <p>Ask general health questions, understand common terms and prepare questions for a clinician.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('symptomPanel')">
+      <div class="icon">🩺</div>
+      <h3>Symptom Information</h3>
+      <p>Organise your symptoms and identify warning signs that may need prompt professional assessment.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('appointmentPanel')">
+      <div class="icon">📅</div>
+      <h3>Book a Consultation</h3>
+      <p>Submit a request to see a healthcare professional. Booking is not confirmed until the provider responds.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('recordsPanel')">
+      <div class="icon">📁</div>
+      <h3>My Health Notes</h3>
+      <p>Keep basic personal notes and questions to discuss with your healthcare professional.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('eligibilityPanel')">
+      <div class="icon">🎫</div>
+      <h3>Free Treatment Benefits</h3>
+      <p>Check your DOTGROUP verification status and request confirmation of eligible treatment services.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('pharmacyPanel')">
+      <div class="icon">💊</div>
+      <h3>Pharmacy & Medicines</h3>
+      <p>Record medicine information prescribed by your clinician and prepare to contact a legitimate pharmacy.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('preventionPanel')">
+      <div class="icon">🛡️</div>
+      <h3>Prevention & Wellness</h3>
+      <p>Explore general information about prevention, healthy habits and preparing for check-ups.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('supportPanel')">
+      <div class="icon">💬</div>
+      <h3>Healthcare Support</h3>
+      <p>Submit a support request about appointments, providers, benefits or technical problems.</p>
+    </button>
+
+    <button class="action-card" onclick="showPanel('privacyPanel')">
+      <div class="icon">🔐</div>
+      <h3>Privacy & Consent</h3>
+      <p>Review the privacy principles that a production healthcare platform must implement.</p>
+    </button>
+  </section>
+
+  <!-- AI ASSISTANT -->
+  <section class="panel" id="aiPanel">
+    <h2>🤖 DOHEALTH AI Health Assistant</h2>
+    <p class="helper">
+      This demonstration provides general information only. It does not
+      connect to a medical AI service and cannot diagnose conditions,
+      recommend personalised treatment or prescribe drugs.
+    </p>
+    <div class="chatbox" id="chatMessages" aria-live="polite">
+      <div class="chat-message bot">
+        Welcome to DOHEALTH. I can help you prepare questions for a clinician
+        and understand general health information. What would you like help
+        understanding today?
+      </div>
+    </div>
+    <form id="chatForm">
+      <div class="field">
+        <label for="chatInput">Your question</label>
+        <textarea id="chatInput" required maxlength="1200"
+          placeholder="Example: What information should I prepare before a routine health check?"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Send Question</button>
+        <button class="btn secondary" type="button" onclick="clearChat()">Clear Chat</button>
+      </div>
+    </form>
+    <div class="helper">Do not enter passwords, financial details or unnecessary identifying information.</div>
+  </section>
+
+  <!-- SYMPTOMS -->
+  <section class="panel" id="symptomPanel">
+    <h2>🩺 Symptom Information</h2>
+    <p class="helper">
+      This form organises information for a clinician. It does not calculate a
+      diagnosis or determine whether you are medically safe.
+    </p>
+    <form id="symptomForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="symptomDuration">How long have you had the symptoms?</label>
+          <select id="symptomDuration" required>
+            <option value="">Select duration</option>
+            <option>Started today</option>
+            <option>1–3 days</option>
+            <option>4–7 days</option>
+            <option>More than a week</option>
+            <option>Recurring symptoms</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="symptomSeverity">How concerned are you?</label>
+          <select id="symptomSeverity" required>
+            <option value="">Select</option>
+            <option>Low concern</option>
+            <option>Moderate concern</option>
+            <option>High concern</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="symptoms">Describe your symptoms</label>
+          <textarea id="symptoms" required maxlength="2000"
+            placeholder="Describe what you are experiencing, when it started and what has changed."></textarea>
+        </div>
+        <div class="field full">
+          <label for="symptomContext">Other relevant information (optional)</label>
+          <textarea id="symptomContext" maxlength="1000"
+            placeholder="For example, existing conditions, allergies or current medicines. Only share what is necessary."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Prepare Clinician Summary</button>
+      </div>
+    </form>
+    <div class="result" id="symptomResult" aria-live="polite"></div>
+  </section>
+
+  <!-- APPOINTMENTS -->
+  <section class="panel" id="appointmentPanel">
+    <h2>📅 Request a Consultation</h2>
+    <p class="helper">
+      This prototype stores requests in your browser only. A live platform
+      must send the request securely to a participating provider and display
+      the actual booking status.
+    </p>
+    <form id="appointmentForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="appointmentType">Type of consultation</label>
+          <select id="appointmentType" required>
+            <option value="">Select service</option>
+            <option>General medical consultation</option>
+            <option>Dental consultation</option>
+            <option>Eye care</option>
+            <option>Maternal and child health</option>
+            <option>Mental health professional</option>
+            <option>Preventive health check</option>
+            <option>Follow-up consultation</option>
+            <option>Other specialist consultation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="appointmentMode">Preferred consultation mode</label>
+          <select id="appointmentMode" required>
+            <option>In-person</option>
+            <option>Video consultation</option>
+            <option>Phone consultation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="appointmentDate">Preferred date</label>
+          <input type="date" id="appointmentDate" required>
+        </div>
+        <div class="field">
+          <label for="appointmentLocation">City / area</label>
+          <input id="appointmentLocation" maxlength="150" required
+            placeholder="Your city or preferred service area">
+        </div>
+        <div class="field full">
+          <label for="appointmentReason">Reason for consultation</label>
+          <textarea id="appointmentReason" maxlength="1200" required
+            placeholder="Briefly explain what kind of professional support you need."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Submit Appointment Request</button>
+      </div>
+    </form>
+    <div class="result" id="appointmentResult" aria-live="polite"></div>
+    <hr>
+    <h3>Your appointment requests</h3>
+    <div class="list" id="appointmentList"></div>
+  </section>
+
+  <!-- HEALTH NOTES -->
+  <section class="panel" id="recordsPanel">
+    <h2>📁 My Health Notes</h2>
+    <p class="helper">
+      These notes are stored locally in this browser. They are not encrypted
+      clinical records and must not be used to store sensitive medical files
+      on a shared device. A production version needs secure, access-controlled
+      storage and appropriate consent.
+    </p>
+    <form id="recordForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="recordTitle">Note title</label>
+          <input id="recordTitle" required maxlength="100"
+            placeholder="Example: Questions for my doctor">
+        </div>
+        <div class="field">
+          <label for="recordDate">Date</label>
+          <input id="recordDate" type="date" required>
+        </div>
+        <div class="field full">
+          <label for="recordText">Your note</label>
+          <textarea id="recordText" required maxlength="3000"
+            placeholder="Write information you want to discuss with your clinician."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Save Note on This Device</button>
+      </div>
+    </form>
+    <div class="result" id="recordResult" aria-live="polite"></div>
+    <hr>
+    <h3>Saved notes</h3>
+    <div class="list" id="recordList"></div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="panel" id="eligibilityPanel">
+    <h2>🎫 DOTGROUP Treatment Benefit Verification</h2>
+    <p>
+      DOHEALTH is intended to help verified DOTGROUP members access eligible
+      healthcare services under the programme's approved rules.
+    </p>
+    <div class="notice">
+      <strong>Eligibility must be confirmed.</strong> Account verification
+      alone should not be treated as proof that a particular consultation,
+      procedure, facility or treatment is covered. The live system must check
+      your member status, benefit rules, provider participation and available
+      programme limits.
+    </div>
+    <form id="eligibilityForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="dotUsername">DOTGROUP username or member ID</label>
+          <input id="dotUsername" maxlength="100" required
+            placeholder="Enter your DOTGROUP member ID">
+        </div>
+        <div class="field">
+          <label for="memberVerification">Account verification status</label>
+          <select id="memberVerification" required>
+            <option value="">Select your status</option>
+            <option value="verified">Verified account</option>
+            <option value="unverified">Not yet verified</option>
+            <option value="unknown">Not sure</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="benefitService">Service you want to check</label>
+          <select id="benefitService" required>
+            <option value="">Select service</option>
+            <option>General consultation</option>
+            <option>Laboratory investigation</option>
+            <option>Dental care</option>
+            <option>Eye care</option>
+            <option>Maternal and child health</option>
+            <option>Specialist consultation</option>
+            <option>Other treatment</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Check Demonstration Eligibility</button>
+      </div>
+    </form>
+    <div class="result" id="eligibilityResult" aria-live="polite"></div>
+    <p class="helper">
+      Demonstration only: this form does not contact DOTGROUP or verify a
+      member account. Real verification must use an authenticated backend.
+    </p>
+  </section>
+
+  <!-- PHARMACY -->
+  <section class="panel" id="pharmacyPanel">
+    <h2>💊 Pharmacy & Medicine Information</h2>
+    <div class="notice">
+      Medicines are not included automatically in the treatment benefit.
+      Use a prescription from a qualified clinician, confirm the correct
+      medicine and dosage with a licensed pharmacist, and use a legitimate,
+      authorised pharmacy. Do not self-prescribe.
+    </div>
+    <form id="medicineForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="medicineName">Medicine name as written on prescription</label>
+          <input id="medicineName" required maxlength="150">
+        </div>
+        <div class="field">
+          <label for="medicineStatus">Prescription status</label>
+          <select id="medicineStatus" required>
+            <option value="">Select</option>
+            <option>Prescribed by a clinician</option>
+            <option>Need to discuss with clinician</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="medicineNote">Notes for your pharmacist (optional)</label>
+          <textarea id="medicineNote" maxlength="1000"
+            placeholder="For example, questions about availability or whether the pharmacy can verify the prescription."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Save Medicine Note</button>
+      </div>
+    </form>
+    <div class="result" id="medicineResult" aria-live="polite"></div>
+    <div class="list" id="medicineList"></div>
+  </section>
+
+  <!-- WELLNESS -->
+  <section class="panel" id="preventionPanel">
+    <h2>🛡️ Prevention & Wellness Centre</h2>
+    <p>Use these general health topics to prepare for discussions with qualified healthcare professionals.</p>
+    <div class="list">
+      <div class="list-item">
+        <div><h4>Preventive check-ups</h4><p>Ask a clinician which health checks are appropriate for your age, history and circumstances.</p></div>
+        <span class="badge info">Prevention</span>
+      </div>
+      <div class="list-item">
+        <div><h4>Vaccination information</h4><p>Discuss recommended vaccinations and timing with an authorised healthcare provider.</p></div>
+        <span class="badge info">Information</span>
+      </div>
+      <div class="list-item">
+        <div><h4>Healthy eating and movement</h4><p>Seek guidance appropriate to your health needs, abilities, culture and available resources.</p></div>
+        <span class="badge info">Wellness</span>
+      </div>
+      <div class="list-item">
+        <div><h4>Sleep and emotional wellbeing</h4><p>Discuss persistent sleep problems, distress or mood changes with a qualified professional.</p></div>
+        <span class="badge info">Wellbeing</span>
+      </div>
+      <div class="list-item">
+        <div><h4>Family health education</h4><p>Use trusted health information and professional advice for age-appropriate family care.</p></div>
+        <span class="badge info">Education</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="panel" id="supportPanel">
+    <h2>💬 DOHEALTH Support Centre</h2>
+    <form id="supportForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="supportTopic">Support category</label>
+          <select id="supportTopic" required>
+            <option>Member eligibility</option>
+            <option>Appointment issue</option>
+            <option>Healthcare provider</option>
+            <option>Technical problem</option>
+            <option>Privacy concern</option>
+            <option>Other enquiry</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="supportContact">Contact email (optional)</label>
+          <input type="email" id="supportContact" maxlength="200"
+            placeholder="Only if you want a reply">
+        </div>
+        <div class="field full">
+          <label for="supportMessage">How can we help?</label>
+          <textarea id="supportMessage" maxlength="2000" required
+            placeholder="Describe the issue without including unnecessary medical or financial details."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Submit Support Request</button>
+      </div>
+    </form>
+    <div class="result" id="supportResult" aria-live="polite"></div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="panel" id="privacyPanel">
+    <h2>🔐 Privacy, Security & Consent</h2>
+    <div class="list">
+      <div class="list-item">
+        <div><h4>Health data is sensitive</h4><p>A live platform must collect only necessary information and protect it with appropriate access controls and encryption.</p></div>
+      </div>
+      <div class="list-item">
+        <div><h4>Clear consent</h4><p>Members must understand how their information is used, who can access it and how consent can be withdrawn where applicable.</p></div>
+      </div>
+      <div class="list-item">
+        <div><h4>Separate permissions</h4><p>Healthcare professionals should access only the records necessary for their authorised care duties. Shop, affiliate and unrelated administrators must not automatically access health records.</p></div>
+      </div>
+      <div class="list-item">
+        <div><h4>Secure account access</h4><p>Production implementation should include strong authentication, secure sessions, role-based permissions, audit logs and account recovery protections.</p></div>
+      </div>
+      <div class="list-item">
+        <div><h4>Data control</h4><p>Members need a clear way to request access to their records, corrections, exports or deletion when legally permitted.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <div>
+      <h2>My Recent Activity</h2>
+      <p>Activity saved locally in this demonstration</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="list" id="activityList">
+      <div class="empty">No activity recorded yet.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="disclaimer">
+    <strong>DOHEALTH — A DOTGROUP initiative</strong><br>
+    AI-supported health information • Healthcare access • Community wellbeing<br><br>
+    DOHEALTH does not replace qualified medical professionals. This demo is
+    not connected to real providers, pharmacies, payment systems or medical
+    records. Actual services and treatment benefits must be confirmed before
+    launch. Do not use this prototype to make medical decisions.
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/*
+ * DOHEALTH FRONT-END DEMO
+ * - Uses browser localStorage for non-clinical prototype data.
+ * - Does not connect to a real AI, provider, pharmacy or DOTGROUP account.
+ * - Replace the demo storage and eligibility logic with authenticated APIs
+ *   before handling real members or health information.
+ */
+
+const STORAGE = {
+  appointments: "dohealth_demo_appointments_v1",
+  notes: "dohealth_demo_notes_v1",
+  medicines: "dohealth_demo_medicines_v1",
+  activity: "dohealth_demo_activity_v1"
+};
+
+const $ = id => document.getElementById(id);
+
+function readList(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveList(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    alert("This browser could not save the information. Please check device storage.");
+    return false;
+  }
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[character]);
+}
+
+function showPanel(id) {
+  document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
+  const panel = $(id);
+  if (panel) {
+    panel.classList.add("active");
+    panel.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+
+function showResult(id, message, type="success") {
+  const element = $(id);
+  element.className = "result show" + (type === "warning" ? " warning" : type === "error" ? " error" : "");
+  element.textContent = message;
+}
+
+function addActivity(message) {
+  const activities = readList(STORAGE.activity);
+  activities.unshift({message, date:new Date().toLocaleString()});
+  saveList(STORAGE.activity, activities.slice(0,30));
+  renderActivity();
+}
+
+function renderActivity() {
+  const activities = readList(STORAGE.activity);
+  const list = $("activityList");
+  if (!activities.length) {
+    list.innerHTML = '<div class="empty">No activity recorded yet.</div>';
+    return;
+  }
+  list.innerHTML = activities.map(item => `
+    <div class="list-item">
+      <div><h4>${escapeHTML(item.message)}</h4><p>${escapeHTML(item.date)}</p></div>
+      <span class="badge info">Demo</span>
+    </div>
+  `).join("");
+}
+
+function renderAppointments() {
+  const items = readList(STORAGE.appointments);
+  $("appointmentCount").textContent = items.length;
+  const list = $("appointmentList");
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">No appointment requests yet.</div>';
+    return;
+  }
+  list.innerHTML = items.map(item => `
+    <div class="list-item">
+      <div>
+        <h4>${escapeHTML(item.type)}</h4>
+        <p>Preferred date: ${escapeHTML(item.date)}<br>
+        Mode: ${escapeHTML(item.mode)}<br>
+        Location: ${escapeHTML(item.location)}<br>
+        Reason: ${escapeHTML(item.reason)}</p>
+      </div>
+      <span class="badge pending">Request only</span>
+    </div>
+  `).join("");
+}
+
+function renderNotes() {
+  const items = readList(STORAGE.notes);
+  $("recordCount").textContent = items.length;
+  const list = $("recordList");
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">No saved notes yet.</div>';
+    return;
+  }
+  list.innerHTML = items.map(item => `
+    <div class="list-item">
+      <div>
+        <h4>${escapeHTML(item.title)}</h4>
+        <p>${escapeHTML(item.date)}<br>${escapeHTML(item.text)}</p>
+      </div>
+      <button class="btn small red" type="button" data-delete-note="${escapeHTML(item.id)}">Delete</button>
+    </div>
+  `).join("");
+}
+
+function renderMedicines() {
+  const items = readList(STORAGE.medicines);
+  const list = $("medicineList");
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">No medicine notes saved.</div>';
+    return;
+  }
+  list.innerHTML = items.map(item => `
+    <div class="list-item">
+      <div>
+        <h4>${escapeHTML(item.name)}</h4>
+        <p>${escapeHTML(item.status)}<br>${escapeHTML(item.note || "No additional note.")}</p>
+      </div>
+      <span class="badge info">Personal note</span>
+    </div>
+  `).join("");
+}
+
+$("appointmentDate").min = new Date().toISOString().split("T")[0];
+$("recordDate").value = new Date().toISOString().split("T")[0];
+
+$("appointmentForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const item = {
+    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    type:$("appointmentType").value,
+    mode:$("appointmentMode").value,
+    date:$("appointmentDate").value,
+    location:$("appointmentLocation").value.trim(),
+    reason:$("appointmentReason").value.trim(),
+    createdAt:new Date().toISOString()
+  };
+
+  if (item.date < new Date().toISOString().split("T")[0]) {
+    showResult("appointmentResult","Choose today or a future date.","error");
+    return;
+  }
+
+  const items = readList(STORAGE.appointments);
+  items.unshift(item);
+  if (!saveList(STORAGE.appointments,items)) return;
+
+  renderAppointments();
+  addActivity("Appointment request saved locally");
+  showResult("appointmentResult",
+    "Your request has been saved in this browser. No provider has received it and no appointment is confirmed. In the live platform, this step must securely send the request to a participating provider.");
+  event.target.reset();
+  $("appointmentDate").min = new Date().toISOString().split("T")[0];
+});
+
+$("recordForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const items = readList(STORAGE.notes);
+  items.unshift({
+    id:crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    title:$("recordTitle").value.trim(),
+    date:$("recordDate").value,
+    text:$("recordText").value.trim()
+  });
+
+  if (!saveList(STORAGE.notes,items)) return;
+  renderNotes();
+  addActivity("Personal health note saved locally");
+  showResult("recordResult","Your note has been saved in this browser only. It is not uploaded to a healthcare professional.");
+  event.target.reset();
+  $("recordDate").value = new Date().toISOString().split("T")[0];
+});
+
+$("recordList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-note]");
+  if (!button) return;
+
+  const id = button.dataset.deleteNote;
+  const items = readList(STORAGE.notes).filter(item => item.id !== id);
+  if (saveList(STORAGE.notes,items)) {
+    renderNotes();
+    addActivity("Personal health note deleted locally");
+  }
+});
+
+$("eligibilityForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const status = $("memberVerification").value;
+  const service = $("benefitService").value;
+
+  if (status === "verified") {
+    $("benefitStat").textContent = "Pending check";
+    showResult("eligibilityResult",
+      "DEMONSTRATION RESULT: You selected 'Verified account'. Your treatment eligibility is NOT yet confirmed. The live system must validate your member ID with DOTGROUP, check the current benefit rules and participating provider, and return an authorised decision for: " + service + ". No free-treatment approval has been issued.",
+      "warning");
+  } else {
+    $("benefitStat").textContent = "Not confirmed";
+    showResult("eligibilityResult",
+      "Your treatment benefit has not been confirmed. Verify your DOTGROUP account through the official account system and ask DOHEALTH support to check whether the requested service is covered.",
+      "warning");
+  }
+
+  addActivity("Treatment benefit eligibility check requested");
+});
+
+$("symptomForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const duration = $("symptomDuration").value;
+  const severity = $("symptomSeverity").value;
+  const symptoms = $("symptoms").value.trim();
+  const context = $("symptomContext").value.trim();
+
+  const summary =
+    "CLINICIAN SUMMARY\n\n" +
+    "Duration: " + duration + "\n" +
+    "Self-reported concern: " + severity + "\n\n" +
+    "Symptoms:\n" + symptoms + "\n\n" +
+    "Additional context:\n" + (context || "Not provided") + "\n\n" +
+    "Please assess the patient and determine appropriate next steps.";
+
+  showResult("symptomResult",summary);
+
+  const copyButton = document.createElement("button");
+  copyButton.type = "button";
+  copyButton.className = "btn secondary";
+  copyButton.style.marginTop = "12px";
+  copyButton.textContent = "Copy Clinician Summary";
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(summary);
+      copyButton.textContent = "Copied";
+    } catch {
+      copyButton.textContent = "Copy unavailable in this browser";
+    }
+  });
+
+  $("symptomResult").appendChild(document.createElement("br"));
+  $("symptomResult").appendChild(copyButton);
+
+  if (severity === "High concern") {
+    const warning = document.createElement("p");
+    warning.textContent = "You reported high concern. Seek prompt professional assessment. If you have severe or rapidly worsening symptoms or any emergency warning signs, obtain emergency care now.";
+    warning.style.fontWeight = "700";
+    $("symptomResult").appendChild(warning);
+  }
+
+  addActivity("Clinician summary prepared on this device");
+});
+
+$("medicineForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  if ($("medicineStatus").value !== "Prescribed by a clinician") {
+    showResult("medicineResult",
+      "Please discuss the medicine with a qualified clinician before using it. This platform cannot approve or prescribe medication.",
+      "warning");
+    return;
+  }
+
+  const items = readList(STORAGE.medicines);
+  items.unshift({
+    name:$("medicineName").value.trim(),
+    status:$("medicineStatus").value,
+    note:$("medicineNote").value.trim()
+  });
+
+  if (!saveList(STORAGE.medicines,items)) return;
+  renderMedicines();
+  addActivity("Medicine note saved locally");
+  showResult("medicineResult","Medicine note saved locally. This is not a prescription, medicine order or pharmacy booking.");
+  event.target.reset();
+});
+
+$("supportForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  // Demo only: no request is transmitted to DOTGROUP.
+  showResult("supportResult",
+    "Your support message has been validated in this demo but has NOT been sent to DOTGROUP. A live implementation must transmit it through a secure support API and return a real ticket number.");
+  addActivity("Support request prepared but not transmitted");
+  event.target.reset();
+});
+
+/*
+ * Safe demo assistant:
+ * It deliberately avoids diagnosing symptoms, recommending drugs or
+ * generating personalised treatment instructions. Connect a clinically
+ * governed AI service on the backend for a production implementation.
+ */
+$("chatForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const input = $("chatInput");
+  const question = input.value.trim();
+  if (!question) return;
+
+  appendChat(question,"user");
+  input.value = "";
+
+  const lower = question.toLowerCase();
+  let response =
+    "I can help you prepare for a conversation with a healthcare professional. " +
+    "Please describe your concern to a qualified clinician, including when it began, " +
+    "how it has changed, any relevant medical history and medicines you take. " +
+    "I cannot diagnose a condition or prescribe treatment. If you are worried or symptoms persist, seek professional assessment.";
+
+  if (/chest pain|can't breathe|cannot breathe|difficulty breathing|severe bleeding|unconscious|signs of stroke|face drooping/.test(lower)) {
+    response =
+      "This may be a medical emergency. Seek emergency medical care immediately or contact your local emergency service. Do not wait for a chat response.";
+  } else if (/prescribe|which drug|what medicine|dosage|antibiotic|painkiller/.test(lower)) {
+    response =
+      "I cannot select a medicine or recommend a personalised dose. A qualified clinician or pharmacist should assess your situation, allergies, other medicines and medical history before advising you. If a medicine has already been prescribed, follow the prescriber's instructions and ask a pharmacist if anything is unclear.";
+  } else if (/appointment|doctor|consultation/.test(lower)) {
+    response =
+      "You can open 'Book a Consultation' to prepare a request. In this prototype, requests remain on this device and are not sent to a real provider. A live platform must confirm provider availability before a booking is considered complete.";
+  } else if (/benefit|free treatment|verified/.test(lower)) {
+    response =
+      "Use 'Free Treatment Benefits' to submit a benefit check. This prototype cannot verify DOTGROUP accounts or authorise free treatment. Actual coverage must be confirmed against the official member record and current programme rules.";
+  }
+
+  window.setTimeout(() => appendChat(response,"bot"),180);
+});
+
+function appendChat(message, role) {
+  const box = $("chatMessages");
+  const item = document.createElement("div");
+  item.className = "chat-message " + role;
+  item.textContent = message;
+  box.appendChild(item);
+  box.scrollTop = box.scrollHeight;
+}
+
+function clearChat() {
+  $("chatMessages").innerHTML = "";
+  appendChat("Chat cleared. What general health information can I help you prepare for discussion with a clinician?","bot");
+}
+
+renderAppointments();
+renderNotes();
+renderMedicines();
+renderActivity();
+</script>
+</body>
+</html>

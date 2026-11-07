@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DASHBOARD | DOTGROUP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}:root{--blue:#0756a8;--red:#e52335;--light:#f3f6fb;--gold:#f7b733}
+body{font-family:Arial;background:var(--light);line-height:1.6}a{text-decoration:none}button{cursor:pointer;border:none}
+header{position:sticky;top:0;z-index:1000;background:linear-gradient(180deg,#0756a8 0%,#063d7a 100%)}
+.header-row1{display:flex;justify-content:center;align-items:center;padding:8px 12px;height:58px;border-bottom:1px solid #ffffff22}
+.logo-box{display:flex;align-items:center;gap:10px;color:white}.logo-img{height:42px;width:42px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0756a8;font-weight:900;font-size:14px}
+.logo{font-size:20px;font-weight:900}.header-row2{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:#063d7a;height:44px}
+.dropdown{position:relative}.dropdown-btn{background:white;color:#0756a8;padding:8px 14px;border-radius:20px;font-weight:bold;font-size:13px}.dropdown-btn.primary{background:var(--red);color:white}
+.dropdown-content{display:none;position:absolute;left:0;top:42px;background:white;min-width:220px;box-shadow:0 8px 20px #0003;border-radius:8px;z-index:1001;overflow:hidden}.dropdown-content.right{left:auto;right:0}
+.dropdown-content a{padding:12px 16px;display:block;font-size:14px;color:#252b35;border-bottom:1px solid #f0f0f0}.show{display:block!important}
+@media(max-width:768px){.dropdown-content{position:fixed;left:8px;right:8px;top:108px}}
+.hero-small{background:linear-gradient(140deg,#0756a8,#06366b);color:white;text-align:center;padding:18px 16px}
+.card{background:#fff;margin:12px;border-radius:16px;padding:16px;box-shadow:0 4px 15px #0001;border:1px solid #eef2f7}
+.stage-box{padding:14px;border-radius:14px;color:#fff;font-weight:900;text-align:center;background:linear-gradient(135deg,#0756a8,#6a11cb);transition:0.3s}
+.points-big{font-size:36px;font-weight:900;color:#0756a8;text-align:center;line-height:1.1}
+.dot-big{font-size:18px;font-weight:900;color:#e52335;text-align:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.stat{border-radius:14px;padding:14px;text-align:center;background:#f9fbff;border:1px solid #e8eef9}
+.stat b{font-size:22px;display:block;color:#0756a8}
+.stat small{font-size:11px;color:#666}
+.invite-input{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin:6px 0;font-size:12px;background:#f0f2f5}
+.btn{padding:10px 16px;border-radius:10px;font-weight:bold;font-size:13px;display:inline-block;margin:4px 4px 0}
+.btn-blue{background:#0756a8;color:#fff}.btn-red{background:#e52335;color:#fff}.btn-green{background:#0a8a4b;color:#fff}
+.downline-item{border-left:4px solid #0756a8;padding:10px 12px;margin:8px 0;background:#f9fbff;border-radius:10px;font-size:13px;line-height:1.4}
+.level-badge{background:#0756a8;color:#fff;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:900;margin-right:6px}
+.level-1{border-left-color:#e52335}.level-2{border-left-color:#0756a8}.level-3{border-left-color:#0a8a4b}.level-rest{border-left-color:#6a11cb}
+.small{font-size:11px;color:#666}.search{width:100%;padding:12px;border-radius:24px;border:1px solid #ddd;background:#f0f2f5;outline:none}
+footer{background:#082b50;color:white;padding:20px 14px;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row1"><a href="index.html" class="logo-box"><div class="logo-img">DOT</div><div class="logo">DOTGROUP</div></a></div>
+  <div class="header-row2">
+    <div class="dropdown"><button onclick="toggleDD('menuDropdown')" class="dropdown-btn">Menu ☰</button>
+      <div id="menuDropdown" class="dropdown-content">
+        <a href="index.html">🏠 Home</a><a href="dashboard.html">📊 My Dashboard</a><a href="docart.html">🛒 DOCART</a><a href="dolearn.html">📚 DOLEARN</a><a href="dotv.html">📺 DOTV</a>
+      </div></div>
+    <div class="dropdown"><button onclick="toggleDD('accountDropdown')" class="dropdown-btn primary" id="accountBtn">Account ▼</button>
+      <div id="accountDropdown" class="dropdown-content right">
+        <div id="accountGuest"><a href="index.html">Sign In / Sign Up</a></div>
+        <div id="accountMember" style="display:none"><a href="#" id="welcomeUser">Welcome</a><a href="dashboard.html">My Dashboard</a><a href="#" onclick="return doLogout()">Logout</a></div>
+      </div></div>
+  </div>
+</header>
+
+<div class="hero-small"><h2>📊 My DOTGROUP Dashboard</h2><p style="font-size:12px;opacity:0.9">Let's do it together — We are target achievers — Bridging gap poor & rich</p></div>
+
+<div id="notLogged" class="card" style="display:none;text-align:center">
+<h3>🔒 Please Sign In</h3><p class="small">Go to homepage and click 🤖 Dobot to Sign In</p><br><a href="index.html" class="btn btn-blue">Go to Home</a>
+</div>
+
+<div id="dashboardMain" style="display:none">
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+<div><b id="userName" style="font-size:18px">@USER</b><br><small id="userFull" class="small"></small><br><small id="userEmail" class="small"></small><br><small id="userLocation" class="small"></small></div>
+<div id="stageBox" class="stage-box" style="min-width:110px">STARTER</div>
+</div>
+<div style="margin-top:14px" class="grid2">
+<div><div class="points-big" id="pointsBox">0</div><div class="small" style="text-align:center">TOTAL POINTS</div></div>
+<div><div class="dot-big" id="dotBox">0.0 DOT</div><div class="small" style="text-align:center">1000 Points = 1 DOT<br><span id="timeSpent">Time: 0m</span></div></div>
+</div>
+<div style="margin-top:10px" class="grid3">
+<div class="stat"><b id="nextStagePoints">5000</b><small>Next Stage Points</small></div>
+<div class="stat"><b id="dailyStreak">1 Day</b><small>Daily Login Streak</small></div>
+<div class="stat"><b id="rankPercent">Top 100%</b><small>Your Rank</small></div>
+</div>
+</div>
+
+<div class="card">
+<b>🎁 Your Invite Link — Peter.invite Style</b><br><small class="small">Share — anyone who clicks goes to Dobot and AI knows you are sponsor! System checks sponsor_username</small>
+<input id="refShort" class="invite-input" readonly>
+<input id="refInvite" class="invite-input" readonly>
+<div>
+<button class="btn btn-blue" onclick="navigator.clipboard.writeText(document.getElementById('refShort').value);alert('Copied: '+document.getElementById('refShort').value)">📋 Copy Short</button>
+<button class="btn btn-red" onclick="navigator.clipboard.writeText(document.getElementById('refInvite').value);alert('Copied: '+document.getElementById('refInvite').value)">📋 Copy /invite/</button>
+<button class="btn btn-green" onclick="if(navigator.share){navigator.share({title:'Join DOTGROUP - '+document.getElementById('refShort').value,url:document.getElementById('refShort').value})}else{alert(document.getElementById('refShort').value)}">📤 Share</button>
+</div>
+<div style="margin-top:8px" class="grid2">
+<button class="btn btn-blue" style="width:100%" onclick="claimDaily()">🎁 Claim Daily 10 Points</button>
+<button class="btn btn-red" style="width:100%" onclick="location.href='dogame.html'">🎮 Play 1-Hour Game</button>
+</div>
+<small id="dailyMsg" class="small"></small>
+</div>
+
+<div class="card grid2">
+<div class="stat"><b id="directCount" style="color:#e52335">0</b><small>Direct Downliners<br>Level 1</small></div>
+<div class="stat"><b id="totalTeam" style="color:#0756a8">0</b><small>Total Team<br>1-50 Levels</small></div>
+</div>
+
+<div class="card grid3">
+<div class="stat"><b id="earnDirect">0</b><small>Direct Earn<br>600 pts each</small></div>
+<div class="stat"><b id="earnIndirect">0</b><small>Indirect Earn<br>100 pts each</small></div>
+<div class="stat"><b id="earnTime">0</b><small>Time Earn<br>1 pt / min</small></div>
+</div>
+
+<div class="card">
+<b>📈 Stage Requirements</b>
+<table style="width:100%;font-size:12px;margin-top:8px;border-collapse:collapse">
+<tr style="background:#f0f2f5;font-weight:bold"><td style="padding:8px">Stage</td><td>Points</td><td>Direct</td><td>Reward</td></tr>
+<tr><td style="padding:8px">⭐ STARTER</td><td>600</td><td>0</td><td>Free</td></tr>
+<tr><td style="padding:8px">🥉 BRONZE</td><td>5,000</td><td>3</td><td>DOCART Discount</td></tr>
+<tr><td style="padding:8px">🥈 SILVER</td><td>20,000</td><td>10</td><td>Monthly Bonus</td></tr>
+<tr><td style="padding:8px">🥇 GOLD</td><td>100,000</td><td>20 + 100 team</td><td>Leadership Bonus</td></tr>
+<tr><td style="padding:8px">💎 DIAMOND</td><td>500,000</td><td>50 + 1000 team</td><td>Diamond Pool</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<b>👥 My Downline Tree (1-50 Levels) — System Checked</b>
+<select id="levelFilter" onchange="renderTree()" style="padding:8px;border-radius:8px;border:1px solid #ddd"><option value="0">All Levels</option></select>
+</div>
+<input id="searchDownline" class="search" placeholder="Search @username, name, country..." oninput="renderTree()" style="margin-top:10px">
+<div id="downlineTree" style="margin-top:12px;max-height:600px;overflow-y:auto"></div>
+</div>
+
+</div>
+
+<footer>© 2026 DOTGROUP — Dashboard checks dot_users_db — sponsor_username links up to 50 levels</footer>
+
+<script>
+function toggleDD(id){const el=document.getElementById(id);const o=el.classList.contains('show');document.querySelectorAll('.dropdown-content').forEach(d=>d.classList.remove('show'));if(!o) el.classList.add('show');}
+window.addEventListener('click',e=>{if(!e.target.closest('.dropdown')) document.querySelectorAll('.dropdown-content').forEach(d=>d.classList.remove('show'));});
+
+function getCurrent(){return localStorage.getItem('dot_current_user')||'';}
+function getDB(){try{return JSON.parse(localStorage.getItem('dot_users_db')||'[]')}catch(e){return []}}
+function isRegistered(){return !!getCurrent();}
+function applyAuth(){const reg=isRegistered();document.getElementById('notLogged').style.display=reg?'none':'block';document.getElementById('dashboardMain').style.display=reg?'block':'none';document.getElementById('accountGuest').style.display=reg?'none':'block';document.getElementById('accountMember').style.display=reg?'block':'none';if(reg){document.getElementById('welcomeUser').innerText='Welcome '+getCurrent();document.getElementById('accountBtn').innerText=getCurrent()+' ▼';}}
+applyAuth();
+
+function getStageInfo(points,direct,total){
+  if(points>=500000 && direct>=50) return {name:'💎 DIAMOND', color:'linear-gradient(135deg,#00c9ff,#92fe9d)', next:0, textColor:'#003'};
+  if(points>=100000 && direct>=20) return {name:'🥇 GOLD', color:'linear-gradient(135deg,#f7971e,#ffd200)', next:500000-points, textColor:'#000'};
+  if(points>=20000 && direct>=10) return {name:'🥈 SILVER', color:'linear-gradient(135deg,#8e9eab,#eef2f3)', next:100000-points, textColor:'#000'};
+  if(points>=5000 && direct>=3) return {name:'🥉 BRONZE', color:'linear-gradient(135deg,#603813,#b29f94)', next:20000-points, textColor:'#fff'};
+  return {name:'⭐ STARTER', color:'linear-gradient(135deg,#0756a8,#6a11cb)', next:5000-points, textColor:'#fff'};
+}
+
+function buildTree(root){
+  let db=getDB();
+  let map={};
+  db.forEach(u=>{let s=(u.sponsor_username||'').toLowerCase().trim(); if(!map[s]) map[s]=[]; map[s].push(u);});
+  let result=[]; let queue=[{username:root.toLowerCase(), level:0}]; let visited=new Set([root.toLowerCase()]);
+  while(queue.length>0){
+    let cur=queue.shift();
+    let children=map[cur.username]||[];
+    for(let child of children){
+      let uname=(child.username||'').toLowerCase();
+      if(!uname || visited.has(uname)) continue;
+      visited.add(uname);
+      let level=cur.level+1;
+      if(level>50) continue;
+      result.push({user:child, level:level});
+      queue.push({username:uname, level:level});
+    }
+  }
+  return result;
+}
+
+function claimDaily(){
+  let cur=getCurrent(); if(!cur) return;
+  let last=localStorage.getItem('dot_daily_'+cur.toUpperCase());
+  let today=new Date().toDateString();
+  if(last===today){document.getElementById('dailyMsg').innerText='✅ Already claimed today. Come back tomorrow!'; return;}
+  localStorage.setItem('dot_daily_'+cur.toUpperCase(), today);
+  let points=parseInt(localStorage.getItem('dot_daily_points_'+cur.toUpperCase())||'0')+10;
+  localStorage.setItem('dot_daily_points_'+cur.toUpperCase(), points);
+  document.getElementById('dailyMsg').innerText='🎉 +10 Points claimed! Total daily: '+points;
+  renderTree();
+}
+
+function renderTree(){
+  let cur=getCurrent(); if(!cur) return;
+  let tree=buildTree(cur);
+  let filter=document.getElementById('levelFilter').value;
+  let search=(document.getElementById('searchDownline').value||'').toLowerCase();
+
+  let direct=tree.filter(x=>x.level===1).length;
+  let total=tree.length;
+
+  // Points system
+  let base=600;
+  let daily=parseInt(localStorage.getItem('dot_daily_points_'+cur.toUpperCase())||'0');
+  let timeSec=parseInt(localStorage.getItem('dot_total_time_'+cur.toUpperCase())||'0');
+  let timePoints=Math.floor(timeSec/60);
+  let directEarn=direct*600;
+  let indirectEarn=(total-direct)*100;
+  let totalPoints=base+directEarn+indirectEarn+timePoints+daily;
+
+  let stage=getStageInfo(totalPoints,direct,total);
+
+  document.getElementById('pointsBox').innerText=totalPoints.toLocaleString();
+  document.getElementById('dotBox').innerText=(totalPoints/1000).toFixed(2)+' DOT';
+  document.getElementById('directCount').innerText=direct;
+  document.getElementById('totalTeam').innerText=total;
+  document.getElementById('earnDirect').innerText=directEarn;
+  document.getElementById('earnIndirect').innerText=indirectEarn;
+  document.getElementById('earnTime').innerText=timePoints;
+  document.getElementById('stageBox').innerText=stage.name;
+  document.getElementById('stageBox').style.background=stage.color;
+  document.getElementById('stageBox').style.color=stage.textColor;
+  document.getElementById('nextStagePoints').innerText=stage.next>0?stage.next.toLocaleString():'MAX';
+  document.getElementById('timeSpent').innerText='Time: '+Math.floor(timeSec/60)+'m '+ (timeSec%60)+'s';
+
+  let me=getDB().find(u=>u.username.toLowerCase()===cur.toLowerCase());
+  document.getElementById('userName').innerText='@'+cur;
+  if(me){
+    document.getElementById('userFull').innerText=me.full_name||'';
+    document.getElementById('userEmail').innerText=me.email||'';
+    document.getElementById('userLocation').innerText=(me.country||'')+' | '+(me.state_region||'')+' | '+(me.city||'')+' | '+ (me.whatsapp_full||'');
+  }
+
+  // Referral links
+  let baseUrl=window.location.origin + window.location.pathname.replace('dashboard.html','').replace('dowallet.html','');
+  if(baseUrl.endsWith('/')) baseUrl=baseUrl.slice(0,-1);
+  if(!baseUrl || baseUrl.endsWith('.html')) baseUrl=window.location.origin;
+  document.getElementById('refShort').value=baseUrl+'?ref='+cur;
+  document.getElementById('refInvite').value=baseUrl+'/invite/'+cur;
+
+  // Level filter options
+  let sel=document.getElementById('levelFilter');
+  if(sel.options.length===1){
+    for(let i=1;i<=50;i++){
+      let c=tree.filter(x=>x.level===i).length;
+      if(c>0){let o=document.createElement('option');o.value=i;o.text='Level '+i+' ('+c+')';sel.appendChild(o);}
+    }
+  }
+
+  let filtered=filter==="0"?tree:tree.filter(x=>x.level==parseInt(filter));
+  if(search) filtered=filtered.filter(x=>{
+    let u=x.user;
+    return (u.username||'').toLowerCase().includes(search) || (u.full_name||'').toLowerCase().includes(search) || (u.country||'').toLowerCase().includes(search) || (u.email||'').toLowerCase().includes(search);
+  });
+
+  if(filtered.length===0){
+    document.getElementById('downlineTree').innerHTML='<div class="small">No downliners found. Share your invite: <b>'+baseUrl+'?ref='+cur+'</b><br>When someone clicks, Dobot saves sponsor as @'+cur+' via Peter.invite system.</div>';
+    return;
+  }
+
+  let html='';
+  filtered.forEach(item=>{
+    let lvl=item.level;
+    let cls=lvl===1?'level-1':lvl===2?'level-2':lvl===3?'level-3':'level-rest';
+    html+=`<div class="downline-item ${cls}"><span class="level-badge">L${lvl}</span><b>@${item.user.username}</b> — ${item.user.full_name||''}<br><small>🌍 ${item.user.country||''} | 📧 ${item.user.email||''} | 📱 ${item.user.whatsapp_full||''}<br>👤 Sponsor: @${item.user.sponsor_username||''} | 💰 ${item.user.points||600} pts | 📅 ${new Date(item.user.created_at).toLocaleDateString()}</small></div>`;
+  });
+  document.getElementById('downlineTree').innerHTML=html;
+
+  // Rank
+  let allUsers=getDB().length;
+  document.getElementById('dailyStreak').innerText=(parseInt(localStorage.getItem('dot_login_streak_'+cur.toUpperCase())||'1'))+' Day';
+  document.getElementById('rankPercent').innerText='Top '+ (allUsers>0?Math.max(1, Math.round((1 - total/allUsers)*100))+'%':'100%');
+}
+
+function doLogout(){
+  let cur=getCurrent();
+  if(confirm('Logout @'+cur+'? Come back soon! ❤️')){
+    localStorage.removeItem('dot_current_user'); localStorage.removeItem('dot_logged_in');
+    location.href='index.html';
+  }
+  return false;
+}
+
+renderTree();
+
+// Auto refresh every 10 sec for time
+setInterval(renderTree,10000);
+</script>
+</body>
+</html>

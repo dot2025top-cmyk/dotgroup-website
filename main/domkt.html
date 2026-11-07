@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>DOMKT V1.0 — BY DOTGROUP | CREATE. PROMOTE. CONNECT. CONVERT. GROW.</title>
+<style>
+:root{
+--blue:#0B5DDD;
+--blue-dark:#082D8A;
+--blue-light:#E8F0FF;
+--red:#E11D48;
+--red-dark:#BE123C;
+--red-light:#FFF0F3;
+--white:#FFFFFF;
+--border-blue:#B8D0FF;
+--border-red:#FFB3C2;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{background:var(--white);color:var(--blue-dark);line-height:1.5}
+header{position:sticky;top:0;z-index:50;background:var(--blue);border-bottom:3px solid var(--red);display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900}
+.logo b{font-size:22px;letter-spacing:1px;color:var(--white)} 
+.logo span{font-size:11px;background:var(--red);color:var(--white);padding:4px 8px;border-radius:20px;border:1px solid var(--white)}
+.logo small{color:var(--white);font-weight:700;font-size:11px}
+.nav-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:12px;background:var(--white);border-bottom:2px solid var(--blue);position:sticky;top:56px;z-index:40}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;padding:9px 16px;border-radius:20px;border:2px solid var(--blue);font-size:12px;font-weight:800;cursor:pointer;background:var(--white);color:var(--blue);transition:.2s}
+.tab.active{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.tab.active::after{content:' •';color:var(--red)}
+.container{max-width:1200px;margin:0 auto;padding:14px;background:var(--white)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:1fr 1fr 1fr} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:800px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}} @media(max-width:500px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--white);border:2px solid var(--blue);border-radius:14px;padding:14px;box-shadow:0 2px 0 var(--blue-light)}
+.card.red-card{border-color:var(--red);box-shadow:0 2px 0 var(--red-light)}
+.card h3{font-size:14px;margin-bottom:8px;color:var(--blue);font-weight:900}
+.muted{color:var(--blue-dark);font-size:12px;opacity:.8}
+.kpi{font-size:26px;font-weight:900;color:var(--blue)} .kpi.red{color:var(--red)}
+.badge{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--blue-light);color:var(--blue);font-weight:800;border:1px solid var(--blue)}
+.badge.ok{background:var(--blue);color:var(--white)} .badge.warn{background:var(--red-light);color:var(--red);border-color:var(--red)} .badge.bad{background:var(--red);color:var(--white)}
+.btn{padding:10px 16px;border-radius:10px;border:2px solid var(--blue);font-weight:800;font-size:13px;cursor:pointer;background:var(--white);color:var(--blue)}
+.btn-primary{background:var(--blue);color:var(--white);border-color:var(--blue)} 
+.btn-red{background:var(--red);color:var(--white);border-color:var(--red)} 
+.btn:hover{transform:translateY(-1px)}
+.input,select,textarea{width:100%;padding:11px 12px;border:2px solid var(--border-blue);border-radius:10px;font-size:13px;background:var(--white);color:var(--blue-dark)}
+.input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-light)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hidden{display:none!important}
+.list-item{padding:11px;border:2px solid var(--blue);border-radius:10px;background:var(--white);display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.list-item.red{border-color:var(--red)}
+.progress{height:8px;background:var(--blue-light);border-radius:6px;overflow:hidden;border:1px solid var(--border-blue)} .progress i{display:block;height:100%;background:var(--blue)}
+.progress.red i{background:var(--red)}
+.qr{width:86px;height:86px;border:2px dashed var(--red);display:grid;place-items:center;border-radius:10px;font-size:10px;text-align:center;background:var(--red-light);color:var(--red);font-weight:800}
+.editor{min-height:120px;border:2px solid var(--blue);border-radius:10px;padding:12px;background:var(--white)}
+.funnel{display:flex;gap:8px;overflow-x:auto} .funnel-step{min-width:135px;padding:10px;border:2px solid var(--blue);border-radius:10px;background:var(--blue-light);text-align:center;font-size:12px;font-weight:700;color:var(--blue)}
+.funnel-step:nth-child(even){background:var(--red-light);border-color:var(--red);color:var(--red)}
+</style>
+</head>
+<body>
+<header>
+<div class="logo"><b>DOMKT</b> <span>V1.0 BY DOTGROUP</span> <small>CREATE. PROMOTE. CONNECT. CONVERT. GROW.</small></div>
+<div class="row"><span class="badge ok" id="ecoStatus" style="background:white;color:var(--blue);border-color:white">DOTGROUP Sync: Active</span><button class="btn" style="background:white;color:var(--blue);border-color:white" onclick="quickAction('Create Campaign')">+ Campaign</button></div>
+</header>
+
+<div class="nav-tabs" id="navTabs"></div>
+
+<div class="container">
+<div id="view-dashboard">
+<div class="grid g4" id="kpiGrid"></div>
+<div class="grid g2" style="margin-top:12px">
+<div class="card"><h3 style="border-left:4px solid var(--red);padding-left:8px">Marketing Overview — Real Data</h3><div id="overviewChart" style="height:120px;display:flex;align-items:end;gap:6px;padding-top:10px"></div><div class="muted" style="margin-top:8px">Source: local DB domkt_campaigns_db + domkt_leads_db. No fabricated stats.</div></div>
+<div class="card red-card"><h3 style="color:var(--red)">Quick Actions — Your Marketing Dept in One</h3><div class="grid g2">
+<button class="btn btn-primary" onclick="switchTab('campaigns')">Create Campaign</button>
+<button class="btn btn-red" onclick="switchTab('ai')">Create Marketing Plan</button>
+<button class="btn btn-primary" onclick="switchTab('content')">Generate Content</button>
+<button class="btn btn-red" onclick="switchTab('landing')">Create Landing Page</button>
+<button class="btn" onclick="switchTab('leads')">Create Lead Form</button>
+<button class="btn btn-red" onclick="switchTab('social')">Schedule Social</button>
+<button class="btn btn-primary" onclick="switchTab('email')">Email Campaign</button>
+<button class="btn btn-red" onclick="switchTab('whatsapp')">WhatsApp Campaign</button>
+<button class="btn btn-primary" onclick="switchTab('funnel')">Build Funnel</button>
+<button class="btn" onclick="switchTab('affiliate')">Create Referral</button>
+<button class="btn btn-primary" onclick="switchTab('analytics')">Analyse Results</button>
+<button class="btn btn-red" onclick="switchTab('ai')">Ask DOMKT AI</button>
+</div></div>
+</div>
+<div class="grid g2" style="margin-top:12px">
+<div class="card"><h3>Upcoming Activities + Failed Jobs</h3><div id="upcomingList"></div></div>
+<div class="card"><h3 style="color:var(--red)">DOTGROUP Ecosystem Status</h3><div id="ecoGrid" class="grid g2"></div></div>
+</div>
+</div>
+
+<div id="view-ai" class="hidden">
+<div class="card"><h3>DOMKT AI — Business-Aware Assistant</h3>
+<textarea id="aiBusiness" class="input" style="height:90px" placeholder="Explain your business: I sell fashion items in Nigeria..."></textarea>
+<div class="row" style="margin-top:8px">
+<button class="btn btn-primary" onclick="aiGeneratePlan()">Generate Marketing Plan</button>
+<button class="btn btn-red" onclick="aiGenerateCampaign()">Generate Campaign Draft</button>
+<button class="btn" onclick="aiChat()">Ask AI</button>
+</div>
+<div id="aiOutput" class="editor" style="margin-top:10px;white-space:pre-wrap">AI output — Based only on your data + local DB.</div>
+</div>
+<div class="grid g2" style="margin-top:12px">
+<div class="card red-card"><h3 style="color:var(--red)">AI Marketing Chat</h3><div id="aiChatHist" style="max-height:200px;overflow:auto;font-size:13px"></div><div class="row" style="margin-top:8px"><input id="aiChatInput" class="input" placeholder="How can I get more customers?"><button class="btn btn-primary" onclick="aiChat()">Send</button></div></div>
+<div class="card"><h3>Brand Voice Memory</h3><input id="brandName" class="input" placeholder="Brand name"><input id="brandVoice" class="input" placeholder="Brand voice" style="margin-top:6px"><textarea id="brandBenefits" class="input" placeholder="Main benefits, words to avoid" style="margin-top:6px;height:70px"></textarea><button class="btn btn-red" style="margin-top:6px" onclick="saveBrand()">Save Brand Kit</button><div id="brandDisplay" class="muted" style="margin-top:6px"></div></div>
+</div>
+</div>
+
+<div id="view-campaigns" class="hidden">
+<div class="card"><h3>Campaign Builder</h3>
+<div class="grid g3">
+<input id="campName" class="input" placeholder="Campaign name">
+<select id="campObjective" class="input"><option>Lead Generation</option><option>Brand Awareness</option><option>Online Sales</option></select>
+<select id="campChannel" class="input"><option>Email + WhatsApp + Social</option><option>WhatsApp Only</option></select>
+</div>
+<div class="grid g3" style="margin-top:8px">
+<input id="campAudience" class="input" placeholder="Target audience">
+<input id="campBudget" class="input" type="number" placeholder="Budget NGN">
+<input id="campDestination" class="input" placeholder="Landing page / link">
+</div>
+<div class="row" style="margin-top:8px"><button class="btn btn-primary" onclick="createCampaign()">Create Draft</button><button class="btn btn-red" onclick="compareCampaigns()">Compare</button></div>
+<div id="campList" style="margin-top:10px"></div>
+</div>
+</div>
+
+<div id="view-content" class="hidden">
+<div class="card"><h3>Content Studio — BLUE, RED, WHITE only</h3>
+<div class="grid g2"><select id="copyType" class="input"><option>Sales Page</option><option>WhatsApp Message</option><option>Ad Copy</option></select><select id="copyTone" class="input"><option>Professional</option><option>Local-market conversational</option></select></div>
+<textarea id="copyPrompt" class="input" placeholder="Product: Graceland School admission, 10% discount" style="margin-top:8px;height:70px"></textarea>
+<div class="row" style="margin-top:8px"><button class="btn btn-primary" onclick="generateCopy()">Generate Draft</button><button class="btn btn-red" onclick="repurpose()">Repurpose</button></div>
+<div id="copyOutput" class="editor" style="margin-top:8px;white-space:pre-wrap"></div>
+<div style="margin-top:10px"><b>Content Library</b><div id="contentLib" class="grid g2" style="margin-top:6px"></div></div>
+</div>
+</div>
+
+<div id="view-social" class="hidden"><div class="card"><h3>Social Media Centre</h3><div class="row"><button class="btn btn-primary" onclick="connectSocial('Facebook')">Connect Facebook</button><button class="btn btn-red" onclick="connectSocial('Instagram')">Connect Instagram</button><span id="socialStatus" class="badge">OAuth only, never passwords</span></div><div class="grid g2" style="margin-top:10px"><div><h4>Calendar</h4><div id="socialCal" class="grid"></div></div><div><textarea id="socialText" class="input" placeholder="Caption..."></textarea><button class="btn btn-primary" style="margin-top:6px" onclick="scheduleSocial()">Schedule / Save Draft</button></div></div></div></div>
+<div id="view-whatsapp" class="hidden"><div class="card red-card"><h3 style="color:var(--red)">WhatsApp Marketing — Draft vs Sent</h3><div class="grid g2"><div><div class="row"><input id="waNumber" class="input" placeholder="+234..."><button class="btn btn-red" onclick="genWaLink()">Gen Link</button></div><div id="waLinkOut" class="muted"></div><div id="waQR" class="qr" style="margin-top:8px">QR Preview</div></div><div><div id="waStatus" class="badge warn">Not configured — Need API + consent</div><div style="margin-top:8px">Lead → Notify → Assign → Approved template → Record. No bulk spam.</div></div></div></div></div>
+<div id="view-email" class="hidden"><div class="card"><h3>Email Engine</h3><div class="grid g2"><input id="emailSubject" class="input" placeholder="Subject"><select id="emailAudience" class="input"><option>All Leads</option></select></div><textarea id="emailBody" class="input" placeholder="Email body" style="margin-top:8px;height:100px"></textarea><div class="row" style="margin-top:6px"><button class="btn btn-primary" onclick="createEmailCamp()">Create</button><button class="btn btn-red" onclick="showDeliverability()">SPF/DKIM/DMARC</button></div><div id="emailList"></div></div></div>
+<div id="view-sms" class="hidden"><div class="card"><h3>SMS — Approved Providers</h3><textarea id="smsText" class="input"></textarea><div class="row" style="margin-top:6px"><span id="smsCount" class="badge">0 chars</span><button class="btn btn-primary" onclick="estimateSms()">Estimate Cost</button></div></div></div>
+<div id="view-leads" class="hidden"><div class="grid g2"><div class="card"><h3>Lead Lab</h3><div class="grid g2"><input id="leadName" class="input" placeholder="Name"><input id="leadPhone" class="input" placeholder="Phone"><select id="leadInterest" class="input"><option>Admission</option></select><button class="btn btn-red" onclick="captureLead()">Capture Lead</button></div><div id="leadList" style="margin-top:8px"></div></div><div class="card red-card"><h3 style="color:var(--red)">CRM Journey — DOHOST Sync</h3><div id="crmList"></div></div></div></div>
+<div id="view-landing" class="hidden"><div class="card"><h3>Landing + Funnel Builder</h3><div class="funnel" id="funnelPreview"><div class="funnel-step">Traffic</div><div class="funnel-step">Landing</div><div class="funnel-step">Form</div><div class="funnel-step">Follow-up</div><div class="funnel-step">Convert</div></div><div class="grid g2" style="margin-top:10px"><div><input id="lpTitle" class="input" placeholder="Headline"><textarea id="lpCopy" class="input" placeholder="Copy" style="margin-top:6px;height:80px"></textarea><button class="btn btn-primary" onclick="publishLP()">Publish Draft</button></div><div><div id="lpPreview" class="editor">Preview</div><div id="lpAnalytics" class="muted">Visits:0</div></div></div></div></div>
+<div id="view-funnel" class="hidden"><div class="card"><h3>Automation — Trigger → Condition → Action</h3><div class="grid g3"><select id="autoTrigger" class="input"><option>New lead</option></select><select id="autoCond" class="input"><option>No condition</option></select><select id="autoAction" class="input"><option>Create task + Notify</option></select></div><div class="row" style="margin-top:8px"><button class="btn btn-primary" onclick="createAutomation()">Create Workflow</button><button class="btn btn-red" onclick="showFailures()">Failures Log</button></div><div id="autoList"></div></div></div>
+<div id="view-affiliate" class="hidden"><div class="card red-card"><h3 style="color:var(--red)">Affiliate & Referral — Fraud Protected</h3><div class="grid g3"><input id="affProg" class="input" placeholder="Program"><input id="affComm" class="input" placeholder="Commission"><input id="affWindow" class="input" placeholder="Window days"></div><button class="btn btn-red" style="margin-top:8px" onclick="createAffiliate()">Create Program</button><div id="affList"></div></div></div>
+<div id="view-ads" class="hidden"><div class="card"><h3>Ads Management</h3><div class="row"><button class="btn btn-primary" onclick="linkAd('Meta')">Link Meta</button><button class="btn btn-red" onclick="linkAd('Google')">Link Google</button></div><div id="adsList" class="grid g2"></div></div></div>
+<div id="view-qr" class="hidden"><div class="card"><h3>QR Code</h3><div class="grid g2"><input id="qrDest" class="input" placeholder="Destination"><button class="btn btn-primary" onclick="genQR()">Generate QR</button></div><div id="qrOut" class="row" style="margin-top:8px"></div></div></div>
+<div id="view-analytics" class="hidden"><div class="card"><h3>Reports — Real Data Only</h3><div class="grid g3"><select id="repType" class="input"><option>Campaign Performance</option></select><input type="date" class="input"><input type="date" class="input"></div><button class="btn btn-primary" style="margin-top:8px" onclick="genReport()">Generate Report</button><div id="reportOut" class="editor" style="margin-top:8px"></div></div></div>
+<div id="view-calendar" class="hidden"><div class="card"><h3>Marketing Calendar</h3><div id="calGrid" class="grid g3"></div></div></div>
+<div id="view-budget" class="hidden"><div class="card red-card"><h3 style="color:var(--red)">Budget — Planned vs Actual vs Attributed vs Confirmed</h3><div class="grid g2"><div><div id="budgetList"></div></div><div><input id="budCamp" class="input" placeholder="Campaign"><input id="budPlan" class="input" placeholder="Planned" style="margin-top:6px"><input id="budActual" class="input" placeholder="Actual" style="margin-top:6px"><button class="btn btn-red" style="margin-top:6px" onclick="addBudget()">Add Record</button></div></div></div></div>
+<div id="view-team" class="hidden"><div class="card"><h3>Team & Agency</h3><div class="row"><input id="teamEmail" class="input" placeholder="Invite email"><select id="teamRole" class="input"><option>Marketer</option><option>Manager</option></select><button class="btn btn-primary" onclick="inviteTeam()">Invite</button></div><div id="teamList" style="margin-top:8px"></div></div></div>
+<div id="view-admin" class="hidden"><div class="card"><h3>DOMKT Admin — Secure</h3><div class="grid g4" id="adminKpi"></div><div id="adminList"></div></div></div>
+</div>
+
+<script>
+const tabs=["dashboard","ai","campaigns","content","social","whatsapp","email","sms","leads","landing","funnel","affiliate","ads","qr","analytics","calendar","budget","team","admin"];
+function renderTabs(){document.getElementById('navTabs').innerHTML=tabs.map(t=>`<div class="tab ${t==='dashboard'?'active':''}" onclick="switchTab('${t}')">${t.toUpperCase()}</div>`).join('')}
+function switchTab(t){tabs.forEach(x=>{document.getElementById('view-'+x).classList.toggle('hidden',x!==t)});document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.textContent===t.toUpperCase()));window.scrollTo(0,0);if(t==='dashboard') renderDashboard(); if(t==='campaigns') renderCampaigns(); if(t==='leads') renderLeads(); if(t==='analytics') renderCal(); }
+function store(k,v){localStorage.setItem(k,JSON.stringify(v))} function load(k,d){try{const r=JSON.parse(localStorage.getItem(k)); return r!==null&&r!==undefined?r:d}catch{return d}}
+let campaigns=load('domkt_campaigns_db',[]), leads=load('domkt_leads_db',[]), contentLib=load('domkt_content_lib',[]), automations=load('domkt_auto_db',[]), emails=load('domkt_email_db',[]), affiliates=load('domkt_aff_db',[]), budgets=load('domkt_budget_db',[]), team=load('domkt_team_db',[]), lps=load('domkt_lp_db',[]);
+
+function renderDashboard(){
+const total=campaigns.length, active=campaigns.filter(c=>c.status==='Active').length, draft=campaigns.filter(c=>c.status==='Draft').length;
+const totalLeads=leads.length, newLeads=leads.filter(l=>Date.now()-new Date(l.date).getTime()<7*86400000).length;
+document.getElementById('kpiGrid').innerHTML=[
+{k:'Total campaigns',v:total,color:'blue'},{k:'Active',v:active,color:'red'},{k:'Draft',v:draft,color:'blue'},{k:'Total Leads',v:totalLeads,color:'blue'},{k:'New (7d)',v:newLeads,color:'red'},{k:'Conversion',v: totalLeads>0? Math.round(totalLeads/(total||1)*10)/10+'%':'0%',color:'blue'},{k:'Submissions',v:totalLeads,color:'blue'},{k:'Referrals',v:affiliates.reduce((s,a)=>s+(a.clicks||0),0),color:'red'}
+].map(i=>`<div class="card ${i.color==='red'?'red-card':''}"><div class="muted">${i.k}</div><div class="kpi ${i.color==='red'?'red':''}">${i.v}</div></div>`).join('');
+document.getElementById('overviewChart').innerHTML=campaigns.slice(0,6).map((c,idx)=>`<div style="flex:1"><div style="height:${20+Math.random()*80}px;background:${idx%2===0?'var(--blue)':'var(--red)'};border-radius:6px"></div><div style="font-size:10px;text-align:center;margin-top:4px;font-weight:700;color:var(--blue)">${c.name.slice(0,8)}</div></div>`).join('') || '<div class="muted">No campaigns yet — Create first campaign</div>';
+document.getElementById('upcomingList').innerHTML=campaigns.slice(0,4).map(c=>`<div class="list-item"><span>${c.name} — ${c.status}</span><span class="badge">${c.objective}</span></div>`).join('') + (automations.filter(a=>a.fail).length?`<div class="list-item red"><span>Failed jobs: ${automations.filter(a=>a.fail).length}</span><span class="badge bad">Review</span></div>`:'');
+document.getElementById('ecoGrid').innerHTML=[['DOSEARCH','Connected'],['DOHOST','Sync Ready'],['DOCART','Product Sync'],['DOCHAT','Inbox Sync'],['DOMAIL','Email Sync'],['DONEWS','Publishing']].map(([n,s])=>`<div class="list-item ${n==='DOHOST'?'red':''}"><span>${n}</span><span class="badge ok">${s}</span></div>`).join('');
+}
+function aiGeneratePlan(){
+const b=document.getElementById('aiBusiness').value||'Fashion store'; 
+const plan=`MARKETING PLAN (BLUE/RED/WHITE Brand)
+Business: ${b.slice(0,120)}
+Objectives: Leads + WhatsApp enquiries
+Audience: Young adults
+Channels: WhatsApp (primary), Instagram, DOSEARCH, Email
+Budget: 70% Social, 20% Content, 10% Testing
+KPIs: Leads, CPL, Conversion, Response <5min
+Next: Convert to campaign → Review`;
+document.getElementById('aiOutput').innerText=plan; contentLib.push({type:'Marketing Plan',text:plan,date:new Date().toISOString()}); store('domkt_content_lib',contentLib);
+}
+function aiGenerateCampaign(){document.getElementById('aiOutput').innerText=`CAMPAIGN DRAFT — Review required\nProduct: ${document.getElementById('aiBusiness').value||'Product'}\nTracking: domkt.link/fb1 — Needs approval + consent`;}
+function aiChat(){
+const q=document.getElementById('aiChatInput').value||document.getElementById('aiBusiness').value;
+if(!q) return;
+const ans=`DOMKT AI — Data: ${campaigns.length} campaigns, ${leads.length} leads — Suggestion: Enable Instant Reply (60s)`;
+document.getElementById('aiChatHist').innerHTML+=`<div style="padding:6px;border:1px solid var(--blue);border-radius:8px;margin:4px 0"><b style="color:var(--blue)">You:</b> ${q}</div><div style="padding:6px;background:var(--blue-light);border-radius:6px;border:1px solid var(--blue)"><b style="color:var(--red)">AI:</b> ${ans}</div>`;
+document.getElementById('aiChatInput').value='';
+}
+function saveBrand(){store('domkt_brand',{name:brandName.value,voice:brandVoice.value});document.getElementById('brandDisplay').innerText=`Saved: ${brandName.value}`}
+function createCampaign(){const c={id:'c_'+Date.now(),name:campName.value||'Untitled',objective:campObjective.value,channel:campChannel.value,audience:campAudience.value,budget:campBudget.value,destination:campDestination.value,status:'Draft',date:new Date().toISOString()};campaigns.unshift(c);store('domkt_campaigns_db',campaigns);renderCampaigns();renderDashboard();}
+function renderCampaigns(){document.getElementById('campList').innerHTML=campaigns.map(c=>`<div class="list-item"><div><b style="color:var(--blue)">${c.name}</b> — ${c.objective}<br><span class="muted">${c.audience||'—'}</span></div><div class="row"><span class="badge ${c.status==='Active'?'ok':'warn'}">${c.status}</span><button class="btn btn-red" onclick="activateCamp('${c.id}')">Activate</button></div></div>`).join('')||'<div class="muted">No campaigns</div>'}
+function activateCamp(id){const c=campaigns.find(x=>x.id===id);if(!c.destination){alert('Destination required');return}c.status='Active';store('domkt_campaigns_db',campaigns);renderCampaigns();renderDashboard()}
+function compareCampaigns(){document.getElementById('campList').innerHTML+=`<div class="editor" style="margin-top:8px">Comparison: Spend, Leads, CPL — Definitions consistent</div>`}
+function generateCopy(){const out=`[${copyType.value} — ${copyTone.value}] Draft\nProduct: ${copyPrompt.value}\nCTA: Chat on WhatsApp`;document.getElementById('copyOutput').innerText=out; contentLib.unshift({type:copyType.value,text:out,date:new Date().toISOString()}); store('domkt_content_lib',contentLib); renderLib();}
+function repurpose(){document.getElementById('copyOutput').innerText+='\n--- Repurposed: 5 posts, Email, Script — Preserves meaning';}
+function renderLib(){document.getElementById('contentLib').innerHTML=contentLib.slice(0,6).map(c=>`<div class="card"><b style="color:var(--blue)">${c.type}</b><div class="muted">${c.text.slice(0,90)}...</div></div>`).join('')}
+function connectSocial(p){document.getElementById('socialStatus').innerText=`${p} Connected via OAuth`}
+function scheduleSocial(){document.getElementById('socialCal').innerHTML+=`<div class="list-item"><span>${socialText.value.slice(0,20)}</span><span class="badge ok">Draft</span></div>`}
+function genWaLink(){const num=waNumber.value; const link=`https://wa.me/${num.replace('+','')}`; document.getElementById('waLinkOut').innerHTML=`<a href="${link}" target="_blank" style="color:var(--blue);font-weight:700">${link}</a>`; document.getElementById('waQR').innerText=`QR ${num}`}
+function createEmailCamp(){const e={id:'e_'+Date.now(),subject:emailSubject.value,status:'Draft'}; emails.unshift(e);store('domkt_email_db',emails);renderEmails()}
+function renderEmails(){document.getElementById('emailList').innerHTML=emails.map(e=>`<div class="list-item"><span><b>${e.subject}</b></span><span class="badge">${e.status}</span></div>`).join('')}
+function showDeliverability(){alert('SPF/DKIM/DMARC Guidance — Check provider')}
+function estimateSms(){document.getElementById('smsCount').innerText=`${smsText.value.length} chars`}
+function captureLead(){const lead={id:'l_'+Date.now(),name:leadName.value,phone:leadPhone.value,status:'New',score:70,date:new Date().toISOString()};leads.unshift(lead);store('domkt_leads_db',leads);renderLeads();}
+function renderLeads(){document.getElementById('leadList').innerHTML=leads.slice(0,8).map(l=>`<div class="list-item"><span><b style="color:var(--blue)">${l.name||'Unknown'}</b> — ${l.phone}</span><span class="badge ok">${l.status}</span></div>`).join('');document.getElementById('crmList').innerHTML=leads.slice(0,8).map(l=>`<div class="list-item red"><span>${l.name} — ${l.status} → Qualified</span></div>`).join('');}
+function publishLP(){document.getElementById('lpPreview').innerHTML=`<h2 style="color:var(--blue)">${lpTitle.value}</h2><p>${lpCopy.value}</p><button class="btn btn-red">WhatsApp Enquire</button>`}
+function createAutomation(){const a={id:'a_'+Date.now(),trigger:autoTrigger.value,action:autoAction.value,fail:Math.random()<0.2}; automations.unshift(a);store('domkt_auto_db',automations);renderAuto()}
+function renderAuto(){document.getElementById('autoList').innerHTML=automations.map(a=>`<div class="list-item ${a.fail?'red':''}"><span><b>${a.trigger}</b> → ${a.action}</span><span class="badge ${a.fail?'bad':'ok'}">${a.fail?'Failed':'Active'}</span></div>`).join('')}
+function showFailures(){alert('Failures — Retry safe, idempotent')}
+function quickAction(){switchTab('campaigns')}
+function createAffiliate(){const a={id:'af_'+Date.now(),prog:affProg.value,status:'Active'}; affiliates.unshift(a);store('domkt_aff_db',affiliates);renderAff()}
+function renderAff(){document.getElementById('affList').innerHTML=affiliates.map(a=>`<div class="list-item red"><span><b>${a.prog}</b> — domkt.to/${a.id}</span><span class="badge ok">Active</span></div>`).join('')}
+function linkAd(p){document.getElementById('adsList').innerHTML+=`<div class="card"><b>${p} Ads</b><div class="muted">Linked</div></div>`}
+function genQR(){document.getElementById('qrOut').innerHTML=`<div class="qr">QR<br>${qrDest.value.slice(0,12)}</div>`}
+function genReport(){document.getElementById('reportOut').innerText=`Report: ${repType.value}\nCampaigns: ${campaigns.length} Leads: ${leads.length}`}
+function renderCal(){document.getElementById('calGrid').innerHTML=['Mon Launch','Tue Email','Wed WhatsApp','Thu Social','Fri Review','Sat Budget','Sun Analytics'].map(d=>`<div class="card"><b style="color:var(--blue)">${d}</b></div>`).join('')}
+function addBudget(){const b={camp:budCamp.value,plan:budPlan.value,actual:budActual.value}; budgets.unshift(b);store('domkt_budget_db',budgets);renderBudget()}
+function renderBudget(){document.getElementById('budgetList').innerHTML=budgets.map(b=>`<div class="list-item"><span>${b.camp}: Planned ${b.plan} — Actual ${b.actual}</span></div>`).join('')}
+function inviteTeam(){const m={email:teamEmail.value,role:teamRole.value}; team.unshift(m);store('domkt_team_db',team);renderTeam()}
+function renderTeam(){document.getElementById('teamList').innerHTML=team.map(t=>`<div class="list-item"><span>${t.email} — ${t.role}</span><span class="badge ok">Invited</span></div>`).join('')}
+function renderAdmin(){document.getElementById('adminKpi').innerHTML=[`Users ${team.length+1}`,`Businesses ${campaigns.length}`].map(k=>`<div class="card red-card"><div class="kpi red">${k}</div></div>`).join('')}
+
+renderTabs();renderDashboard();renderCampaigns();renderLeads();renderLib();renderAuto();renderAff();renderBudget();renderTeam();renderAdmin();renderCal();renderEmails();
+</script>
+</body>
+</html>

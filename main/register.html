@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOTGROUP Registration</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#222;line-height:1.5}
+header,footer{background:#0756a8;color:white;text-align:center;padding:20px;border-bottom:5px solid #e32636}
+header h1{margin:0;font-size:30px;letter-spacing:2px}
+main{max-width:700px;width:94%;margin:22px auto}
+.card{background:white;padding:22px;border-radius:12px;box-shadow:0 4px 15px #00000012}
+h2,h3{color:#0756a8}
+h2{text-align:center}
+.section{border-top:1px solid #ddd;margin-top:22px;padding-top:12px}
+label{display:block;font-weight:bold;margin-top:13px}
+input,select{width:100%;padding:12px;margin-top:5px;border:1px solid #bbb;border-radius:6px;background:white;font-size:16px}
+input:focus,select:focus{outline:2px solid #0756a8}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button,.button{display:block;width:100%;padding:13px;margin-top:14px;border:0;border-radius:6px;background:#0756a8;color:white;text-align:center;text-decoration:none;font-weight:bold;font-size:15px;cursor:pointer}
+.red{background:#e32636}
+.green{background:#16834a}
+.note{background:#fff0f0;border-left:5px solid #e32636;padding:12px;margin:15px 0;overflow-wrap:anywhere}
+.hint{font-size:13px;color:#666}
+.suggestion{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f2f6fc;border:1px solid #dce6f2;border-radius:6px;padding:9px;margin-top:7px}
+.suggestion span{overflow-wrap:anywhere;font-weight:bold}
+.suggestion button{width:auto;margin:0;padding:8px;font-size:12px;flex-shrink:0}
+.status{font-size:13px;overflow-wrap:anywhere}
+footer{margin-top:25px;border:0}
+@media(max-width:430px){.card{padding:15px}.row{grid-template-columns:1fr}}
+#sponsorBox{display:none;background:#fffbe6;border:2px solid #0756a8;border-radius:10px;padding:15px;margin-top:15px}
+.userRow{display:flex;justify-content:space-between;align-items:center;border:1px solid #dce6f2;padding:10px;border-radius:6px;margin-top:8px;background:white}
+.userRow b{color:#0756a8}
+</style>
+</head>
+<body>
+<header>
+<h1>DOTGROUP</h1>
+<strong>DO TARGETPRENEURSHIP</strong>
+<p>Let's DO It Together!</p>
+</header>
+<main>
+<div class="card">
+<h2>Create Your DOTGROUP Account</h2>
+<p style="text-align:center">We Are Target Achievers!</p>
+<div class="note">
+<strong>Meet Your Sponsor First</strong>
+<p id="sponsorMessage">Checking your sponsor's username...</p>
+</div>
+
+<form id="registerForm">
+<div class="section">
+<h3>1. Personal Information</h3>
+<label for="firstName">First Name *</label>
+<input id="firstName" name="first_name" required maxlength="60" placeholder="Enter first name">
+<label for="middleName">Middle Name</label>
+<input id="middleName" name="middle_name" maxlength="60" placeholder="Enter middle name (optional)">
+<label for="surname">Surname / Last Name *</label>
+<input id="surname" name="surname" required maxlength="60" placeholder="Enter surname">
+<label>Date of Birth *</label>
+<div class="row">
+<div><label for="birthDay">Day</label><select id="birthDay" required><option value="">Day</option></select></div>
+<div><label for="birthMonth">Month</label><select id="birthMonth" required><option value="">Month</option></select></div>
+</div>
+<label for="birthYear">Year</label><select id="birthYear" required><option value="">Select year</option></select>
+<label for="sex">Sex *</label>
+<select id="sex" name="sex" required><option value="">Select sex</option><option value="Male">Male</option><option value="Female">Female</option></select>
+</div>
+
+<div class="section">
+<h3>2. Country and Location</h3>
+<label for="country">Country *</label><select id="country" name="country" required><option value="">Loading countries...</option></select>
+<p class="hint">Choose your country first.</p>
+<label for="region" id="regionLabel">State / Province / Region *</label><select id="region" name="region" required disabled><option value="">Choose country first</option></select>
+<label for="district" id="districtLabel">Local Government / District *</label><select id="district" name="district" required disabled><option value="">Choose a region first</option></select>
+<label for="city">City / Town</label><input id="city" name="city" maxlength="100" placeholder="Enter your city or town">
+<label for="address">Residential Address *</label><input id="address" name="address" required maxlength="200" placeholder="House number and street">
+</div>
+
+<div class="section">
+<h3>3. WhatsApp Contact</h3>
+<label for="phoneCountry">WhatsApp Country Code *</label><select id="phoneCountry" name="phone_country" required><option value="">Select country code</option></select>
+<label for="whatsapp">WhatsApp Number *</label><input id="whatsapp" name="whatsapp" type="tel" required maxlength="20" placeholder="Enter number without country code">
+</div>
+
+<div class="section">
+<h3>4. Account Information</h3>
+<label for="email">Email Address *</label><input id="email" name="email" type="email" required maxlength="254" placeholder="Enter your email">
+<label for="username">Choose Your Username *</label><input id="username" name="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" placeholder="Choose a suggestion or type your own">
+<p class="hint">Use 3–30 letters, numbers or underscores.</p>
+<div id="usernameSuggestions"></div>
+<button type="button" id="moreUsernames" style="display:none">Suggest 5 More Usernames</button>
+<p id="usernameStatus" class="status"></p>
+<label for="password">Create Password *</label><input id="password" name="password" type="password" required minlength="8" placeholder="At least 8 characters">
+<label for="confirmPassword">Confirm Password *</label><input id="confirmPassword" type="password" required minlength="8" placeholder="Enter password again">
+<p id="passwordStatus" class="status"></p>
+</div>
+
+<div class="section">
+<h3>5. Sponsor and Agreement</h3>
+<p id="sponsorDetails" class="hint">Your sponsor's username will be identified.</p>
+<label for="sponsorUsername">Sponsor's Username *</label>
+<input id="sponsorUsername" name="sponsor_username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" placeholder="Sponsor's username">
+<label><input type="checkbox" id="terms" required style="width:auto"> I agree to DOTGROUP's terms and privacy policy.</label>
+<button type="submit" id="submitButton">Continue Registration</button>
+</div>
+</form>
+
+<button type="button" class="button red" id="needSponsorBtn">I NEED A SPONSOR</button>
+
+<div id="sponsorBox">
+<h3 style="margin:0;color:#0756a8">Find A Sponsor</h3>
+<p class="hint">Choose country, then state, then see verified members.</p>
+<label>Country where you want sponsor</label><select id="sCountry"><option>Loading...</option></select>
+<label>State / Region</label><select id="sRegion" disabled><option>Choose country first</option></select>
+<button type="button" class="green" id="findSponsors">Show Verified Usernames</button>
+<div id="sponsorList"></div>
+</div>
+
+<a href="home.html" class="button">BACK TO HOMEPAGE</a>
+<p class="hint">Prototype - Now with 90 Days Trial + Dobot+</p>
+</div>
+</main>
+<footer>
+<strong>D.O.T — LET'S DO IT TOGETHER!</strong>
+<p>&copy; <span id="year"></span> DOTGROUP</p>
+</footer>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+$("year").textContent=new Date().getFullYear();
+
+const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+for(let d=1;d<=31;d++)$("birthDay").add(new Option(d,d));
+monthNames.forEach((m,i)=>$("birthMonth").add(new Option(m,i+1)));
+const thisYear=new Date().getFullYear();
+for(let y=thisYear-10;y>=thisYear-120;y--)$("birthYear").add(new Option(y,y));
+function updateBirthDays(){const d=$("birthDay"),m=$("birthMonth"),y=$("birthYear");const old=d.value;const max=(m.value&&y.value)?new Date(Number(y.value),Number(m.value),0).getDate():31;d.length=1;for(let n=1;n<=max;n++)d.add(new Option(n,n));if(old&&Number(old)<=max)d.value=old}
+$("birthMonth").addEventListener("change",updateBirthDays);$("birthYear").addEventListener("change",updateBirthDays);
+
+const params=new URLSearchParams(location.search);
+const sponsor=(params.get("ref")||"").trim();
+if(/^[A-Za-z0-9_]{3,30}$/.test(sponsor)){
+  $("sponsorMessage").textContent="Sponsor's username confirmed: "+sponsor;
+  $("sponsorDetails").textContent="Sponsor's username: "+sponsor;
+  $("sponsorUsername").value=sponsor;
+}else{
+  $("sponsorMessage").textContent="Sponsor's username is required. Click I NEED A SPONSOR if you don't have one.";
+  $("sponsorDetails").textContent="Enter your sponsor's username.";
+  $("submitButton").disabled=true;
+  $("submitButton").textContent="Sponsor's Username Required";
+}
+$("sponsorUsername").addEventListener("input",()=>{
+  const v=$("sponsorUsername").value.trim();
+  if(/^[A-Za-z0-9_]{3,30}$/.test(v)){
+    $("sponsorMessage").textContent="Sponsor's username entered: "+v;
+    $("sponsorDetails").textContent="Sponsor's username: "+v;
+    $("submitButton").disabled=false;
+    $("submitButton").textContent="Continue Registration";
+  }else if(!v){
+    $("sponsorMessage").textContent="Sponsor's username is required.";
+    $("submitButton").disabled=true;
+    $("submitButton").textContent="Sponsor's Username Required";
+  }
+});
+
+const callingCodes=[["Nigeria","+234"],["Ghana","+233"],["United States","+1"],["United Kingdom","+44"],["South Africa","+27"],["Kenya","+254"],["India","+91"]];
+function fillPhoneCodes(){const s=$("phoneCountry");s.length=1;callingCodes.sort((a,b)=>a[0].localeCompare(b[0])).forEach(i=>s.add(new Option(i[0]+" ("+i[1]+")",i[0]+"|"+i[1])))}
+const countrySelect=$("country"),regionSelect=$("region"),districtSelect=$("district");
+async function loadCountries(){countrySelect.innerHTML="<option value=''>Loading countries...</option>";try{const r=await fetch("https://countriesnow.space/api/v0.1/countries/positions");const d=await r.json();const names=(d.data||[]).map(x=>x.name).sort((a,b)=>a.localeCompare(b));countrySelect.innerHTML="<option value=''>Choose your country</option>";names.forEach(n=>countrySelect.add(new Option(n,n)));const nig=names.find(n=>n.toLowerCase()==="nigeria");if(nig)countrySelect.value=nig;fillRegions();updatePhoneCode();}catch(e){countrySelect.innerHTML="<option value=''>Could not load countries</option>"}}
+async function fillRegions(){const country=countrySelect.value;regionSelect.disabled=true;districtSelect.disabled=true;regionSelect.innerHTML="<option value=''>Loading regions...</option>";districtSelect.innerHTML="<option value=''>Choose a region first</option>";if(!country){regionSelect.innerHTML="<option value=''>Choose country first</option>";return}$("regionLabel").textContent=country==="United States"?"State *":"State / Province / Region *";$("districtLabel").textContent=country==="Nigeria"?"Local Government Area (LGA) *":"District *";try{const r=await fetch("https://countriesnow.space/api/v0.1/countries/states",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({country:country})});const j=await r.json();const states=(j.data&&j.data.states)||[];regionSelect.innerHTML="<option value=''>Choose state / region</option>";states.forEach(s=>regionSelect.add(new Option(s.name,s.name)));if(!states.length)regionSelect.add(new Option("Not available","__not_available__"));regionSelect.disabled=false}catch(e){regionSelect.innerHTML="<option value=''>Location unavailable</option>"}}
+async function fillDistricts(){const country=countrySelect.value;const region=regionSelect.value;districtSelect.disabled=true;if(!country||!region||region==="__not_available__"){districtSelect.innerHTML="<option value=''>Choose a region first</option>";return}districtSelect.innerHTML="<option value=''>Loading districts...</option>";try{const r=await fetch("https://countriesnow.space/api/v0.1/countries/state/cities",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({country:country,state:region})});const j=await r.json();const places=(j.data||[]).filter(Boolean);districtSelect.innerHTML="<option value=''>Choose local area</option>";places.forEach(p=>districtSelect.add(new Option(p,p)));if(!places.length)districtSelect.add(new Option("Not available","__not_available__"));districtSelect.disabled=false}catch(e){districtSelect.innerHTML="<option value=''>Local areas unavailable</option>"}}
+countrySelect.addEventListener("change",()=>{fillRegions();updatePhoneCode()});regionSelect.addEventListener("change",fillDistricts);
+function updatePhoneCode(){const sel=countrySelect.value;const m=callingCodes.find(i=>i[0]===sel);if(m)$("phoneCountry").value=m[0]+"|"+m[1]}
+fillPhoneCodes();loadCountries();
+
+let previousSuggestions=[],round=0;
+function cleanUsername(v){return v.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9_]/g,"")}
+function nameParts(){return [$("firstName").value,$("middleName").value,$("surname").value].map(cleanUsername).filter(Boolean)}
+function makeSuggestions(){const parts=nameParts();if(parts.length<2){$("usernameSuggestions").innerHTML="";$("moreUsernames").style.display="none";$("usernameStatus").textContent="Enter first name and surname.";return}const first=parts[0],last=parts[parts.length-1],base=parts.join(""),initials=parts.map(p=>p[0]).join(""),r=round+1;const candidates=[first+last,first+"_"+last,base,first+last+r,initials+last];const result=[],seen=new Set();for(const item of candidates){const name=cleanUsername(item);const key=name.toLowerCase();if(name.length>=3&&name.length<=30&&!seen.has(key)&&!previousSuggestions.some(x=>x.toLowerCase()===key)){result.push(name);seen.add(key)}if(result.length===5)break}$("usernameSuggestions").innerHTML="";if(!result.length){$("usernameStatus").textContent="No more suggestions.";return}previousSuggestions.push(...result);result.forEach((name,i)=>{const row=document.createElement("div");row.className="suggestion";const t=document.createElement("span");t.textContent=name;const b=document.createElement("button");b.type="button";b.textContent=i===0&&round===0?"Recommended":"Choose";if(i===0&&round===0)b.className="green";b.addEventListener("click",()=>{$("username").value=name;$("usernameStatus").textContent="Selected: "+name});row.append(t,b);$("usernameSuggestions").appendChild(row)});$("moreUsernames").style.display="block";$("usernameStatus").textContent="Choose or type your own."}
+["firstName","middleName","surname"].forEach(id=>$(id).addEventListener("input",()=>{round=0;previousSuggestions=[];makeSuggestions()}));$("moreUsernames").addEventListener("click",()=>{round++;makeSuggestions()});
+$("username").addEventListener("input",()=>{$("usernameStatus").textContent="Your username: "+$("username").value});
+function passwordsMatch(){const m=$("password").value===$("confirmPassword").value;$("passwordStatus").textContent=m?"Passwords match.":"Passwords do not match.";$("passwordStatus").style.color=m?"#16834a":"#e32636";return m}
+$("password").addEventListener("input",()=>{if($("confirmPassword").value)passwordsMatch()});$("confirmPassword").addEventListener("input",passwordsMatch);
+
+const verifiedDB=[
+{c:"Nigeria",s:"Lagos",u:"LagosChampion"},{c:"Nigeria",s:"Lagos",u:"DOT_Lagos001"},{c:"Nigeria",s:"Lagos",u:"TargetAchiever_LG"},
+{c:"Nigeria",s:"Abuja Federal Capital Territory",u:"AbujaLeader"},{c:"Nigeria",s:"Abuja Federal Capital Territory",u:"DOT_Abuja01"},
+{c:"Nigeria",s:"Rivers",u:"PH_Sponsor"},{c:"Nigeria",s:"Kano",u:"KanoDOT"},{c:"Nigeria",s:"Oyo",u:"IbadanDOT"},
+{c:"Ghana",s:"Greater Accra",u:"GhanaStar"},{c:"Ghana",s:"Ashanti",u:"KumasiDOT"},
+{c:"United States",s:"Texas",u:"TexasDOT"},{c:"United States",s:"California",u:"CaliforniaDOT"},
+{c:"United Kingdom",s:"England",u:"LondonDOT"},{c:"South Africa",s:"Gauteng",u:"SA_DOT"},
+{c:"Kenya",s:"Nairobi",u:"KenyaDOT"}
+];
+$("needSponsorBtn").addEventListener("click",()=>{
+  $("sponsorBox").style.display=$("sponsorBox").style.display==="none"?"block":"none";
+  loadSponsorCountries();
+});
+async function loadSponsorCountries(){
+  const sel=$("sCountry");sel.innerHTML="<option>Loading countries...</option>";
+  try{const r=await fetch("https://countriesnow.space/api/v0.1/countries/positions");const d=await r.json();const names=(d.data||[]).map(x=>x.name).sort();sel.innerHTML="<option value=''>Choose country where you want sponsor</option>";names.forEach(n=>sel.add(new Option(n,n)));sel.value="Nigeria";loadSponsorRegions();}catch(e){sel.innerHTML="<option>Could not load</option>"}
+}
+async function loadSponsorRegions(){
+  const country=$("sCountry").value;const rs=$("sRegion");rs.disabled=true;rs.innerHTML="<option>Loading states...</option>";if(!country){rs.innerHTML="<option>Choose country first</option>";return}
+  try{const r=await fetch("https://countriesnow.space/api/v0.1/countries/states",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({country:country})});const j=await r.json();const states=(j.data&&j.data.states)||[];rs.innerHTML="<option value=''>Choose state / region</option>";states.forEach(s=>rs.add(new Option(s.name,s.name)));rs.disabled=false;}catch(e){rs.innerHTML="<option>Unavailable</option>"}
+}
+$("sCountry").addEventListener("change",loadSponsorRegions);
+$("findSponsors").addEventListener("click",()=>{
+  const c=$("sCountry").value;const s=$("sRegion").value;if(!c||!s){alert("Choose country and state first");return}
+  let filtered=verifiedDB.filter(m=>m.c===c&&m.s===s);
+  if(!filtered.length)filtered=verifiedDB.filter(m=>m.c===c);
+  const box=$("sponsorList");if(!filtered.length){box.innerHTML="<p class='hint'>No verified sponsors in "+c+". Try another country.</p>";return}
+  let html="<p style='margin-top:10px'><b>Verified usernames in "+s+", "+c+": "+filtered.length+" found</b></p>";
+  filtered.forEach(m=>{html+="<div class='userRow'><div><b>@"+m.u+"</b><br><small>"+m.s+", "+m.c+" - Verified ✅</small></div><button type='button' style='width:auto;padding:8px 12px' class='green' onclick=\"useSponsor('"+m.u+"')\">Use</button></div>"});
+  box.innerHTML=html;
+});
+window.useSponsor=function(u){$("sponsorUsername").value=u;$("sponsorMessage").textContent="Sponsor's username selected: "+u;$("sponsorDetails").textContent="Sponsor's username: "+u;$("submitButton").disabled=false;$("submitButton").textContent="Continue Registration";$("sponsorBox").style.display="none";window.scrollTo(0,0);alert("Sponsor's username set to: "+u)};
+
+// === UPGRADED FINAL REGISTRATION - WITH 90 DAYS TRIAL + DOBOT+ ===
+$("registerForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const sponsorVal=$("sponsorUsername").value.trim();
+  if(!/^[A-Za-z0-9_]{3,30}$/.test(sponsorVal)){alert("Enter valid sponsor's username.");return}
+  if(!$("registerForm").reportValidity())return;
+  if(!passwordsMatch()){alert("Passwords do not match.");return}
+  
+  const firstName=$("firstName").value.trim();
+  const surname=$("surname").value.trim();
+  const username=$("username").value.trim();
+  const email=$("email").value.trim();
+  const country=$("country").value;
+  const region=$("region").value;
+  const district=$("district").value;
+  const whatsapp=$("whatsapp").value.trim();
+  
+  if(!username||username.length<3){alert("Choose username");return}
+  const USER_UPPER = username.toUpperCase();
+
+  // === ONE ACCOUNT FOR HOME PAGE (Dowallet unlock) - KEEP YOUR OLD LOGIC ===
+  localStorage.setItem('dot_user', username);
+  localStorage.setItem('dot_registered', 'true');
+  localStorage.setItem('isRegistered', 'true');
+  localStorage.setItem('dotgroup_user', username);
+  localStorage.setItem('user_name', firstName);
+  localStorage.setItem('dot_name', firstName + ' ' + surname);
+  localStorage.setItem('dot_email', email);
+  localStorage.setItem('user_email', email);
+  localStorage.setItem('dot_country', country);
+  localStorage.setItem('dot_sponsor', sponsorVal);
+  localStorage.setItem('dot_firstName', firstName);
+  localStorage.setItem('dot_username', username);
+
+  // === NEW: 90 DAYS TRIAL FOR DOBOT+ - THIS IS WHAT WE ADDED ===
+  localStorage.setItem('dot_current_user', USER_UPPER); // For dashboard
+  localStorage.setItem('dot_registered_'+USER_UPPER, Date.now().toString()); // Trial start time
+  localStorage.setItem('dot_verified_'+USER_UPPER, 'false'); // Not verified yet
+  // For new domain system peter.docart etc
+  localStorage.setItem('dot_user_'+USER_UPPER, JSON.stringify({
+    user: USER_UPPER,
+    phone: whatsapp,
+    bname: firstName+' '+surname,
+    country: country,
+    state: region,
+    lga: district,
+    sponsor: sponsorVal,
+    reg: Date.now()
+  }));
+
+  const userData = {
+    username: username,
+    firstName: firstName,
+    surname: surname,
+    email: email,
+    sponsor: sponsorVal,
+    country: country,
+    registeredAt: new Date().toISOString()
+  };
+  localStorage.setItem('dot_user_data', JSON.stringify(userData));
+
+  alert(
+    "✅ REGISTRATION SUCCESSFUL!\n\n" +
+    "Welcome " + firstName + "!\n\n" +
+    "Username: " + username + "\n" +
+    "Sponsor: " + sponsorVal + "\n" +
+    "Your 90 days free trial started!\n\n" +
+    "🤖 Dobot+ will serve you as agent for 3 months FREE\n" +
+    "Inside trial: Verify with $30\n" +
+    "After trial: $100 - If you no verify, Dobot+ will leave you\n\n" +
+    "You will go to Dashboard now.\n" +
+    "Dowallet also unlocked in Home.\n\n" +
+    "Your brands ready:\n" +
+    username.toLowerCase()+".docart (shop)\n" +
+    username.toLowerCase()+".dolearn (teaching)\n" +
+    username.toLowerCase()+".dospace (content)\n\n" +
+    "Let's DO It Together!"
+  );
+  
+  // Go to dashboard where Dobot+ asks questions
+  window.location.href = "dashboard.html?shop=" + USER_UPPER;
+});
+</script>
+</body>
+</html>

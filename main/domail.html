@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMAIL - peter@domail</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Roboto,Arial}
+body{background:#f6f8fc;height:100vh;display:flex;flex-direction:column}
+.topbar{background:#fff;padding:12px 15px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e0e0e0;position:relative}
+.logo{font-size:22px;font-weight:bold} .logo span{color:#6a11cb}
+.hamburger{font-size:22px;padding:8px 12px;background:#f0f0f0;border-radius:8px;cursor:pointer;user-select:none}
+.search{flex:1;background:#eaf1fb;padding:10px 15px;border-radius:30px;display:flex;gap:8px}
+.search input{border:none;background:transparent;width:100%;outline:none;font-size:14px}
+.main{flex:1;background:#fff;margin:8px;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.mail-header{padding:12px 15px;border-bottom:1px solid #eee;font-size:13px;color:#666;display:flex;justify-content:space-between}
+.mail-list{flex:1;overflow-y:auto}
+.mail-card{padding:14px 15px;border-bottom:1px solid #f0f0f0;cursor:pointer}
+.mail-card:active{background:#e8f0fe}
+.mail-card b{font-size:14px}
+.mail-card-sub{font-size:13px;color:#555;margin-top:4px;line-height:1.4}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.badge{padding:3px 8px;border-radius:10px;font-size:11px;color:#fff}
+.dot{background:#6a11cb} .inv{background:#ff8c00} .paid{background:#00c853;color:#000;font-weight:bold} .track{background:#ffcccc;color:#c00}
+.dropdown{position:absolute;top:60px;left:10px;width:290px;background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.25);z-index:200;display:none;max-height:85vh;overflow-y:auto}
+.dropdown.active{display:block}
+.drop-item{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid #f5f5f5;font-size:14px}
+.drop-item:hover{background:#f6f8fc}
+.drop-item:active{background:#e8f0fe}
+.drop-item b{margin-left:auto;background:#eee;padding:3px 8px;border-radius:10px;font-size:11px}
+.drop-item.active-item{background:#d3e3fd;font-weight:bold}
+.compose-btn{margin:12px;background:#c2e7ff;padding:14px;border-radius:16px;text-align:center;font-weight:bold;cursor:pointer}
+.storage{margin:12px;padding:12px;background:#1a1a1a;color:#fff;border-radius:12px;font-size:12px}
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:150}
+.compose-win{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:16px 16px 0 0;box-shadow:0 -5px 30px rgba(0,0,0,0.3);display:none;flex-direction:column;z-index:200;max-height:90vh}
+.compose-head{padding:12px 15px;background:#f2f6fc;display:flex;justify-content:space-between;font-weight:bold;border-radius:16px 16px 0 0}
+.compose-body{padding:15px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+.compose-body input,.compose-body textarea{border:1px solid #ddd;padding:12px;border-radius:8px;outline:none}
+.tools{display:flex;gap:8px;padding:12px;border-top:1px solid #eee;flex-wrap:wrap}
+.tool{padding:10px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:13px;font-weight:bold}
+.tool.purple{background:#6a11cb;color:#fff} .tool.orange{background:#ff8c00;color:#fff}
+.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);display:none;z-index:300;width:90%;max-width:350px}
+.popup input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin:10px 0}
+.detail{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;z-index:250;display:none;flex-direction:column;padding:15px;overflow-y:auto}
+.empty{padding:40px 20px;text-align:center;color:#888}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="hamburger" id="hamb">☰</div>
+  <div class="logo">D<span>O</span>MAIL</div>
+  <div class="search">🔍 <input id="searchInput" placeholder="Search mail..."></div>
+</div>
+
+<div class="dropdown" id="dropdown">
+  <div class="compose-btn" id="composeBtn">✏️ Compose</div>
+  <div class="drop-item active-item" data-filter="all">📥 Inbox <b id="c-all">5</b></div>
+  <div class="drop-item" data-filter="dot">💸 DOT Attached <b id="c-dot">2</b></div>
+  <div class="drop-item" data-filter="invoice">🧾 Invoices <b id="c-invoice">2</b></div>
+  <div class="drop-item" data-filter="pay">🔒 Pay-to-Inbox Requests <b id="c-pay" style="background:#ff0055;color:#fff">1</b></div>
+  <div class="drop-item" data-filter="tracker">🛡️ Tracker Blocked <b id="c-tracker">3</b></div>
+  <div class="drop-item" data-filter="paid">✅ Paid Mails <b id="c-paid">1</b></div>
+  <div class="drop-item" data-filter="starred">⭐ Starred <b>0</b></div>
+  <div class="drop-item" data-filter="sent">📤 Sent <b>1</b></div>
+  <div class="drop-item" data-filter="trash">🗑️ Trash <b>0</b></div>
+  <div style="padding:10px 16px;display:flex;gap:6px;flex-wrap:wrap">
+    <span style="background:#00ff88;padding:4px 8px;border-radius:10px;font-size:11px">🛡️ Tracker-Free</span>
+    <span style="background:#ff0055;color:#fff;padding:4px 8px;border-radius:10px;font-size:11px">💰 0.0001 Verified</span>
+  </div>
+  <div class="storage"><small>PRO Storage</small><br><b>12GB / 100GB</b><div style="background:#333;height:5px;border-radius:3px;margin:5px 0"><div style="width:12%;background:#6a11cb;height:100%"></div></div><small style="color:#00ff88">No bankruptcy - 0.0001 only!</small></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="main">
+  <div class="mail-header"><span id="currentTitle">📥 Inbox - 5 mails</span><span>Up-Down ✅</span></div>
+  <div class="mail-list" id="mailList"></div>
+</div>
+
+<div class="compose-win" id="composeWin">
+  <div class="compose-head"><span>New Message</span><span id="closeCompose" style="padding:5px;cursor:pointer">✕</span></div>
+  <div class="compose-body">
+    <input id="toInput" placeholder="To: amaka@domail"><input placeholder="Subject"><textarea placeholder="Write email..."></textarea>
+    <div id="attachPreview" style="display:flex;flex-direction:column;gap:6px"></div>
+  </div>
+  <div class="tools">
+    <button class="tool purple" id="attachDotBtn">💰 Attach DOT</button>
+    <button class="tool orange" id="attachInvBtn">🧾 Invoice</button>
+    <button class="tool" style="margin-left:auto;background:#0b57d0;color:#fff" id="sendBtn">Send</button>
+  </div>
+</div>
+
+<div class="popup" id="dotPopup"><h3>💰 Attach DOT</h3><input type="number" id="dotAmount" placeholder="Amount e.g. 2, 10"><div style="display:flex;gap:10px"><button class="tool" id="cancelDot">Cancel</button><button class="tool purple" id="confirmDot">Attach</button></div></div>
+<div class="popup" id="invoicePopup"><h3>🧾 Invoice</h3><input id="invItem" placeholder="Item: iPhone 15"><input type="number" id="invPrice" placeholder="500 DOT"><div style="display:flex;gap:10px"><button class="tool" id="cancelInv">Cancel</button><button class="tool orange" id="confirmInv">Attach</button></div></div>
+<div class="detail" id="detail"><div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:10px"><b id="dFrom"></b><span id="closeDetail" style="font-size:22px;cursor:pointer">✕</span></div><div id="dBody" style="padding-top:15px"></div></div>
+
+<script>
+const allMails=[
+  {from:"Docart Order",sub:"Order #1023 delivered",body:"Your iPhone 15 delivered. You got 50 DOT bonus! Click to claim to Dowallet.",dot:"50 DOT",inv:true,paid:false,track:2,pay:false,sent:false},
+  {from:"stranger-pay@domail",sub:"Paid 1 DOT - Buy 20 phones",body:"I am serious buyer from Kano. I paid 1 DOT gate fee to enter your inbox. Reply = refund me. Spam = you earn it!",dot:null,inv:false,paid:false,track:1,pay:true,sent:false},
+  {from:"amaka@domail",sub:"Salary 10 DOT",body:"Boss attach my 10 DOT",dot:"10 DOT",inv:false,paid:false,track:0,pay:false,sent:false},
+  {from:"emeka-stores@domail",sub:"Invoice #1024 - 5 chargers",body:"Total 25 DOT. Pay inside email with 1 click.",dot:null,inv:true,paid:true,track:0,pay:false,sent:false},
+  {from:"You to amaka@domail",sub:"Sent mail",body:"You sent mail",dot:null,inv:false,paid:false,track:0,pay:false,sent:true},
+];
+let currentFilter='all';
+let aDot=null,aInv=null;
+const mailList=document.getElementById('mailList');
+const dropdown=document.getElementById('dropdown');
+const overlay=document.getElementById('overlay');
+const currentTitle=document.getElementById('currentTitle');
+
+function getFiltered(){
+  if(currentFilter==='all') return allMails.filter(m=>!m.sent);
+  if(currentFilter==='dot') return allMails.filter(m=>m.dot);
+  if(currentFilter==='invoice') return allMails.filter(m=>m.inv);
+  if(currentFilter==='pay') return allMails.filter(m=>m.pay);
+  if(currentFilter==='tracker') return allMails.filter(m=>m.track>0);
+  if(currentFilter==='paid') return allMails.filter(m=>m.paid);
+  if(currentFilter==='sent') return allMails.filter(m=>m.sent);
+  if(currentFilter==='starred') return [];
+  if(currentFilter==='trash') return [];
+  return allMails;
+}
+
+function render(){
+  const filtered=getFiltered();
+  if(filtered.length===0){
+    mailList.innerHTML=`<div class="empty"><h3>No mails here</h3><p>For ${currentFilter} filter</p><p style="margin-top:10px">💰 Try attach DOT - Gmail no fit!</p></div>`;
+    currentTitle.innerText=`${getTitle()} - 0`;
+    return;
+  }
+  mailList.innerHTML=filtered.map((m,i)=>`
+    <div class="mail-card" data-real="${allMails.indexOf(m)}">
+      <b>${m.from}</b>
+      <div class="mail-card-sub"><b>${m.sub}</b> - ${m.body.slice(0,80)}...</div>
+      <div class="badges">
+        ${m.pay?'<span class="badge paid">💰 PAID 1 DOT</span>':''}
+        ${m.dot?'<span class="badge dot">📎 '+m.dot+'</span>':''}
+        ${m.inv?'<span class="badge inv">🧾 Invoice '+(m.paid?'✅ PAID':'')+'</span>':''}
+        ${m.track?'<span class="badge track">🚫 '+m.track+' trackers</span>':''}
+      </div>
+    </div>`).join('');
+  document.querySelectorAll('.mail-card').forEach(el=>el.addEventListener('click',()=>openDetail(el.getAttribute('data-real'))));
+  currentTitle.innerText=`${getTitle()} - ${filtered.length}`;
+}
+
+function getTitle(){
+  const map={all:'📥 Inbox',dot:'💸 DOT Attached',invoice:'🧾 Invoices',pay:'🔒 Pay-to-Inbox',tracker:'🛡️ Tracker Blocked',paid:'✅ Paid',sent:'📤 Sent',starred:'⭐ Starred',trash:'🗑️ Trash'};
+  return map[currentFilter]||'Inbox';
+}
+
+function openDetail(realIndex){
+  const m=allMails[realIndex];
+  document.getElementById('dFrom').innerText=m.from;
+  document.getElementById('dBody').innerHTML=`
+    <h3>${m.sub}</h3><p style="margin:15px 0;line-height:1.6">${m.body}</p>
+    ${m.pay?'<div style="padding:12px;background:#eafff0;border-radius:10px;margin-bottom:10px"><b>💰 Paid 1 DOT gate fee!</b><br>This stranger paid to talk to you. If you reply, he gets refund. If spam, you earn 1 DOT!<br><br><button class="tool purple" onclick="alert(\'✅ Replied! 1 DOT refunded to stranger!\')">Reply (Refund him)</button> <button class="tool" style="background:#ff0055;color:#fff" onclick="alert(\'✅ Marked spam! You earned 1 DOT!\')">Mark Spam (Earn 1 DOT)</button></div>':''}
+    ${m.dot?'<button class="tool purple" onclick="alert(\'✅ '+m.dot+' claimed to Dowallet!\')">📎 Claim '+m.dot+' to Dowallet</button>':''}
+    ${m.inv?'<button class="tool orange" style="margin-left:8px" onclick="alert(\'✅ Paid with Dowallet 1-click! Transaction done!\')">🧾 Pay with Dowallet 1-click</button>':''}
+    ${m.track?'<div style="margin-top:12px;padding:10px;background:#ffe0e0;border-radius:8px">🚫 Blocked '+m.track+' invisible trackers that Gmail allows!</div>':''}
+    <div style="margin-top:15px;padding:10px;background:#f0f0f0;border-radius:8px;font-size:12px">💰 0.0001 DOCOIN reward if you reply (verified only) - Safe, no bankruptcy!</div>
+  `;
+  document.getElementById('detail').style.display='flex'; overlay.style.display='block';
+}
+
+render();
+
+// HAMBURGER
+document.getElementById('hamb').addEventListener('click',()=>{
+  dropdown.classList.toggle('active');
+  overlay.style.display=dropdown.classList.contains('active')?'block':'none';
+});
+overlay.addEventListener('click',()=>{
+  dropdown.classList.remove('active');
+  document.getElementById('composeWin').style.display='none';
+  document.getElementById('dotPopup').style.display='none';
+  document.getElementById('invoicePopup').style.display='none';
+  document.getElementById('detail').style.display='none';
+  overlay.style.display='none';
+});
+
+// DROPDOWN FILTERS - NOW WORKING!
+document.querySelectorAll('.drop-item[data-filter]').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.drop-item').forEach(i=>i.classList.remove('active-item'));
+    item.classList.add('active-item');
+    currentFilter=item.getAttribute('data-filter');
+    render();
+    dropdown.classList.remove('active');
+    overlay.style.display='none';
+  });
+});
+
+// COMPOSE
+document.getElementById('composeBtn').addEventListener('click',()=>{
+  dropdown.classList.remove('active'); document.getElementById('composeWin').style.display='flex'; overlay.style.display='block';
+});
+document.getElementById('closeCompose').addEventListener('click',()=>{document.getElementById('composeWin').style.display='none';overlay.style.display='none';});
+document.getElementById('attachDotBtn').addEventListener('click',()=>{document.getElementById('dotPopup').style.display='block';});
+document.getElementById('cancelDot').addEventListener('click',()=>{document.getElementById('dotPopup').style.display='none';});
+document.getElementById('confirmDot').addEventListener('click',()=>{
+  const v=document.getElementById('dotAmount').value; if(!v)return alert('Enter amount');
+  aDot=v; document.getElementById('attachPreview').innerHTML+=`<span class="badge dot">📎 ${v} DOT attached</span>`;
+  document.getElementById('dotPopup').style.display='none';
+});
+document.getElementById('attachInvBtn').addEventListener('click',()=>{document.getElementById('invoicePopup').style.display='block';});
+document.getElementById('cancelInv').addEventListener('click',()=>{document.getElementById('invoicePopup').style.display='none';});
+document.getElementById('confirmInv').addEventListener('click',()=>{
+  const item=document.getElementById('invItem').value||'Product'; const price=document.getElementById('invPrice').value||'500';
+  aInv={item,price}; document.getElementById('attachPreview').innerHTML+=`<span class="badge inv">🧾 ${item} - ${price} DOT</span>`;
+  document.getElementById('invoicePopup').style.display='none';
+});
+document.getElementById('sendBtn').addEventListener('click',()=>{
+  allMails.unshift({from:"You",sub:"Sent "+(aDot?aDot+' DOT':'mail'),body:"Mail sent",dot:aDot?aDot+' DOT':null,inv:!!aInv,paid:false,track:0,pay:false,sent:true});
+  render(); document.getElementById('composeWin').style.display='none'; overlay.style.display='none';
+  document.getElementById('attachPreview').innerHTML=''; aDot=null;aInv=null;
+});
+document.getElementById('closeDetail').addEventListener('click',()=>{document.getElementById('detail').style.display='none';overlay.style.display='none';});
+
+// Search
+document.getElementById('searchInput').addEventListener('input',(e)=>{
+  const q=e.target.value.toLowerCase();
+  if(!q){render(); return;}
+  const filtered=allMails.filter(m=>m.from.toLowerCase().includes(q)||m.sub.toLowerCase().includes(q));
+  mailList.innerHTML=filtered.map(m=>`<div class="mail-card"><b>${m.from}</b><div class="mail-card-sub">${m.sub}</div></div>`).join('');
+});
+</script>
+</body>
+</html>

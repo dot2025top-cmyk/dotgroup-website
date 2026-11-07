@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoLearn</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<style>
+*{box-sizing:border-box}body{font-family:Arial;background:linear-gradient(180deg,#fff 0%,#f0f6ff 50%,#fff5f5 100%);color:#0a1931;margin:0;overflow-x:hidden}
+header{background:#fff;color:#0a1931;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,#b71c1c,#0f5bd7,#fff) 1;box-shadow:0 2px 12px #0001}
+header a{color:#0f5bd7;text-decoration:none;font-weight:900;font-size:14px;padding:8px 16px;background:#fff;border:2px solid #0f5bd7;border-radius:20px}
+header a:first-child{border-color:#b71c1c;color:#b71c1c}
+header b{font-size:16px;background:linear-gradient(90deg,#b71c1c,#0f5bd7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0eaff;position:sticky;top:56px;z-index:10;overflow-x:auto}
+.tabs button{flex:1;min-width:90px;padding:14px 6px;border:none;background:#fff;color:#0a1931;font-weight:900;cursor:pointer;font-size:12px;white-space:nowrap;border-bottom:3px solid transparent}
+.tabs button:nth-child(1).active{background:#0f5bd7;color:#fff;border-bottom-color:#0f5bd7}
+.tabs button:nth-child(2).active{background:#b71c1c;color:#fff;border-bottom-color:#b71c1c}
+.tabs button:nth-child(3).active{background:#0a1931;color:#fff;border-bottom-color:#0a1931}
+.tabs button:nth-child(4).active{background:linear-gradient(90deg,#b71c1c,#0f5bd7);color:#fff}
+.wrap{max-width:780px;margin:0 auto;padding:8px;width:100%}
+.card{background:#fff;border:2px solid #c7d7ff;padding:12px;border-radius:16px;margin:10px 0;width:100%;box-shadow:0 4px 16px #0f5bd711}
+.card.red{border-color:#ffaaaa;box-shadow:0 4px 16px #b71c1c11}
+.card.blue{border-color:#a8c0ff}
+input,select,textarea{width:100%;padding:12px;background:#fff;border:2px solid #a8c0ff;border-radius:10px;margin:5px 0;color:#0a1931;font-size:14px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#0f5bd7}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:900;margin:6px 0;cursor:pointer;font-size:14px}
+.blue{background:#0f5bd7;color:#fff}.red{background:#b71c1c;color:#fff}.white{background:#fff;color:#0f5bd7;border:2px solid #0f5bd7}.dark{background:#0a1931;color:#fff}
+.row{display:flex;gap:6px;flex-wrap:wrap}.row > *{flex:1;min-width:120px}
+.course{background:#fff;border:2px solid #d0ddff;border-radius:14px;padding:10px;margin:8px 0;display:flex;gap:10px;width:100%;cursor:pointer;box-shadow:0 2px 10px #00000008}
+.course.boosted{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box, linear-gradient(90deg,#b71c1c,#0f5bd7,#fff) border-box}
+.course img{width:88px;height:88px;object-fit:cover;border-radius:12px;flex-shrink:0;border:2px solid #e0eaff}
+.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900;display:inline-block;margin:2px}
+.badge-blue{background:#0f5bd7;color:#fff}.badge-red{background:#b71c1c;color:#fff}.badge-white{background:#fff;color:#0f5bd7;border:1px solid #a8c0ff}
+.small{font-size:11px;color:#4a5f8a}
+.visionBar{background:linear-gradient(90deg,#b71c1c,#0f5bd7,#b71c1c);padding:11px;border-radius:12px;margin:10px 0;text-align:center;color:#fff;font-weight:900;font-size:13px}
+.marquee{overflow:hidden;white-space:nowrap;background:#fff;border-radius:12px;padding:10px;border:2px solid transparent;border-image:linear-gradient(90deg,#b71c1c,#0f5bd7) 1;width:100%}
+.marquee-track{display:flex;gap:12px;animation:scroll 18s ease-in-out infinite alternate;width:max-content}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-45%)}}
+.marquee-item{min-width:168px;max-width:168px;background:#fff;border:2px solid #e0eaff;border-radius:12px;padding:8px;cursor:pointer;flex-shrink:0}
+.marquee-item img{width:100%;height:85px;object-fit:cover;border-radius:8px}
+.verifyAlert{background:#ffeaea;border:2px solid #b71c1c;padding:10px;border-radius:12px;color:#b71c1c;font-weight:900;text-align:center}
+.verifyOk{background:#e8f0ff;border:2px solid #0f5bd7;padding:10px;border-radius:12px;color:#0a1931;text-align:center;font-weight:900}
+.modal{position:fixed;inset:0;background:#0007;display:none;overflow:auto;z-index:30;padding:8px}
+.modalBox{background:#fff;border:3px solid transparent;border-image:linear-gradient(90deg,#b71c1c,#0f5bd7,#fff) 1;border-radius:16px;max-width:700px;width:95%;margin:20px auto;padding:12px}
+.filter-row{display:flex;gap:6px;overflow-x:auto;padding:6px 0;flex-wrap:nowrap}
+.filter-row button{white-space:nowrap;padding:8px 14px;border-radius:20px;border:2px solid #0f5bd7;background:#fff;color:#0f5bd7;font-size:12px;cursor:pointer;flex-shrink:0;font-weight:900}
+.filter-row button.active{background:#0f5bd7;color:#fff}
+.filter-row button:nth-child(2).active{background:#b71c1c;border-color:#b71c1c}
+.progress{width:100%;height:12px;background:#e0eaff;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#b71c1c,#0f5bd7);transition:width 0.5s}
+.lesson{border:2px solid #d0ddff;padding:10px;border-radius:10px;margin:6px 0;background:#f8fbff}
+.lesson.done{border-color:#0f5bd7;background:#e8f0ff}
+.quiz{border:2px solid #ffaaaa;padding:10px;border-radius:10px;margin:6px 0;background:#fff5f5}
+</style>
+</head>
+<body>
+<header>
+<a href="home.html">← Back</a>
+<b>📚 DoLearn</b>
+<a href="home.html">Home</a>
+</header>
+
+<div class="tabs">
+<button id="tabGeneral" class="active" onclick="switchTab('general')">🌐 General</button>
+<button id="tabMyLearn" onclick="switchTab('mylearn')">🎓 My Learn</button>
+<button id="tabTeach" onclick="switchTab('teach')">👨‍🏫 Teach</button>
+<button id="tabMyCourses" onclick="switchTab('mycourses')">📖 My Courses</button>
+</div>
+
+<div class="wrap">
+<div id="generalView">
+<div class="card">
+<div class="row">
+<select id="filterCountry" onchange="countryChanged()"></select>
+<select id="filterCity" onchange="cityChanged()"></select>
+</div>
+<div class="row"><select id="filterArea" onchange="renderGeneral()"></select><select id="filterLevel"><option value="All">All Levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+</div>
+
+<div class="card">
+<div class="visionBar">🔥 FEATURED COURSES</div>
+<div class="marquee"><div class="marquee-track" id="visionTrack"></div></div>
+<div class="filter-row" id="mainFilter"></div><div class="filter-row" id="subFilter"></div>
+<div class="row" style="margin-top:6px"><button class="white" style="padding:8px;font-size:11px" onclick="setSort('low')">↑ Low</button><button class="white" style="padding:8px;font-size:11px" onclick="setSort('high')">↓ High</button><button class="red" style="padding:8px;font-size:11px" onclick="setSort('vision')">🔥 Featured</button><button class="blue" style="padding:8px;font-size:11px" onclick="setSort('rating')">⭐ Rating</button></div>
+<input type="text" id="searchBox" placeholder="🔍 Search course, skill..." oninput="renderGeneral()">
+</div>
+<div id="generalList"></div>
+</div>
+
+<div id="mylearnView" style="display:none">
+<div id="verifyCheck"></div>
+<div id="noLearnBox" class="card" style="text-align:center;border:3px dashed #0f5bd7;display:none">
+<h3 style="color:#0f5bd7">🎓 Create Your Learning Platform</h3>
+<div style="text-align:left">
+<input id="learnName" placeholder="Platform Name">
+<textarea id="learnDesc" placeholder="What do you teach?"></textarea>
+<div class="row"><select id="learnCountry"></select><select id="learnCity"></select></div><select id="learnArea"></select>
+<div class="row"><select id="learnMain"></select><select id="learnSub"></select></div>
+<input id="learnWhatsapp" placeholder="WhatsApp number">
+<button class="blue btn" onclick="createLearn()">✅ Create Platform</button>
+</div>
+</div>
+<div id="hasLearnBox" style="display:none">
+<div class="card" id="myLearnHeader"></div>
+<div class="card"><b>📊 Dashboard</b><div id="teachStats"></div></div>
+<div class="card"><b>📚 My Courses (<span id="myCourseCount">0</span>)</b><div id="myCoursesListTeach"></div></div>
+</div>
+</div>
+
+<div id="teachView" style="display:none">
+<div id="verifyCheck2"></div>
+<div class="card">
+<h3 style="margin:0;color:#0f5bd7">👨‍🏫 Create New Course</h3>
+<div class="row"><select id="courseMain"></select><select id="courseSub"></select></div><select id="courseSubSub"></select>
+<input id="courseTitle" placeholder="Course Title">
+<div class="row"><input id="coursePrice" type="number" placeholder="Price"><input id="courseOldPrice" type="number" placeholder="Old Price"><select id="courseLevel"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>All Levels</option></select></div>
+<div class="row"><select id="courseLang"><option>English</option><option>Pidgin English</option><option>Yoruba</option><option>Igbo</option><option>Hausa</option></select><input id="courseDuration" placeholder="Duration"><select id="courseCert"><option value="Yes">Certificate Yes</option><option value="No">No Certificate</option></select></div>
+
+<div class="card" style="background:#f8fbff">
+<b>📹 Lessons</b>
+<div id="lessonsBuilder"><div class="lesson"><input placeholder="Lesson 1 Title" class="lessonTitle"><input placeholder="Video URL" class="lessonVideo"><textarea placeholder="Notes" class="lessonNotes"></textarea><div class="row"><select class="lessonType"><option>Video</option><option>PDF</option><option>Text</option><option>Live Class</option><option>Assignment</option></select><input placeholder="Duration" class="lessonDuration"></div></div></div>
+<button class="white btn" onclick="addLessonField()">➕ Add Lesson</button>
+</div>
+
+<div class="card" style="background:#fff5f5">
+<b>📝 Quiz</b>
+<div id="quizBuilder"><div class="quiz"><input placeholder="Question" class="quizQ"><input placeholder="A" class="quizA"><input placeholder="B" class="quizB"><input placeholder="C" class="quizC"><input placeholder="D" class="quizD"><select class="quizCorrect"><option value="A">Correct: A</option><option value="B">Correct: B</option><option value="C">Correct: C</option><option value="D">Correct: D</option></select></div></div>
+<button class="white btn" onclick="addQuizField()">➕ Add Question</button>
+</div>
+
+<div class="row"><label style="font-size:12px"><input type="checkbox" id="courseFree"> Free</label><label style="font-size:12px"><input type="checkbox" id="courseLive"> Live</label><label style="font-size:12px"><input type="checkbox" id="courseDownload"> Downloadable</label><label style="font-size:12px"><input type="checkbox" id="courseVision"> Featured</label></div>
+<textarea id="courseDesc" placeholder="Description"></textarea>
+<div class="row"><select id="courseCountry"></select><select id="courseCity"></select></div><select id="courseArea"></select>
+<input id="courseImage" type="file" accept="image/*" onchange="handleImage(this,1)"><div id="coursePreview" style="text-align:center"></div>
+<button class="blue btn" onclick="postCourse()">📤 Publish Course</button>
+</div>
+</div>
+
+<div id="mycoursesView" style="display:none">
+<div class="card"><b>📖 My Enrolled Courses</b><div id="studentStats"></div></div>
+<div id="myEnrolledList"></div>
+</div>
+</div>
+
+<div class="modal" id="courseModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><b id="modalTitle">Course</b><button onclick="closeModal()" style="background:#b71c1c;color:#fff;border:none;padding:6px 12px;border-radius:8px">X</button></div><div id="modalBody"></div></div></div>
+
+<script>
+const ALL_COUNTRIES = ["All Countries","Nigeria","Ghana","Kenya","South Africa","Sierra Leone","United States","United Kingdom","India"];
+const WORLD_STATES = {"Nigeria":["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT Abuja","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"],"Ghana":["Greater Accra","Ashanti"],"Kenya":["Nairobi","Mombasa"],"Sierra Leone":["Western Area","Eastern Province","Northern Province","Southern Province"]};
+const NIGERIA_LGAS = {"Abia":["Aba North","Aba South"],"Anambra":["Awka North","Awka South","Onitsha North","Onitsha South","Nnewi North"],"Lagos":["Agege","Alimosho","Ikeja","Surulere","Lagos Island"],"FCT Abuja":["Abaji","Bwari","Gwagwalada","Kuje","Kwali","Municipal"]};
+function getCitiesForCountry(c){if(WORLD_STATES[c]) return WORLD_STATES[c];return ["All Regions"];}
+function getAreasForCity(city){if(NIGERIA_LGAS[city]) return NIGERIA_LGAS[city];if(city==="Awka") return NIGERIA_LGAS["Anambra"];if(city==="All Regions") return ["All Areas"];return [city+" Central",city+" North",city+" South",city+" Main"];}
+const LEARN_CATS = {"Technology":{"Programming":{"Web":["React","JavaScript","Python"]}},"Business":{"Entrepreneurship":{"Business":["Selling"]}},"Fashion":{"Tailoring":{"Sewing":["Ankara"]}},"Academic":{"Science":{"Maths":["Algebra"]}},"Skills":{"Handwork":{"Beauty":["Braiding"]}}};
+let currentCountry="All Countries",currentMain="All",currentSub="All",currentSubSub="All",sortType="vision",courseThumb=null;
+function getUser(){return (localStorage.getItem('dot_user')||'peter').trim();}
+function isVerified(){let u=getUser().toUpperCase();return localStorage.getItem('dot_verified_'+u)==='true'||localStorage.getItem('dot_user_verified')==='true';}
+function getVerificationStatus(){if(isVerified()) return `<div class="verifyOk">✅ Verified</div>`;else return `<div class="verifyAlert">🔒 Verify first - <a href="dowallet.html" style="color:#b71c1c;text-decoration:underline;font-weight:900">Click here to verify</a></div>`;}
+function getCourses(){return JSON.parse(localStorage.getItem('dot_courses')||'[]');}
+function saveCourses(c){localStorage.setItem('dot_courses',JSON.stringify(c));}
+function getEnrollments(){return JSON.parse(localStorage.getItem('dot_enrollments_'+getUser())||'[]');}
+function saveEnrollments(e){localStorage.setItem('dot_enrollments_'+getUser(),JSON.stringify(e));}
+function fillAllCountries(id){let sel=document.getElementById(id);if(!sel) return;sel.innerHTML='';ALL_COUNTRIES.forEach(c=>{let o=document.createElement('option');o.value=c;o.text=c;sel.appendChild(o);});}
+function fillCitiesDropdown(country,cityId,areaId){let citySel=document.getElementById(cityId);if(!citySel) return;citySel.innerHTML='';getCitiesForCountry(country).forEach(city=>{let o=document.createElement('option');o.value=city;o.text=city;citySel.appendChild(o);});fillAreasDropdown(citySel.value,areaId);}
+function fillAreasDropdown(city,areaId){let areaSel=document.getElementById(areaId);if(!areaSel) return;areaSel.innerHTML='';getAreasForCity(city).forEach(a=>{let o=document.createElement('option');o.value=a;o.text=a;areaSel.appendChild(o);});}
+function countryChanged(){currentCountry=document.getElementById('filterCountry').value;fillCitiesDropdown(currentCountry,'filterCity','filterArea');renderFilters();renderGeneral();}
+function cityChanged(){let city=document.getElementById('filterCity').value;fillAreasDropdown(city,'filterArea');renderGeneral();}
+function fillMainCats(){let mainHtml='<option value="All">All Categories</option>';Object.keys(LEARN_CATS).forEach(k=>{mainHtml+=`<option value="${k}">${k}</option>`;});['learnMain','courseMain'].forEach(id=>{if(document.getElementById(id)) document.getElementById(id).innerHTML=mainHtml;});}
+function learnMainChanged(){let main=document.getElementById('learnMain').value;let subSel=document.getElementById('learnSub');let html='<option>All Sub</option>';if(main!=='All'&&LEARN_CATS[main]) Object.keys(LEARN_CATS[main]).forEach(k=>{html+=`<option>${k}</option>`;});subSel.innerHTML=html;}
+function courseMainChanged(){let main=document.getElementById('courseMain').value;let subSel=document.getElementById('courseSub');let html='<option>All Sub</option>';if(main!=='All'&&LEARN_CATS[main]) Object.keys(LEARN_CATS[main]).forEach(k=>{html+=`<option>${k}</option>`;});subSel.innerHTML=html;courseSubChanged();}
+function courseSubChanged(){let main=document.getElementById('courseMain').value;let sub=document.getElementById('courseSub').value;let subSubSel=document.getElementById('courseSubSub');let html='<option>All</option>';if(main!=='All'&&sub!=='All Sub'&&LEARN_CATS[main]&&LEARN_CATS[main][sub]) Object.keys(LEARN_CATS[main][sub]).forEach(k=>{html+=`<option>${k}</option>`;});subSubSel.innerHTML=html;}
+function switchTab(t){document.getElementById('generalView').style.display=t==='general'?'block':'none';document.getElementById('mylearnView').style.display=t==='mylearn'?'block':'none';document.getElementById('teachView').style.display=t==='teach'?'block':'none';document.getElementById('mycoursesView').style.display=t==='mycourses'?'block':'none';document.getElementById('tabGeneral').className=t==='general'?'active':'';document.getElementById('tabMyLearn').className=t==='mylearn'?'active':'';document.getElementById('tabTeach').className=t==='teach'?'active':'';document.getElementById('tabMyCourses').className=t==='mycourses'?'active':'';if(t==='general') renderGeneral();if(t==='mylearn') renderMyLearn();if(t==='teach') document.getElementById('verifyCheck2').innerHTML=getVerificationStatus();if(t==='mycourses') renderMyEnrolled();}
+function renderFilters(){let mainDiv=document.getElementById('mainFilter');mainDiv.innerHTML='<button class="'+(currentMain==='All'?'active':'')+'" onclick="filterMain(\'All\')">All</button>';Object.keys(LEARN_CATS).forEach(m=>{mainDiv.innerHTML+='<button class="'+(currentMain===m?'active':'')+'" onclick="filterMain(\''+m+'\')">'+m+'</button>';});let subDiv=document.getElementById('subFilter');subDiv.innerHTML='<button class="'+(currentSub==='All'?'active':'')+'" onclick="filterSub(\'All\')">All Sub</button>';let subList=[];if(currentMain==='All'){Object.values(LEARN_CATS).forEach(subObj=>{subList=subList.concat(Object.keys(subObj));});}else{subList=Object.keys(LEARN_CATS[currentMain]||{});}subList.forEach(s=>{subDiv.innerHTML+='<button class="'+(currentSub===s?'active':'')+'" onclick="filterSub(\''+s+'\')">'+s+'</button>';});}
+function filterMain(m){currentMain=m;currentSub="All";currentSubSub="All";renderFilters();renderGeneral();}
+function filterSub(s){currentSub=s;currentSubSub="All";renderFilters();renderGeneral();}
+function setSort(t){sortType=t;renderGeneral();}
+function createLearn(){if(!isVerified()){alert('Verify first');return;}let name=document.getElementById('learnName').value.trim();if(!name){alert('Name required');return;}let platform={id:Date.now(),owner:getUser(),name,desc:document.getElementById('learnDesc').value,country:document.getElementById('learnCountry').value,city:document.getElementById('learnCity').value,area:document.getElementById('learnArea').value,whatsapp:document.getElementById('learnWhatsapp').value};localStorage.setItem('dot_learn_'+getUser(),JSON.stringify(platform));alert('Platform created');renderMyLearn();}
+function renderMyLearn(){let platform=localStorage.getItem('dot_learn_'+getUser());document.getElementById('verifyCheck').innerHTML=getVerificationStatus();if(!platform){document.getElementById('noLearnBox').style.display='block';document.getElementById('hasLearnBox').style.display='none';fillAllCountries('learnCountry');fillAllCountries('courseCountry');fillCitiesDropdown('Nigeria','learnCity','learnArea');fillCitiesDropdown('Nigeria','courseCity','courseArea');fillMainCats();}else{document.getElementById('noLearnBox').style.display='none';document.getElementById('hasLearnBox').style.display='block';let s=JSON.parse(platform);document.getElementById('myLearnHeader').innerHTML=`<h3 style="margin:0;color:#0f5bd7">🎓 ${s.name}</h3><p class="small">${s.desc||''} - 📍 ${s.country} ${s.city}</p>`;let myCourses=getCourses().filter(c=>c.teacher===getUser());document.getElementById('myCourseCount').textContent=myCourses.length;document.getElementById('teachStats').innerHTML=`<div class="row"><div class="card" style="margin:2px"><b>${myCourses.length}</b><br><span class="small">Courses</span></div><div class="card" style="margin:2px"><b>${myCourses.reduce((a,c)=>a+(c.students||0),0)}</b><br><span class="small">Students</span></div></div>`;let html='';myCourses.forEach(c=>{html+=`<div class="course ${c.boosted?'boosted':''}" onclick="openCourse(${c.id})"><img src="${c.image}"><div><b>${c.title}</b> ${c.boosted?'<span class="badge badge-red">🔥 Featured</span>':''}<br><span class="small">${c.level} | ${c.lang}</span><br><span class="badge badge-blue">$${c.price}</span> <span class="badge badge-white">${c.lessons?.length||0} lessons</span></div></div>`;});if(!html) html='<p class="small">No courses yet - Go to Teach tab</p>';document.getElementById('myCoursesListTeach').innerHTML=html;}}
+function addLessonField(){let div=document.createElement('div');div.className='lesson';div.innerHTML=`<input placeholder="Lesson Title" class="lessonTitle"><input placeholder="Video URL" class="lessonVideo"><textarea placeholder="Notes" class="lessonNotes"></textarea><div class="row"><select class="lessonType"><option>Video</option><option>PDF</option><option>Text</option><option>Live Class</option></select><input placeholder="Duration" class="lessonDuration"></div><button onclick="this.parentElement.remove()" style="background:#b71c1c;color:#fff;border:none;padding:4px 8px;border-radius:6px">Remove</button>`;document.getElementById('lessonsBuilder').appendChild(div);}
+function addQuizField(){let div=document.createElement('div');div.className='quiz';div.innerHTML=`<input placeholder="Question" class="quizQ"><input placeholder="A" class="quizA"><input placeholder="B" class="quizB"><input placeholder="C" class="quizC"><input placeholder="D" class="quizD"><select class="quizCorrect"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select><button onclick="this.parentElement.remove()" style="background:#b71c1c;color:#fff;border:none;padding:4px 8px;border-radius:6px">Remove</button>`;document.getElementById('quizBuilder').appendChild(div);}
+function handleImage(input,num){if(input.files&&input.files[0]){let reader=new FileReader();reader.onload=e=>{courseThumb=e.target.result;document.getElementById('coursePreview').innerHTML=`<img src="${courseThumb}" style="width:120px;height:80px;object-fit:cover;border-radius:8px;border:2px solid #0f5bd7">`;};reader.readAsDataURL(input.files[0]);}}
+function postCourse(){if(!isVerified()){alert('Verify first');return;}let title=document.getElementById('courseTitle').value.trim();let price=document.getElementById('coursePrice').value.trim();if(!title||!price){alert('Title and price required');return;}let lessons=[];document.querySelectorAll('#lessonsBuilder .lesson').forEach(el=>{let t=el.querySelector('.lessonTitle')?.value||'';if(t) lessons.push({title:t,video:el.querySelector('.lessonVideo')?.value||'',notes:el.querySelector('.lessonNotes')?.value||'',type:el.querySelector('.lessonType')?.value||'Video',duration:el.querySelector('.lessonDuration')?.value||'15 mins',done:false});});let quizzes=[];document.querySelectorAll('#quizBuilder .quiz').forEach(el=>{let q=el.querySelector('.quizQ')?.value||'';if(q) quizzes.push({q,a:el.querySelector('.quizA')?.value,b:el.querySelector('.quizB')?.value,c:el.querySelector('.quizC')?.value,d:el.querySelector('.quizD')?.value,correct:el.querySelector('.quizCorrect')?.value});});let course={id:Date.now(),title,price:parseFloat(price),oldPrice:parseFloat(document.getElementById('courseOldPrice').value||price),level:document.getElementById('courseLevel').value,lang:document.getElementById('courseLang').value,duration:document.getElementById('courseDuration').value||'5 hours',cert:document.getElementById('courseCert').value,desc:document.getElementById('courseDesc').value,country:document.getElementById('courseCountry').value,city:document.getElementById('courseCity').value,area:document.getElementById('courseArea').value,main:document.getElementById('courseMain').value,sub:document.getElementById('courseSub').value,subSub:document.getElementById('courseSubSub').value,free:document.getElementById('courseFree').checked,live:document.getElementById('courseLive').checked,download:document.getElementById('courseDownload').checked,boosted:document.getElementById('courseVision').checked,lessons,quizzes,image:courseThumb||'https://via.placeholder.com/300',teacher:getUser(),students:0,rating:5,created:Date.now()};let courses=getCourses();courses.unshift(course);saveCourses(courses);alert('Course published');document.getElementById('courseTitle').value='';document.getElementById('coursePrice').value='';courseThumb=null;document.getElementById('coursePreview').innerHTML='';renderMyLearn();renderGeneral();}
+function renderGeneral(){let q=(document.getElementById('searchBox')?.value||'').toLowerCase();let level=document.getElementById('filterLevel')?.value||'All';let courses=getCourses();let filtered=courses.filter(c=>{if(currentMain!=='All'&&c.main!==currentMain) return false;if(currentSub!=='All'&&c.sub!==currentSub) return false;if(level!=='All'&&c.level!==level) return false;if(currentCountry!=="All Countries"&&c.country&&c.country!==currentCountry) return false;if(q){let hay=(c.title+' '+c.desc+' '+c.teacher+' '+c.level).toLowerCase();if(!hay.includes(q)) return false;}return true;});if(sortType==='low') filtered.sort((a,b)=>a.price-b.price);if(sortType==='high') filtered.sort((a,b)=>b.price-a.price);if(sortType==='vision') filtered.sort((a,b)=>(b.boosted?1:0)-(a.boosted?1:0));let boosted=filtered.filter(c=>c.boosted);let visionHtml='';boosted.forEach(c=>{visionHtml+=`<div class="marquee-item" onclick="openCourse(${c.id})"><img src="${c.image}"><div class="small" style="font-weight:900;color:#0f5bd7">${c.title}</div><span class="badge badge-blue">$${c.price}</span> <span class="badge badge-red">Featured</span></div>`;});if(!visionHtml) visionHtml=`<div class="small" style="padding:10px">No Featured courses</div>`;document.getElementById('visionTrack').innerHTML=visionHtml+visionHtml;let listHtml='';filtered.forEach(c=>{listHtml+=`<div class="course ${c.boosted?'boosted':''}" onclick="openCourse(${c.id})"><img src="${c.image}"><div><b>${c.title}</b> ${c.boosted?'<span class="badge badge-red">🔥 Featured</span>':''} ${c.live?'<span class="badge badge-blue">🔴 LIVE</span>':''}<br><span class="small">${c.teacher} - ${c.level} - ${c.lang} - ${c.duration}</span><br><span class="badge badge-blue">$${c.price}</span> <span class="badge badge-white">${c.lessons?.length||0} lessons</span> <span class="badge badge-white">⭐ ${c.rating||5}</span><br><span class="small">${(c.desc||'').substring(0,70)}</span></div></div>`;});if(!listHtml) listHtml=`<div class="card"><p style="text-align:center">No courses yet</p></div>`;document.getElementById('generalList').innerHTML=listHtml;}
+function openCourse(id){let courses=getCourses();let c=courses.find(x=>x.id==id);if(!c) return;document.getElementById('modalTitle').textContent=c.title;let lessonsHtml='';(c.lessons||[]).forEach((l,i)=>{lessonsHtml+=`<div class="lesson ${l.done?'done':''}"><b>Lesson ${i+1}: ${l.title}</b> <span class="badge badge-white">${l.type}</span> ${l.duration}<br><span class="small">${l.notes||''} ${l.video?'<a href="'+l.video+'" target="_blank" style="color:#0f5bd7;font-weight:900">▶️ Watch</a>':''}</span><br><button onclick="markLessonDone(${c.id},${i})" style="padding:4px 8px;background:${l.done?'#0f5bd7':'#b71c1c'};color:#fff;border:none;border-radius:6px;font-size:10px;margin-top:4px">${l.done?'✅ Done':'Mark Done'}</button></div>`;});let quizzesHtml='';(c.quizzes||[]).forEach((q,i)=>{quizzesHtml+=`<div class="quiz"><b>Q${i+1}: ${q.q}</b><br>A: ${q.a}<br>B: ${q.b}<br>C: ${q.c}<br>D: ${q.d}</div>`;});document.getElementById('modalBody').innerHTML=`<img src="${c.image}" style="width:100%;border-radius:12px;max-height:220px;object-fit:cover;border:2px solid #0f5bd7"><h3>${c.title} ${c.boosted?'<span class="badge badge-red">🔥 Featured</span>':''}</h3><p class="small">📍 ${c.country} ${c.city} - ${c.main} > ${c.sub} - ${c.level} - ${c.lang} - ${c.duration} - ${c.cert} Cert</p><p><span class="badge badge-blue" style="font-size:14px">$${c.price}</span> <span class="badge badge-white">👥 ${c.students||0}</span></p><p class="small">${c.desc||''}</p><div class="card"><b>📹 Content - ${c.lessons?.length||0} Lessons</b><div class="progress"><div class="progress-bar" style="width:${getProgress(c)}%"></div></div><span class="small">${getProgress(c)}% completed</span><div>${lessonsHtml||'No lessons'}</div></div><div class="card red"><b>📝 Quizzes</b><div>${quizzesHtml||'No quizzes'}</div><button class="red btn" onclick="submitQuiz(${c.id})">📤 Submit Quiz</button></div><div class="row"><button class="blue btn" onclick="enrollCourse(${c.id})">🎓 Enroll - $${c.price}</button><button class="white btn" onclick="contactTeacher(${c.id})">💬 WhatsApp Teacher</button></div>`;document.getElementById('courseModal').style.display='block';}
+function closeModal(){document.getElementById('courseModal').style.display='none';}
+function getProgress(c){if(!c.lessons||!c.lessons.length) return 0;let done=c.lessons.filter(l=>l.done).length;return Math.round((done/c.lessons.length)*100);}
+function markLessonDone(courseId,lessonIndex){let courses=getCourses();let c=courses.find(x=>x.id==courseId);if(c&&c.lessons[lessonIndex]){c.lessons[lessonIndex].done=true;saveCourses(courses);openCourse(courseId);renderMyEnrolled();}}
+function submitQuiz(courseId){alert('Quiz submitted! 🎉');}
+function enrollCourse(id){let courses=getCourses();let c=courses.find(x=>x.id==id);let enroll=getEnrollments();if(enroll.find(x=>x.courseId==id)){alert('Already enrolled');return;}enroll.push({courseId:id,title:c.title,teacher:c.teacher,image:c.image,price:c.price,cert:c.cert,enrolled:Date.now()});saveEnrollments(enroll);c.students=(c.students||0)+1;saveCourses(courses);alert('Enrolled! Go to My Courses');renderMyEnrolled();renderGeneral();}
+function renderMyEnrolled(){let enroll=getEnrollments();document.getElementById('studentStats').innerHTML=`<div class="row"><div class="card" style="margin:2px"><b>${enroll.length}</b><br><span class="small">Enrolled</span></div></div>`;let html='';enroll.forEach(e=>{let course=getCourses().find(c=>c.id==e.courseId);let progress=course?getProgress(course):0;html+=`<div class="course" onclick="openCourse(${e.courseId})"><img src="${e.image}"><div><b>${e.title}</b><br><span class="small">${e.teacher}</span><br><div class="progress"><div class="progress-bar" style="width:${progress}%"></div></div><span class="small">${progress}% completed</span></div></div>`;});if(!html) html='<div class="card"><p class="small">No enrolled courses yet</p></div>';document.getElementById('myEnrolledList').innerHTML=html;}
+function contactTeacher(id){let c=getCourses().find(x=>x.id==id);let msg=`Hello ${c.teacher}, I want to enroll in ${c.title} - $${c.price}`;window.open(`https://wa.me/234000000000?text=${encodeURIComponent(msg)}`,'_blank');}
+(function init(){fillAllCountries('filterCountry');fillAllCountries('learnCountry');fillAllCountries('courseCountry');fillCitiesDropdown('All Countries','filterCity','filterArea');fillCitiesDropdown('Nigeria','learnCity','learnArea');fillCitiesDropdown('Nigeria','courseCity','courseArea');fillMainCats();let mainHtml='<option value="All">All Categories</option>';Object.keys(LEARN_CATS).forEach(k=>{mainHtml+=`<option value="${k}">${k}</option>`;});document.getElementById('learnMain').innerHTML=mainHtml;document.getElementById('courseMain').innerHTML=mainHtml;learnMainChanged();courseMainChanged();renderFilters();renderGeneral();renderMyLearn();})();
+</script>
+  <!-- 🤖 DUAL PROFESSIONAL BOT - IN-APP + WHATSAPP BRAIN - BLUE WHITE RED -->
+<div id="botFloat" onclick="openBot()" style="position:fixed;bottom:20px;right:20px;background:linear-gradient(90deg,#b71c1c,#0f5bd7);color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;z-index:99;box-shadow:0 4px 15px #0004;border:3px solid #fff">🤖</div>
+
+<div id="botBox" style="display:none;position:fixed;bottom:90px;right:15px;width:92%;max-width:380px;height:75vh;max-height:500px;background:#fff;border:3px solid transparent;border-image:linear-gradient(90deg,#b71c1c,#0f5bd7,#fff) 1;border-radius:16px;z-index:100;flex-direction:column;box-shadow:0 10px 30px #0003">
+<div style="background:linear-gradient(90deg,#b71c1c,#0f5bd7);color:#fff;padding:12px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:center"><b>🤖 DoBot - Professional Assistant - Business + Anything</b><button onclick="closeBot()" style="background:#fff;color:#b71c1c;border:none;padding:4px 10px;border-radius:20px;font-weight:900">X</button></div>
+<div id="botMessages" style="flex:1;overflow:auto;padding:10px;background:#f8fbff"></div>
+<div style="padding:8px;border-top:2px solid #e0eaff;display:flex;gap:6px;background:#fff"><input id="botInput" placeholder="Ask anything - Business, marketing, sales, pricing, DoLearn, DoCart..." style="flex:1;border:2px solid #0f5bd7;border-radius:20px;padding:10px" onkeypress="if(event.key==='Enter') sendBot()"><button onclick="sendBot()" style="background:#0f5bd7;color:#fff;border:none;padding:10px 16px;border-radius:20px;font-weight:900">Send</button></div>
+<div style="padding:6px;background:#fff5f5;text-align:center;font-size:10px;color:#7a0000">Also on WhatsApp: <a href="https://wa.me/234000000000?text=Hello%20DoBot" style="color:#0f5bd7;font-weight:900">Chat on WhatsApp - Same brain</a> - Dual Bot</div>
+</div>
+
+<script>
+// 🤖 PROFESSIONAL BOT BRAIN - FEED WITH EVERYTHING
+const BOT_KNOWLEDGE = {
+  platform: "DoLearn, DoCart, DoGroup, DoWallet, DoSpace, dotgroup.top - Dual links peter.dolearn = peter.dolearn.dotgroup.top, peter.docart = peter.docart.dotgroup.top, peter.dogroup = peter.dogroup.dotgroup.top",
+  business: `
+  BUSINESS DEVELOPMENT - PROFESSIONAL:
+    - Marketing: Post daily on DoSpace, use Vision $0.001 marquee, offer discounts, free delivery, flash sales
+    - Sales: Haggle offers, fast reply WhatsApp, professional photos, size/color details
+    - Pricing: Check competitor price in General tab, set affiliate 10-30% to get others sell for you
+    - Customer Service: Always reply in 5 mins, say "Thank you", offer return 7 days
+    - Jarra Business: Shoes sizes 38-44, colors Black White Brown Blue, stock alert when low
+    - E-Learning: Create short lessons 15 mins, add quiz, give certificate, live class weekly
+    - Growth: Ask customers review, get 5-star rating, boost rating sort
+    - WhatsApp: Use broadcast, status, save customer numbers
+  `,
+  courses: () => JSON.stringify(getCourses().slice(0,10)),
+  products: () => { try{ return JSON.stringify(JSON.parse(localStorage.getItem('dot_products')||'[]').slice(0,10)) }catch(e){ return "No products yet" } }
+};
+
+function openBot(){document.getElementById('botBox').style.display='flex'; if(!document.getElementById('botMessages').innerHTML) addBotMsg("bot","Hello 👋 I be your Professional DoBot - I fit answer ANYTHING:\n\n📚 DoLearn courses\n🛒 DoCart products\n💼 Business development - marketing, sales, pricing\n💡 Any question outside business too - I be professional bot like WhatsApp bot\n\nAsk me anything!"); }
+function closeBot(){document.getElementById('botBox').style.display='none';}
+function addBotMsg(who, text){
+ let div=document.createElement('div');
+ div.style.cssText=who==='user'?'background:#0f5bd7;color:#fff;padding:8px 12px;border-radius:18px 18px 0 18px;margin:6px 0 6px 30px;align-self:flex-end;max-width:85%;font-size:13px;white-space:pre-wrap':'background:#fff;border:2px solid #e0eaff;padding:8px 12px;border-radius:18px 18px 18px 0;margin:6px 30px 6px 0;max-width:85%;font-size:13px;color:#0a1931;white-space:pre-wrap';
+ div.textContent=text;
+ document.getElementById('botMessages').appendChild(div);
+ document.getElementById('botMessages').scrollTop=99999;
+}
+
+function professionalBotAnswer(question){
+ let q=question.toLowerCase();
+ // 1. Platform questions
+ if(q.includes('course')||q.includes('learn')||q.includes('teach')) return `📚 DoLearn Help:\nYou have ${getCourses().length} courses total.\nGo to Teach tab → Create course → Add lessons (video/PDF) + quiz → Publish.\nYour platform will show in General tab + Featured marquee if you tick Featured.\nWant make I help you write course title or description? Tell me topic.`;
+ if(q.includes('product')||q.includes('shop')||q.includes('docart')||q.includes('jarra')) return `🛒 DoCart Help:\nPost product: My Shop tab → Fill name, price, size (${q.includes('size')?'38-44 for shoes':'S M L XL'}), color (Black White etc), brand → Upload image → Post.\nTips: Add Free Delivery + 7-day Return + Vision $0.001 for marquee.\nAffiliate: Tick Yes → Others go sell for you 10-30%.\nYou currently have ${(JSON.parse(localStorage.getItem('dot_products')||'[]').length)} products.`;
+ if(q.includes('marketing')||q.includes('sales')||q.includes('sell more')||q.includes('customer')) return `💼 Business Development - Professional:\n${BOT_KNOWLEDGE.business}\n\nQuick Win for you TODAY:\n1. Post 1 product/course with Flash Sale ⏰\n2. Share link on WhatsApp status with affiliate message\n3. Reply all haggle offers in My Shop → Offers\n\nTell me your business type (shoes? tailoring? coding?) - I go give you specific plan.`;
+ if(q.includes('price')||q.includes('pricing')) return `💰 Pricing Strategy:\n- Check General tab sorted by Low - See competitor price\n- Set price +10% then give discount Old Price to show ${Math.round(Math.random()*30+10)}% OFF badge\n- Add affiliate 20% - Others go push your product\n- Free delivery if price > $30 - Customer go buy more\nWhat product you wan price? Tell me name + cost - I calculate for you.`;
+ if(q.includes('whatsapp')||q.includes('bot')||q.includes('dual')) return `🤖 Dual Bot Setup - Professional:\nIN-APP: This bot you dey chat now - Inside DoLearn/DoCart - Works offline with knowledge.\nWHATSAPP BOT: Same brain but for WhatsApp Business API.\n\nTo make WhatsApp bot live:\n1. Go to developers.facebook.com → Create App → WhatsApp Business\n2. Get Phone Number ID + Access Token\n3. Create webhook server (I go give you server.js) → Connect to this same BOT_KNOWLEDGE + AI\n4. Customers chat your WhatsApp number → Bot answer same as here - Business + anything\n\nYou want make I generate the WhatsApp webhook server code? Talk "Yes webhook code".`;
+ // General professional answer
+ return `🤖 Professional Answer:\nYou ask: "${question}"\n\nHere is how e go help your business:\n- If na marketing: Post daily, use Featured $0.001, share affiliate links\n- If na sales: Fast reply, haggle, free delivery, return policy\n- If na idea: Think wetin customer need for ${currentCountry||'your area'} - Solve that\n- If na anything outside business: I fit still answer - I be like ChatGPT but trained for your Jarra/DoLearn business\n\nGive me more detail - Your business name? What you sell/teach? I go give you step-by-step plan wey you go do today.\n\nAlso check: General tab = all courses/products | My Learn/My Shop = your own platform.`;
+}
+
+function sendBot(){
+ let input=document.getElementById('botInput');
+ let text=input.value.trim();
+ if(!text) return;
+ addBotMsg('user', text);
+ input.value='';
+ setTimeout(()=>{
+  let answer=professionalBotAnswer(text);
+  addBotMsg('bot', answer);
+  // Optional: If you get OpenAI API key, replace with fetch to AI
+  // fetch('https://api.openai.com/v1/chat/completions', {method:'POST', headers:{'Authorization':'Bearer YOUR_KEY','Content-Type':'application/json'}, body:JSON.stringify({model:'gpt-4o-mini', messages:[{role:'system',content:BOT_KNOWLEDGE.business+BOT_KNOWLEDGE.platform},{role:'user',content:text}]})})
+ }, 600);
+}
+</script>
+</body>
+</html>

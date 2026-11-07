@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DOTGROUP GAME HUB V8 FINAL</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0f0f0f;color:#fff;min-height:100vh;padding-top:82px;display:flex;flex-direction:column}
+.header{position:fixed;top:0;left:0;right:0;height:56px;background:#000;border-bottom:2px solid #c62828;display:flex;justify-content:space-between;align-items:center;padding:0 12px;z-index:999999}
+.logo{width:32px;height:32px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px}
+.ham{width:48px;height:48px;background:#222;border:2px solid #6a11cb;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.ham span{width:20px;height:3px;background:#fff;display:block}
+.strip{position:fixed;top:56px;left:0;right:0;height:26px;background:#0a1931;border-bottom:3px solid #c62828;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:9px;font-weight:700;z-index:999998}
+.menu{position:fixed;top:64px;right:10px;width:290px;background:#1e1e1e;border:2px solid #6a11cb;border-radius:16px;padding:14px;z-index:1000000;display:none}
+.menu.open{display:block!important}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999990;display:none}
+.overlay.open{display:block!important}
+.game-box{margin:10px;background:#000;border:1px solid #333;border-radius:18px;min-height:440px;position:relative;overflow:hidden;flex:1}
+#empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:#000;z-index:2}
+#fr{position:absolute;inset:0;width:100%;height:100%;border:none;display:none;z-index:3}
+#fr.show{display:block!important}
+.footer{margin-top:auto;background:#0a0a0a;border-top:1px solid #222;padding:12px;text-align:center;color:#555;font-size:10px}
+button.mbtn{width:100%;padding:12px;background:#222;border:1px solid #444;color:#fff;border-radius:10px;margin-bottom:8px;text-align:left}
+</style>
+</head>
+<body>
+<div class="header"><div style="display:flex;align-items:center;gap:8px"><div class="logo">DOT</div><b>DOTGROUP <span style="color:#c62828">GAME HUB</span></b></div><button class="ham" onclick="toggleMenu()"><span></span><span></span><span></span></button></div>
+<div class="strip"><span>DOTGROUP GAME HUB — Choose Game — Add Game</span><span>V8 FINAL</span></div>
+<div class="overlay" id="ov" onclick="closeMenu()"></div>
+<div class="menu" id="menuBox"><b style="color:#fff;display:block;margin-bottom:10px">☰ MENU — TAP TO OPEN</b><button class="mbtn" onclick="chooseGame('game1');closeMenu()">🎮 Tap Tap — Play</button><button class="mbtn" onclick="chooseGame('game2');closeMenu()">🎮 Slot 2</button><button class="mbtn" onclick="chooseGame('game3');closeMenu()">🎮 Slot 3</button></div>
+<div style="padding:10px;display:flex;gap:8px"><select id="sel" style="flex:1;background:#222;color:#fff;border:1px solid #444;padding:12px;border-radius:12px"><option value="">-- Choose Game --</option><option value="game1">Tap Tap</option><option value="game2">Slot 2</option><option value="game3">Slot 3</option></select></div>
+<div class="game-box"><div id="empty"><div style="font-size:48px">🎮</div><h2 style="color:#fff;margin:8px 0">SELECT GAME</h2><p style="font-size:11px;color:#6a11cb">V8 — Hamburger fixed — No overlap</p><button onclick="chooseGame('game1')" style="margin-top:12px;padding:10px 20px;background:#6a11cb;color:#fff;border:none;border-radius:10px">▶ PLAY NOW</button></div><iframe id="fr"></iframe></div>
+<div class="footer">© DOTGROUP GAME HUB — V8 Final — Logo 32px — Hamburger Works — Footer Fixed — Permanent Header</div>
+<script>
+function toggleMenu(){document.getElementById('menuBox').classList.toggle('open');document.getElementById('ov').classList.toggle('open')}
+function closeMenu(){document.getElementById('menuBox').classList.remove('open');document.getElementById('ov').classList.remove('open')}
+const GAMES={game1:`<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:Arial}#box{width:280px;height:280px;background:#222;border-radius:20px;position:relative;border:3px solid #6a11cb}#dot{width:56px;height:56px;background:#6a11cb;border-radius:50%;position:absolute}</style></head><body><h2>TAP GAME</h2><div id="sc">Score:0</div><div id="box"><div id="dot"></div></div><script>let s=0;const d=document.getElementById('dot'),sc=document.getElementById('sc');function mv(){d.style.left=Math.random()*224+'px';d.style.top=Math.random()*224+'px'}d.onclick=()=>{s++;sc.innerText='Score:'+s;mv()};d.ontouchstart=(e)=>{e.preventDefault();s++;sc.innerText='Score:'+s;mv()};mv();<\/script></body></html>`,game2:`<body style="background:#000;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial"><h2>Slot 2 Empty</h2></body>`,game3:`<body style="background:#000;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial"><h2>Slot 3 Empty</h2></body>`};
+function chooseGame(v){const fr=document.getElementById('fr'),em=document.getElementById('empty');if(!v){fr.classList.remove('show');fr.style.display='none';em.style.display='flex';return}em.style.display='none';fr.style.display='block';fr.classList.add('show');fr.srcdoc=GAMES[v];document.getElementById('sel').value=v}
+document.getElementById('sel').addEventListener('change',e=>chooseGame(e.target.value));
+</script>
+</body>
+</html>

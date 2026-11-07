@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOCOIN Wallet - Simple</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0;padding:10px}
+.top{background:#1a4db3;color:white;padding:14px;border-radius:12px;text-align:center;max-width:480px;margin:0 auto}
+.card{background:white;border-radius:12px;padding:16px;margin:10px auto;max-width:480px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.input-box{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:8px;margin:6px 0;font-size:15px;box-sizing:border-box}
+.btn-main{background:#1a4db3;color:white;border:none;padding:12px;width:100%;border-radius:8px;font-weight:700}
+.preview{background:#eef4ff;border-radius:8px;padding:10px;margin-top:8px;text-align:center;font-weight:700;color:#0a3d9c}
+.small{font-size:11px;color:#888}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="top">
+<b>DOTGROUP DOCOIN WALLET</b><br>
+<small>1 DOCOIN = $1 USD | 180 Currencies</small>
+</div>
+
+<div class="card">
+<label><b>Wallet Menu</b></label>
+<select id="walletMenu" class="input-box" onchange="showSection()" style="background:#f0f0f0;font-weight:700">
+<option value="main">Main Balance</option>
+<option value="reward">Reward Balance</option>
+<option value="deposit">Deposit (Add Funds)</option>
+<option value="withdraw">Withdrawal</option>
+<option value="transfer">Transfer (Send to User)</option>
+<option value="convert">Convert (180 Currencies)</option>
+</select>
+</div>
+
+<!-- MAIN BALANCE -->
+<div id="sec-main" class="card">
+<div class="small">Main Balance</div>
+<div style="font-size:28px;font-weight:900">100.00 DOCOIN</div>
+<div class="small">Daily spend: 10.00 today</div>
+</div>
+
+<!-- REWARD BALANCE - CHANGED TO SUBSCRIPTION -->
+<div id="sec-reward" class="card hidden">
+<div class="small">Reward Balance</div>
+<div style="font-size:28px;font-weight:900;color:green">50.00 DOCOIN</div>
+<div class="small" style="color:red">Locked until subscribed</div>
+<button class="btn-main" style="margin-top:10px;background:#222" onclick="window.location.href='AccessPass.html'">Subscribe Now</button>
+</div>
+
+<!-- DEPOSIT -->
+<div id="sec-deposit" class="card hidden">
+<b>Deposit</b>
+<input type="number" id="depAmount" class="input-box" placeholder="Amount e.g 5888" oninput="calcDeposit()">
+<select id="depCurrency" class="input-box" onchange="calcDeposit()"></select>
+<div class="preview" id="depPreview" style="display:none">You get <span id="depDocoin">0</span> DOCOIN</div>
+<button class="btn-main">Continue to Pay</button>
+</div>
+
+<!-- WITHDRAWAL - CHANGED TO SUBSCRIPTION 5% -->
+<div id="sec-withdraw" class="card hidden">
+<b>Withdrawal (To Bank / Outside)</b>
+<input type="number" id="witAmount" class="input-box" placeholder="Amount in DOCOIN" oninput="calcWithdraw()">
+<select id="witCurrency" class="input-box" onchange="calcWithdraw()"></select>
+<div class="preview" id="witPreview" style="display:none"></div>
+<div class="small" id="witFee"></div>
+<input type="text" class="input-box" placeholder="Bank / Withdraw Address">
+<button class="btn-main" style="background:#d00">Withdraw</button>
+</div>
+
+<!-- TRANSFER - CHANGED TO SUBSCRIPTION -->
+<div id="sec-transfer" class="card hidden">
+<b>Transfer (To another DOCOIN user)</b>
+<input type="number" id="transAmount" class="input-box" placeholder="Amount in DOCOIN" oninput="calcTransfer()">
+<select id="transCurrency" class="input-box" onchange="calcTransfer()"></select>
+<div class="preview" id="transPreview" style="display:none"></div>
+<input type="text" class="input-box" placeholder="Recipient Username / Wallet ID">
+<button class="btn-main" style="background:#111">Transfer Now</button>
+<div class="small" style="margin-top:6px">Transfer has no 5% fee. Only Withdrawal has 5% fee if not subscribed.</div>
+</div>
+
+<!-- CONVERT -->
+<div id="sec-convert" class="card hidden">
+<b>Convert - 180 Currencies</b>
+<input type="number" id="convAmount" class="input-box" value="1" oninput="calcConvert()">
+<select id="convCurrency" class="input-box" onchange="calcConvert()"></select>
+<div class="preview" id="convPreview">1 DOCOIN = ...</div>
+</div>
+
+<script>
+const curs=["USD","NGN","EUR","GBP","AED","AFN","ALL","AMD","ANG","AOA","ARS","AUD","AWG","AZN","BAM","BBD","BDT","BGN","BHD","BIF","BMD","BND","BOB","BRL","BSD","BTN","BWP","BYN","BZD","CAD","CDF","CHF","CLP","CNY","COP","CRC","CUP","CVE","CZK","DJF","DKK","DOP","DZD","EGP","ERN","ETB","FJD","FKP","GEL","GHS","GIP","GMD","GNF","GTQ","GYD","HKD","HNL","HRK","HTG","HUF","IDR","ILS","INR","IQD","IRR","ISK","JMD","JOD","JPY","KES","KGS","KHR","KMF","KRW","KWD","KYD","KZT","LAK","LBP","LKR","LRD","LSL","LYD","MAD","MDL","MGA","MKD","MMK","MNT","MOP","MRU","MUR","MVR","MWK","MXN","MYR","MZN","NAD","NIO","NOK","NPR","NZD","OMR","PAB","PEN","PGK","PHP","PKR","PLN","PYG","QAR","RON","RSD","RUB","RWF","SAR","SBD","SCR","SDG","SEK","SGD","SHP","SLL","SOS","SRD","SSP","STN","SYP","SZL","THB","TJS","TMT","TND","TOP","TRY","TTD","TWD","TZS","UAH","UGX","UYU","UZS","VES","VND","VUV","WST","XAF","XCD","XOF","XPF","YER","ZAR","ZMW","ZWL"];
+let rates={USD:1,NGN:1345.47};
+function fillSelects(){
+ ["depCurrency","witCurrency","transCurrency","convCurrency"].forEach(id=>{
+  let s=document.getElementById(id); s.innerHTML="";
+  curs.forEach(c=>{let o=document.createElement("option"); o.value=c; o.textContent=c; s.appendChild(o);});
+  s.value="NGN";
+ });
+}
+function showSection(){
+ let v=document.getElementById("walletMenu").value;
+ ["main","reward","deposit","withdraw","transfer","convert"].forEach(k=>{
+  document.getElementById("sec-"+k).classList.add("hidden");
+ });
+ document.getElementById("sec-"+v).classList.remove("hidden");
+}
+async function loadRates(){
+ try{let r=await fetch('https://open.er-api.com/v6/latest/USD'); let d=await r.json(); if(d.rates) rates=d.rates; calcAll();}catch(e){}
+}
+function calcDeposit(){
+ let a=parseFloat(document.getElementById("depAmount").value); let c=document.getElementById("depCurrency").value;
+ let p=document.getElementById("depPreview");
+ if(!a){p.style.display="none";return;}
+ let usd=a/(rates[c]||1); document.getElementById("depDocoin").innerText=usd.toFixed(4); p.style.display="block";
+}
+function calcWithdraw(){
+ let a=parseFloat(document.getElementById("witAmount").value); let c=document.getElementById("witCurrency").value;
+ let p=document.getElementById("witPreview"); let f=document.getElementById("witFee");
+ if(!a){p.style.display="none";return;}
+ let gross=a*(rates[c]||1); p.innerText=`${a} DOCOIN = ${gross.toLocaleString()} ${c}`; p.style.display="block";
+ f.innerText="If not subscribed: 5% fee = You get "+(gross*0.95).toLocaleString()+" "+c;
+}
+function calcTransfer(){
+ let a=parseFloat(document.getElementById("transAmount").value); let c=document.getElementById("transCurrency").value;
+ let p=document.getElementById("transPreview");
+ if(!a){p.style.display="none";return;}
+ let gross=a*(rates[c]||1); p.innerText=`${a} DOCOIN = ${gross.toLocaleString()} ${c} (No fee for Transfer)`; p.style.display="block";
+}
+function calcConvert(){
+ let a=parseFloat(document.getElementById("convAmount").value)||0; let c=document.getElementById("convCurrency").value;
+ document.getElementById("convPreview").innerText=`${a} DOCOIN = ${(a*(rates[c]||1)).toLocaleString()} ${c}`;
+}
+function calcAll(){calcDeposit();calcWithdraw();calcTransfer();calcConvert();}
+fillSelects(); loadRates(); showSection();
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0756a8">
+<title>DO TRAVEL | AI-Powered Travel by DOTGROUP</title>
+
+<link rel="stylesheet" href="dot-header.css">
+<link rel="stylesheet" href="dot-footer.css">
+
+<style>
+:root {
+  --blue:#0756a8; --blue2:#0b75d1; --red:#e52d3b; --white:#ffffff;
+  --bg:#f3f7fc; --text:#172b45; --muted:#64748b; --border:#e1e8f0;
+  --green:#16865b; --shadow:0 8px 28px rgba(15,45,80,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.5}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.topbar{background:#063b78;color:#fff;text-align:center;padding:8px 12px;font-size:12px}
+.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.97)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-light{background:#eaf3ff;color:var(--blue)}
+.btn-outline{background:white;color:var(--blue);border:1px solid #c8d9ed}
+.hero{color:white;padding:62px 20px 100px;background:linear-gradient(110deg,rgba(3,38,79,.96),rgba(5,75,143,.79)),url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1800&q=85') center/cover}
+.hero-inner{max-width:1150px;margin:auto}
+.eyebrow{display:inline-block;background:#ffffff1c;border:1px solid #ffffff55;padding:7px 12px;border-radius:30px;font-size:12px;font-weight:800}
+.hero h1{font-size:clamp(34px,5vw,60px);line-height:1.08;max-width:760px;margin:20px 0}
+.hero h1 span{color:#ff5965}
+.hero p{max-width:630px;color:#e0ebfa;font-size:16px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.search-wrap{max-width:1150px;margin:-57px auto 0;padding:0 20px;position:relative;z-index:5}
+.search-card{background:#fff;border-radius:18px;padding:23px;box-shadow:var(--shadow)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{background:#f1f5f9;color:#475569;border:0;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:800}
+.tab.active{background:var(--blue);color:white}
+.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px;color:#40536b}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #dce5ef;border-radius:9px;background:white;outline:none;min-width:0}
+.field textarea{min-height:100px;resize:vertical}
+.search-actions{display:flex;justify-content:flex-end;margin-top:17px}
+section{padding:55px 20px}
+.container{max-width:1150px;margin:auto}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:25px}
+.section-head h2{font-size:clamp(23px,3vw,34px);margin:0 0 7px}
+.section-head p{color:var(--muted);margin:0;font-size:14px}
+.kicker{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 15px #163b6507}
+.card-body{padding:17px}
+.card h3{margin:0 0 8px;font-size:18px}
+.card p{margin:0 0 12px;color:var(--muted);font-size:13px}
+.card-img{width:100%;height:190px;object-fit:cover;display:block;background:#dce8f6}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.price{color:var(--blue);font-weight:900;font-size:19px}
+.badge{display:inline-block;background:#e8f6ee;color:var(--green);padding:5px 8px;border-radius:6px;font-size:10px;font-weight:900}
+.features{grid-template-columns:repeat(4,minmax(0,1fr))}
+.feature{padding:20px;background:white;border:1px solid var(--border);border-radius:14px}
+.feature-icon{font-size:28px;margin-bottom:10px}
+.feature h3{margin:0 0 6px;font-size:15px}
+.feature p{margin:0;color:var(--muted);font-size:12px}
+.ai-panel{background:linear-gradient(130deg,#063c7c,#0875cf);color:white;border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+.ai-panel p{color:#e0edff}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:start}
+.ai-chat{background:#fff;color:var(--text);border-radius:15px;padding:16px;min-height:300px;display:flex;flex-direction:column}
+.chat-log{flex:1;max-height:280px;overflow:auto;margin-bottom:12px}
+.bubble{padding:11px 13px;border-radius:12px;margin:8px 0;font-size:13px;white-space:pre-wrap}
+.bot-bubble{background:#edf5ff;margin-right:15px}
+.user-bubble{background:#e6f6ee;margin-left:15px}
+.chat-controls{display:flex;gap:8px}
+.chat-controls input{flex:1;min-width:0;border:1px solid var(--border);border-radius:9px;padding:11px}
+.quick-prompts{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.quick-prompts button{border:1px solid #ffffff70;background:#ffffff15;color:white;border-radius:30px;padding:8px 10px;font-size:11px}
+.notice{background:#fff7e5;border:1px solid #f2d49a;color:#78531a;padding:13px;border-radius:10px;font-size:12px;margin-top:13px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px}
+.panel h3{margin-top:0}
+.result-box{background:#edf5ff;padding:15px;border-radius:10px;margin-top:15px;white-space:pre-wrap;font-size:13px}
+.result-box:empty{display:none}
+.list{padding-left:20px;color:var(--muted);font-size:13px}
+.list li{margin:7px 0}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat{padding:17px;background:#f0f6ff;border-radius:12px}
+.stat strong{font-size:24px;display:block;color:var(--blue)}
+.stat span{font-size:11px;color:var(--muted)}
+.trip-item{border:1px solid var(--border);padding:14px;border-radius:10px;margin:10px 0;background:white}
+.trip-item strong{display:block}
+.trip-item small{color:var(--muted)}
+.empty{padding:20px;background:#f7faff;border-radius:10px;color:var(--muted);font-size:13px}
+.faq details{background:white;border:1px solid var(--border);padding:16px;border-radius:10px;margin-bottom:9px}
+.faq summary{font-weight:800;cursor:pointer}
+.faq p{font-size:13px;color:var(--muted)}
+.cta{background:linear-gradient(120deg,#e52d3b,#bc1c2a);color:white;border-radius:20px;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.cta p{color:#ffe7e9;font-size:13px}
+.modal-backdrop{position:fixed;inset:0;background:#061c35b8;z-index:100;display:none;align-items:center;justify-content:center;padding:15px}
+.modal-backdrop.open{display:flex}
+.modal{background:white;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:17px;padding:23px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.modal-head h2{font-size:21px}
+.close{border:0;background:#edf3fa;border-radius:8px;padding:8px 12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#102a45;color:white;padding:13px 18px;border-radius:10px;z-index:200;display:none;max-width:90%;font-size:13px}
+.toast.show{display:block}
+.small-muted{font-size:11px;color:var(--muted)}
+@media(max-width:900px){.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.features{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ai-grid,.split{grid-template-columns:1fr}}
+@media(max-width:560px){.form-grid,.grid,.features,.stat-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.search-card{padding:15px}.cta{align-items:flex-start;flex-direction:column}.hero h1{font-size:38px}}
+</style>
+</head>
+
+<body>
+<div class="topbar">✈ DOTGROUP PRESENTS DO TRAVEL · Explore the World. Travel Smarter.</div>
+
+<!-- NEW HEADER - 32px whole circle logo + 3-line dropdown -->
+<header id="dotHeader" class="dot-header">
+  <div class="dot-header-left">
+    <img src="dot-logo-small-32.png"
+         srcset="dot-logo-small-28.png 28w, dot-logo-small-32.png 32w, dot-logo-small-48.png 48w"
+         alt="DOTGROUP Logo 32px Whole Circle"
+         class="dot-logo-small"
+         width="32" height="32">
+    <div class="dot-brand">
+      <div class="dot-brand-title"><span class="c-blue">DOT</span><span class="c-dark">GROUP</span> <span class="c-red">DO TRAVEL</span></div>
+      <div class="dot-brand-sub">AI-Powered Travel • DOTGROUP</div>
+    </div>
+  </div>
+  <div class="dot-header-right">
+    <button class="dot-hamburger" id="dotHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="dot-dropdown" id="dotDropdown">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <strong style="font-size:11px;color:#0756a8">MENU — DO TRAVEL</strong>
+      <button id="ddClose" style="border:1px solid #e2e8f0;background:#f8fafc;padding:5px 10px;border-radius:8px;font-weight:800">✕</button>
+    </div>
+    <div class="dd-grid">
+      <div class="dd-group">
+        <h4>✈ TRAVEL</h4>
+        <button onclick="document.getElementById('flights').scrollIntoView({behavior:'smooth'})">Flights Search</button>
+        <button onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">Destinations</button>
+        <button onclick="document.getElementById('packages').scrollIntoView({behavior:'smooth'})">Packages</button>
+        <button onclick="document.getElementById('ai').scrollIntoView({behavior:'smooth'})">AI Planner</button>
+      </div>
+      <div class="dd-group">
+        <h4>📁 MY SPACE</h4>
+        <button onclick="document.getElementById('mytrips').scrollIntoView({behavior:'smooth'})">My Trips & Requests</button>
+        <button onclick="document.getElementById('budget').scrollIntoView({behavior:'smooth'})">Budget Calculator</button>
+        <button onclick="document.getElementById('visa').scrollIntoView({behavior:'smooth'})">Visa Info</button>
+        <button onclick="openRequest()">Plan My Trip — Request</button>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="dot-header-overlay" id="dotOverlay"></div>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <span class="eyebrow">🌍 YOUR WORLD. YOUR JOURNEY. YOUR WAY.</span>
+    <h1>Travel Beyond Borders.<br><span>Discover More.</span></h1>
+    <p>Plan smarter journeys with AI-powered travel assistance, destination discovery, personalized itineraries, travel packages, and organized trip requests—all in one place.</p>
+    <div class="hero-actions">
+      <a href="#flights" class="btn btn-red">✈ Explore Travel Options</a>
+      <a href="#ai" class="btn btn-light">✦ Meet Your AI Planner</a>
+    </div>
+  </div>
+</section>
+
+<div class="search-wrap" id="flights">
+  <div class="search-card">
+    <div class="tabs" role="tablist">
+      <button class="tab active" onclick="setSearchType('flight',this)">✈ Flights</button>
+      <button class="tab" onclick="setSearchType('hotel',this)">🏨 Hotels</button>
+      <button class="tab" onclick="setSearchType('tour',this)">🧭 Tours</button>
+      <button class="tab" onclick="setSearchType('transfer',this)">🚘 Transfers</button>
+    </div>
+    <form id="travelSearchForm">
+      <div class="form-grid">
+        <div class="field"><label id="fromLabel">FROM</label><input id="fromLocation" placeholder="e.g. Abuja, Nigeria" required></div>
+        <div class="field"><label id="toLabel">TO</label><input id="toLocation" placeholder="e.g. Accra, Ghana" required></div>
+        <div class="field"><label id="departLabel">DEPARTURE</label><input id="departDate" type="date" required></div>
+        <div class="field" id="returnField"><label>RETURN DATE</label><input id="returnDate" type="date"></div>
+        <div class="field"><label>TRAVELLERS</label><select id="travellers"><option>1 traveller</option><option>2 travellers</option><option>3 travellers</option><option>4 travellers</option><option>5 travellers</option><option>6+ travellers</option></select></div>
+        <div class="field" id="classField"><label>TRAVEL CLASS</label><select id="travelClass"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First Class</option></select></div>
+        <div class="field"><label>ESTIMATED BUDGET (USD)</label><input id="searchBudget" type="number" min="0" placeholder="e.g. 800"></div>
+        <div class="field"><label>TRAVEL PURPOSE</label><select id="travelPurpose"><option>Leisure</option><option>Business</option><option>Family Holiday</option><option>Education</option><option>Religious Travel</option><option>Adventure</option><option>Other</option></select></div>
+      </div>
+      <div class="search-actions"><button class="btn btn-primary" type="submit">Search / Request Options →</button></div>
+      <p class="small-muted">Searches submitted here create a travel enquiry in this demo. Live inventory and confirmed bookings require a connected travel provider.</p>
+    </form>
+  </div>
+</div>
+
+<!-- Rest of your original sections stay same - shortened for message but keep full content as before -->
+<section>
+  <div class="container">
+    <div class="section-head"><div><span class="kicker">Your journey starts here</span><h2>Everything You Need to Travel</h2><p>One travel hub for planning, discovery, preparation, and trip organization.</p></div></div>
+    <div class="grid features">
+      <article class="feature"><div class="feature-icon">✈️</div><h3>Flight Enquiries</h3><p>Organize your route, dates, class, and passenger requirements.</p></article>
+      <article class="feature"><div class="feature-icon">🏨</div><h3>Accommodation</h3><p>Explore hotel types and request options for your stay.</p></article>
+      <article class="feature"><div class="feature-icon">🤖</div><h3>AI Travel Planner</h3><p>Build personalized travel plans around your budget and interests.</p></article>
+      <article class="feature"><div class="feature-icon">🛂</div><h3>Visa Information</h3><p>Prepare document checklists and locate official immigration resources.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="ai" style="padding-top:20px">
+  <div class="container">
+    <div class="ai-panel">
+      <div class="ai-grid">
+        <div>
+          <span class="eyebrow">✦ INTELLIGENT TRAVEL ASSISTANCE</span>
+          <h2 style="font-size:32px;line-height:1.15">Meet Your DO TRAVEL AI Planner</h2>
+          <p>Tell the planner where you want to go, how long you will stay, and what you can spend.</p>
+          <div class="quick-prompts">
+            <button onclick="quickPrompt('Plan a 5-day affordable holiday in Ghana for two people.')">🇬🇭 Ghana holiday</button>
+            <button onclick="quickPrompt('Create a 7-day family vacation itinerary.')">👨‍👩‍👧 Family trip</button>
+            <button onclick="quickPrompt('Help me prepare for an international business trip.')">💼 Business trip</button>
+          </div>
+        </div>
+        <div class="ai-chat">
+          <div class="chat-log" id="chatLog"><div class="bubble bot-bubble">Hello, traveller! 🌍 I'm the DO TRAVEL AI planning demo. Tell me your destination, dates, budget, and interests to get started.</div></div>
+          <div class="chat-controls"><input id="aiInput" placeholder="e.g. Plan 3 days in Lagos..." onkeydown="if(event.key==='Enter')sendAI()"><button class="btn btn-primary" onclick="sendAI()">Send</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mytrips">
+  <div class="container">
+    <div class="section-head"><div><span class="kicker">Your personal travel space</span><h2>My Trips & Requests</h2><p>View requests created in this browser prototype.</p></div><button class="btn btn-primary" onclick="openRequest()">+ New Travel Request</button></div>
+    <div class="stat-grid">
+      <div class="stat"><strong id="statRequests">0</strong><span>TRAVEL REQUESTS</span></div>
+      <div class="stat"><strong id="statSaved">0</strong><span>SAVED DESTINATIONS</span></div>
+      <div class="stat"><strong id="statBudget">$0</strong><span>LAST ESTIMATED BUDGET</span></div>
+      <div class="stat"><strong>Demo</strong><span>STORAGE MODE</span></div>
+    </div>
+    <div class="panel"><h3>Your travel requests</h3><div id="tripList" class="empty">No requests yet. Start by searching for travel options or planning a trip.</div></div>
+  </div>
+</section>
+
+</main>
+
+<!-- NEW FOOTER -->
+<footer class="dot-footer">
+  <div class="dot-footer-inner">
+    <div class="dot-footer-logo">
+      <img src="dot-logo-small-28.png" width="28" height="28" alt="DOT">
+      <span><span style="color:#60a5fa">DOT</span>GROUP <span style="color:#f87171">DO TRAVEL</span></span>
+    </div>
+    <div class="dot-footer-links">
+      <a href="#flights">Travel Search</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#packages">Packages</a>
+      <a href="#ai">AI Planner</a>
+    </div>
+  </div>
+  <div class="dot-footer-bottom">DOTGROUP • DO TRAVEL • AI-Powered Travel • DOTGROUP Platform — Logo 32px whole circle visible<br>© <span id="year"></span> DOTGROUP · DO TRAVEL — Prices, provider availability, and travel rules must be verified before purchase.</div>
+</footer>
+
+<div class="modal-backdrop" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head"><h2 id="modalTitle">Create a Travel Request</h2><button class="close" onclick="closeRequest()" aria-label="Close">✕</button></div>
+    <form id="requestForm">
+      <div class="form-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div class="field"><label>FULL NAME</label><input id="rName" required maxlength="100"></div>
+        <div class="field"><label>EMAIL</label><input id="rEmail" type="email" required></div>
+        <div class="field"><label>PHONE / WHATSAPP</label><input id="rPhone" required maxlength="30"></div>
+        <div class="field"><label>REQUEST TYPE</label><select id="rType"><option>Flight enquiry</option><option>Hotel enquiry</option><option>Tour package</option><option>Airport transfer</option><option>Visa information</option><option>Destination enquiry</option><option>General trip planning</option></select></div>
+        <div class="field"><label>DEPARTURE / ORIGIN</label><input id="rFrom" placeholder="City or country"></div>
+        <div class="field"><label>DESTINATION</label><input id="rTo" required placeholder="Where do you want to go?"></div>
+        <div class="field"><label>TRAVEL DATE</label><input id="rDate" type="date"></div>
+        <div class="field"><label>ESTIMATED BUDGET (USD)</label><input id="rBudget" type="number" min="0" placeholder="Optional"></div>
+      </div>
+      <div class="field" style="margin-top:12px"><label>ADDITIONAL INFORMATION</label><textarea id="rNotes" maxlength="2000" placeholder="Number of travellers, preferences, and other requirements"></textarea></div>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:15px">Save Travel Request</button>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="dot-header.js"></script>
+<script>
+"use strict";
+const STORAGE = { requests: "dotravel_demo_requests_v1", destinations: "dotravel_demo_destinations_v1", budget: "dotravel_demo_last_budget_v1" };
+let searchType = "flight"; let toastTimer;
+function readStore(key, fallback) { try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (e) { return fallback; } }
+function writeStore(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { showToast("Browser storage is unavailable."); return false; } }
+function showToast(message) { const el = document.getElementById("toast"); el.textContent = message; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 3500); }
+document.getElementById("year").textContent = new Date().getFullYear();
+function setSearchType(type, button) {
+  searchType = type;
+  document.querySelectorAll(".tabs .tab").forEach(tab => tab.classList.remove("active"));
+  button.classList.add("active");
+  const labels = { flight:["FROM","TO","DEPARTURE"], hotel:["CITY / AREA","ACCOMMODATION LOCATION","CHECK-IN"], tour:["STARTING LOCATION","TOUR DESTINATION","PREFERRED DATE"], transfer:["PICKUP LOCATION","DROPOFF LOCATION","TRANSFER DATE"] };
+  document.getElementById("fromLabel").textContent = labels[type][0];
+  document.getElementById("toLabel").textContent = labels[type][1];
+  document.getElementById("departLabel").textContent = labels[type][2];
+}
+document.getElementById("travelSearchForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  openRequest({ flight:"Flight enquiry", hotel:"Hotel enquiry", tour:"Tour package", transfer:"Airport transfer" }[searchType], { from:document.getElementById("fromLocation").value.trim(), to:document.getElementById("toLocation").value.trim(), date:document.getElementById("departDate").value, budget:document.getElementById("searchBudget").value, notes:"Travellers: " + document.getElementById("travellers").value + "; Class: " + document.getElementById("travelClass").value });
+});
+function openRequest(type, values) {
+  document.getElementById("requestModal").classList.add("open");
+  document.getElementById("rType").value = type || "General trip planning";
+  if (values) { document.getElementById("rFrom").value = values.from || ""; document.getElementById("rTo").value = values.to || ""; document.getElementById("rDate").value = values.date || ""; document.getElementById("rBudget").value = values.budget || ""; document.getElementById("rNotes").value = values.notes || ""; }
+}
+function closeRequest() { document.getElementById("requestModal").classList.remove("open"); }
+document.getElementById("requestForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const requests = readStore(STORAGE.requests, []);
+  const request = { id:"DT-" + Date.now().toString(36).toUpperCase(), name:document.getElementById("rName").value.trim(), email:document.getElementById("rEmail").value.trim(), phone:document.getElementById("rPhone").value.trim(), type:document.getElementById("rType").value, from:document.getElementById("rFrom").value.trim(), to:document.getElementById("rTo").value.trim(), date:document.getElementById("rDate").value, budget:document.getElementById("rBudget").value, notes:document.getElementById("rNotes").value.trim(), status:"Enquiry saved — not yet confirmed", createdAt:new Date().toISOString() };
+  requests.unshift(request); if (!writeStore(STORAGE.requests, requests)) return; this.reset(); closeRequest(); renderTrips(); showToast("Demo request saved."); document.getElementById("mytrips").scrollIntoView({behavior:"smooth"});
+});
+function renderTrips() {
+  const requests = readStore(STORAGE.requests, []); const saved = readStore(STORAGE.destinations, []);
+  document.getElementById("statRequests").textContent = requests.length;
+  document.getElementById("statSaved").textContent = saved.length;
+  const lastBudget = readStore(STORAGE.budget, 0); document.getElementById("statBudget").textContent = "$" + Number(lastBudget).toLocaleString();
+  const list = document.getElementById("tripList");
+  if (!requests.length) { list.className = "empty"; list.textContent = "No requests yet. Start by searching for travel options or planning a trip."; return; }
+  list.className = ""; list.innerHTML = requests.map(r => `<div class="trip-item"><strong>${r.type} · ${r.to || "Destination not specified"}</strong><small>Reference: ${r.id} · ${r.status}</small><p style="font-size:12px;color:#64748b;margin:8px 0">${r.from || "Origin not specified"} ${r.date ? " · " + r.date : ""} ${r.budget ? " · Budget: $" + r.budget : ""}</p></div>`).join("");
+}
+function quickPrompt(prompt) { document.getElementById("aiInput").value = prompt; sendAI(); }
+function addBubble(text, kind) { const log = document.getElementById("chatLog"); const bubble = document.createElement("div"); bubble.className = "bubble " + (kind === "user" ? "user-bubble" : "bot-bubble"); bubble.textContent = text; log.appendChild(bubble); log.scrollTop = log.scrollHeight; }
+function sendAI() { const input = document.getElementById("aiInput"); const text = input.value.trim(); if (!text) return; addBubble(text, "user"); input.value = ""; addBubble("YOUR TRAVEL PLAN — STARTER DRAFT\n\nRequest: " + text + "\n\nDay 1-3 sample itinerary created. Tell me exact destination, dates, travellers, budget to personalize.", "bot"); }
+renderTrips();
+</script>
+</body>
+</html>

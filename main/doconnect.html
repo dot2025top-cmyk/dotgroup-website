@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DOCONNECT - DOTGROUP - Logo 32px Whole Circle</title>
+<link rel="stylesheet" href="dot-header.css">
+<link rel="stylesheet" href="dot-footer.css">
+<style>
+:root{--blue:#0a1931;--blue2:#102a54;--red:#c62828;--red2:#e53935;--white:#fff;--light:#f5f7fb;--green:#2e7d32;--orange:#ef6c00;--gray:#607d8b;--border:#e3e8f0}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;background:var(--light);color:var(--blue);line-height:1.5}
+.nav{display:flex;gap:6px;flex-wrap:wrap} .nav button{background:rgba(255,255,255,.15);border:1px solid var(--border);color:var(--blue);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer;font-weight:700}
+.nav button.active{background:var(--blue);color:white}
+.top-strip{background:var(--blue);border-bottom:5px solid var(--red);padding:7px 12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;color:white;font-size:10px;font-weight:800}
+.container{max-width:1200px;margin:0 auto;padding:12px}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(10,25,49,.06)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.b-blue{background:#e3f2fd;color:#0d47a1} .b-green{background:#e8f5e9;color:#2e7d32} .b-red{background:#ffebee;color:#b71c1c} .b-orange{background:#fff3e0;color:#e65100} .b-gray{background:#f5f5f5;color:#424242}
+.btn{padding:8px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:13px}
+.btn-blue{background:var(--blue);color:white} .btn-green{background:var(--green);color:white} .btn-light{background:var(--light);color:var(--blue);border:1px solid var(--border)}
+.input,.select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13px;margin:6px 0;background:white}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px} .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.tabs{display:flex;gap:6px;overflow-x:auto} .tab{padding:8px 14px;border-radius:20px;background:var(--light);border:1px solid var(--border);cursor:pointer;white-space:nowrap;font-size:12px;font-weight:600}
+.tab.active{background:var(--blue);color:white}
+.announce-card{border-left:4px solid var(--blue);background:white;border-radius:12px;padding:12px;margin-bottom:10px}
+.discuss-card{border-left:4px solid var(--green);background:#f9fff9;border-radius:12px;padding:12px;margin-bottom:10px}
+.preview-box{background:linear-gradient(135deg,#e3f2fd,#f5f7fb);border:2px dashed var(--blue2);border-radius:12px;padding:12px}
+.wizard-step{display:none} .wizard-step.active{display:block}
+.category-option{padding:10px;border:1px solid var(--border);border-radius:10px;cursor:pointer;margin:4px 0;display:flex;justify-content:space-between;align-items:center}
+.category-option.selected{border-color:var(--blue);background:#e3f2fd}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:200;padding:12px}
+.modal.show{display:flex} .modal-box{background:white;border-radius:16px;padding:16px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
+.small{font-size:11px;color:var(--gray)} .req{color:var(--red)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- NEW HEADER SAME PATTERN — 32px WHOLE CIRCLE VISIBLE + 3-LINE DROPDOWN -->
+<header id="dotHeader" class="dot-header" style="position:sticky;top:0;z-index:100">
+  <div class="dot-header-left">
+    <img src="dot-logo-small-32.png" alt="DOTGROUP Logo Whole Circle 32px" class="dot-logo-small" width="32" height="32">
+    <div class="dot-brand">
+      <div class="dot-brand-title"><span class="c-blue">DOTGROUP</span> <span class="c-dark">DOCONNECT</span></div>
+      <div class="dot-brand-sub">Blue • White • Red • Integration Safe — 25 Categories — Two-Space Structure — Logo 32px Whole Circle Visible</div>
+    </div>
+  </div>
+  <div class="dot-header-right"><button class="dot-hamburger" id="dotHamburger"><span></span><span></span><span></span></button></div>
+  <nav class="dot-dropdown" id="dotDropdown">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px"><strong style="font-size:11px;color:#0a1931">MENU — DOCONNECT</strong><button id="ddClose" style="border:1px solid #e2e8f0;background:#f8fafc;padding:5px 10px;border-radius:8px;font-weight:800">✕</button></div>
+    <div class="dd-grid">
+      <div class="dd-group"><h4>🔍 DISCOVER</h4><button onclick="openSection('discover')">Discover — 25 Categories — Search name, keywords, category</button><button onclick="openSection('my')">My Groups — Joined + Owned</button><button onclick="openSection('dashboard')">Dashboard — Owner Dashboard — Members, Announcements, Comments</button></div>
+      <div class="dd-group"><h4>➕ CREATE</h4><button onclick="openSection('create'); goStep(1)">Create Group — Guided Creation 4 Steps + Preview & Confirm — 10 Questions</button><button onclick="openSection('create'); goStep(2)">Step2 Category — 25 Main — Searchable — Main → Sub → Sub-Sub</button><button onclick="openSection('create'); goStep(3)">Step3 Access — Public / Private / Hidden — Auto approval, Invite, Max members</button><button onclick="openSection('create'); goStep(4)">Step4 Rules & Mode — Announcement-Based Only + Announcement + General</button></div>
+      <div class="dd-group"><h4>👥 GROUP VIEW</h4><button onclick="openSection('group'); openGroupTab('announcements')">ADMIN ANNOUNCEMENTS — One-way official — Only owner authorized — DROP YOUR COMMENT mandatory</button><button onclick="openSection('group'); openGroupTab('discussion')">GROUP DISCUSSION — Announcement-linked threads — Persistent — Do not create new unrelated thread every tap</button><button onclick="openSection('group'); openGroupTab('members')">Members — Role owner/member — Status active/pending</button><button onclick="openSection('group'); openGroupTab('about')">About — Purpose, Benefits, Rules, Category</button></div>
+    </div>
+  </nav>
+</header>
+<div class="dot-header-overlay" id="dotOverlay"></div>
+<div class="top-strip"><span>DOTGROUP DOCONNECT — Blue • White • Red • Integration Safe — 25 Categories — Guided Creation 4 Steps + Preview & Confirm — Two-Space Structure Auto — ADMIN ANNOUNCEMENTS + GROUP DISCUSSION — Logo 32px Whole Circle Visible</span><span>Blue • White • Red • Integration Safe</span></div>
+
+<div class="container">
+<div style="background:white;border:2px solid #0a1931;border-radius:12px;padding:8px;margin-bottom:12px;display:flex;gap:6px;flex-wrap:wrap" class="nav" id="nav">
+<button id="navDiscover" class="active" onclick="openSection('discover')">Discover</button>
+<button id="navCreate" onclick="openSection('create')">Create Group</button>
+<button id="navMy" onclick="openSection('my')">My Groups</button>
+<button id="navDash" onclick="openSection('dashboard')">Dashboard</button>
+</div>
+
+<div id="discoverSection">
+<div class="card"><h3>DOCONNECT Discovery — 25 Categories</h3>
+<div class="grid-2" style="margin-top:10px"><input id="searchGroup" class="input" placeholder="Search name, keywords, category..." oninput="renderDiscover()"><select id="filterMainCat" class="select" onchange="renderDiscover()"><option value="">All 25 Main Categories</option></select></div>
+<div id="discoverList" style="margin-top:10px"></div></div>
+</div>
+<div id="createSection" style="display:none">
+<div class="card"><h3>Guided Creation — 4 Steps + Preview & Confirm</h3><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><span class="badge b-blue" id="stepBadge1">Step1 Basic</span><span class="badge b-gray" id="stepBadge2">Step2 Category</span><span class="badge b-gray" id="stepBadge3">Step3 Access</span><span class="badge b-gray" id="stepBadge4">Step4 Rules</span><span class="badge b-gray" id="stepBadge5">Preview</span></div></div>
+<div id="wizardStep1" class="wizard-step active"><div class="card"><h4>STEP1: Basic Info (10 Questions) *</h4>
+<div class="grid-2"><div><label>1. Group name *</label><input id="gName" class="input"></div><div><label>2. About *</label><input id="gAbout" class="input"></div></div>
+<label>3. Purpose *</label><textarea id="gPurpose" class="input" rows="2"></textarea>
+<label>4. Benefits *</label><textarea id="gBenefits" class="input" rows="2"></textarea>
+<div class="grid-2"><div><label>5. Who should join *</label><input id="gWho" class="input"></div><div><label>6. Language *</label><select id="gLang" class="select"><option>English</option><option>Igbo</option><option>Yoruba</option><option>Hausa</option></select></div></div>
+<div class="grid-2"><div><label>7. Location *</label><input id="gLocation" class="input"></div><div><label>8. Scope *</label><select id="gScope" class="select"><option>Local Community</option><option>National</option><option>International Audience</option></select></div></div>
+<div class="grid-2"><div><label>9. Logo URL</label><input id="gLogo" class="input"></div><div><label>10. Welcome message *</label><input id="gWelcome" class="input"></div></div>
+<div class="preview-box" id="previewBasic" style="margin-top:8px">Preview will show here</div>
+<button class="btn btn-blue" style="margin-top:8px" onclick="goStep(2)">Next - Category</button>
+</div></div>
+<div id="wizardStep2" class="wizard-step"><div class="card"><h4>STEP2: Category * - 25 Main - Searchable</h4><input id="searchCat" class="input" placeholder="Search categories..." oninput="renderCategories()"><div id="catList" style="max-height:400px;overflow:auto;margin-top:8px"></div><div id="selectedCatBox" class="small" style="margin-top:8px"></div><button class="btn btn-light" onclick="goStep(1)">Back</button> <button class="btn btn-blue" onclick="goStep(3)">Next - Access</button></div></div>
+<div id="wizardStep3" class="wizard-step"><div class="card"><h4>STEP3: Access * - Public/Private/Hidden</h4>
+<div class="grid-3">
+<div class="category-option" id="accessPublic" onclick="selectAccess('public')"><div><b>Public</b><br><small>Discoverable</small></div><span id="checkPublic">⭕</span></div>
+<div class="category-option" id="accessPrivate" onclick="selectAccess('private')"><div><b>Private</b><br><small>Approval needed</small></div><span id="checkPrivate">⭕</span></div>
+<div class="category-option" id="accessHidden" onclick="selectAccess('hidden')"><div><b>Hidden</b><br><small>Invite only</small></div><span id="checkHidden">⭕</span></div>
+</div>
+<div class="grid-2" style="margin-top:10px"><div><label><input type="checkbox" id="autoApproval"> Auto approval</label><br><label><input type="checkbox" id="allowInvite" checked> Members can invite</label></div><div><label>Max members (0=unlimited)</label><input id="maxMembers" type="number" class="input" value="0"><label><input type="checkbox" id="visibleSearch" checked> Visible in search</label></div></div>
+<button class="btn btn-light" onclick="goStep(2)">Back</button> <button class="btn btn-blue" onclick="goStep(4)">Next - Rules</button>
+</div></div>
+<div id="wizardStep4" class="wizard-step"><div class="card"><h4>STEP4: Rules & Mode *</h4><textarea id="gRules" class="input" rows="5">1. Respect members
+2. Stay relevant
+3. No spam
+4. No impersonation
+5. No private info
+6. No illegal
+7. Respect admins
+8. Follow category rules</textarea>
+<label>Discussion Mode *</label><select id="discMode" class="select"><option value="announcement_only">Mode1: Announcement-Based Only</option><option value="announcement_plus_general">Mode2: Announcement + General</option></select>
+<label><input type="checkbox" id="confirmRules"> I confirm rules *</label><br><button class="btn btn-light" onclick="goStep(3)">Back</button> <button class="btn btn-blue" onclick="goStep(5)">Preview & Confirm</button>
+</div></div>
+<div id="wizardStep5" class="wizard-step"><div class="card"><h4>Preview & Confirm</h4><div id="finalPreview"></div><label><input type="checkbox" id="finalConfirm"> I confirm - Two-space structure understood *</label><br><br><button class="btn btn-light" onclick="goStep(4)">Back</button> <button class="btn btn-green" onclick="createGroupFinal()">Confirm & Publish</button></div></div>
+</div>
+<div id="mySection" style="display:none"><div class="card"><h3>My Groups</h3><div id="myGroupsList"></div></div></div>
+<div id="groupViewSection" style="display:none"><div class="card" id="groupHeader"></div><div class="card"><div class="tabs"><button class="tab active" id="tabAnn" onclick="openGroupTab('announcements')">ADMIN ANNOUNCEMENTS</button><button class="tab" id="tabDisc" onclick="openGroupTab('discussion')">GROUP DISCUSSION</button><button class="tab" id="tabMembers" onclick="openGroupTab('members')">Members</button><button class="tab" id="tabAbout" onclick="openGroupTab('about')">About</button></div><div id="groupContent" style="margin-top:12px"></div></div></div>
+<div id="dashboardSection" style="display:none"><div class="card"><h3>Owner Dashboard</h3><div id="dashContent"></div></div></div>
+</div>
+<div id="threadModal" class="modal"><div class="modal-box"><div id="threadModalContent"></div><button class="btn btn-light" style="margin-top:8px" onclick="closeModal('threadModal')">Close</button></div></div>
+<div id="createAnnModal" class="modal"><div class="modal-box"><h4>Create Announcement - Only Authorized</h4><input id="annTitle" class="input" placeholder="Title e.g. ANNOUNCEMENT #001 WELCOME"><textarea id="annBody" class="input" rows="4" placeholder="Body"></textarea><input id="annAttach" class="input" placeholder="Attachment URL"><input id="annTopic" class="input" placeholder="Topic"><select id="annCommentOpen" class="select"><option value="open">Comments Open - DROP YOUR COMMENT active</option><option value="closed">Comments Closed</option></select><div style="display:flex;gap:6px;margin-top:6px"><label><input type="checkbox" id="annPin"> Pin</label><label><input type="checkbox" id="annUrgent"> Urgent</label></div><button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="publishAnnouncement()">Publish - Creates ID + Thread + DROP YOUR COMMENT button</button><button class="btn btn-light" style="width:100%;margin-top:6px" onclick="closeModal('createAnnModal')">Cancel</button></div></div>
+
+<footer class="dot-footer">
+  <div class="dot-footer-inner">
+    <div class="dot-footer-logo"><img src="dot-logo-small-28.png" width="28" height="28" alt="DOT"><span>DOCONNECT - DOTGROUP - Logo 32px Whole Circle Visible</span></div>
+    <div class="dot-footer-links"><a href="#" onclick="openSection('discover')">Discover</a><a href="#" onclick="openSection('create')">Create Group</a><a href="#" onclick="openSection('my')">My Groups</a><a href="#" onclick="openSection('dashboard')">Dashboard</a></div>
+  </div>
+  <div class="dot-footer-bottom">DOTGROUP DOCONNECT — Blue • White • Red • Integration Safe — 25 Categories — Education and Learning, Business and Entrepreneurship, Religion and Spirituality, Health and Wellness, Technology and Science, Sports and Physical Activities, Arts Creativity and Design, Entertainment and Recreation, Family and Relationships, Personal Development, Finance and Investment, Agriculture and Environment, Travel and Tourism, News Media and Communication, Society and Culture, Government Law and Civics, Career and Employment, Fashion and Beauty, Food and Cooking, Community Service and Charity, Science Space and Exploration, Hobbies and Special Interests, Networking and Professional Associations, Parenting Children and Youth, Other and Special-Purpose Groups — Guided Creation 4 Steps + Preview & Confirm — 10 Questions Group name About Purpose Benefits Who should join Language Location Scope Logo Welcome message — STEP2 Category 25 Main Searchable Main → Sub → Sub-Sub — STEP3 Access Public/Private/Hidden — Auto approval, Members can invite, Max members, Visible in search — STEP4 Rules & Mode Announcement-Based Only + Announcement + General — Confirm rules — Preview & Confirm Two-space structure understood — Two-Space Auto: 1 ADMIN ANNOUNCEMENTS one-way official only owner authorized + DROP YOUR COMMENT mandatory creates ID + Thread + button 2 GROUP DISCUSSION announcement-linked threads + discussion mode — Each announcement dedicated thread Persistent Do not create new unrelated thread every tap — Discovery Search name keywords category All 25 Main Categories Hidden not exposed — My Groups Joined + Owned — Group View ADMIN ANNOUNCEMENTS Announcement #001 Welcome Topic Welcome Views Comment Open/Closed Pin Urgent Attachment — DISCUSSION Comments POST COMMENT — Members Role owner/member Status active/pending — About Purpose Benefits Rules Main → Sub → Sub-Sub Privacy DiscMode — Create Announcement Only Authorized — Title + body required — Creates announcement ID thread ID DROP YOUR COMMENT mandatory — Thread temporarily unavailable retry Never create new unrelated thread every tap — Comments closed handling — Write comment POST COMMENT — Backend enforced Only owner/authorized can publish — Joined Welcome shows how to find old announcements use DROP YOUR COMMENT — Announcement-linked threads persistent Test4 Test6 — No comments Be first Test5 — Owner Dashboard Members Announcements Comments Manage — Integration Safe — Logo 32px whole circle visible — Blue White Red<br>© 2026 DOTGROUP — DOCONNECT — Guided Creation 4 Steps — 25 Main Categories — Two-Space Structure — ADMIN ANNOUNCEMENTS + GROUP DISCUSSION — DROP YOUR COMMENT mandatory — Announcement-linked threads persistent — Integration Safe — Blue White Red — Logo 32px whole circle visible</div>
+</footer>
+
+<script src="dot-header.js"></script>
+<script>
+const LS_GROUPS='doconnect_groups', LS_ANNS='doconnect_announcements', LS_THREADS='doconnect_threads', LS_COMMENTS='doconnect_comments', LS_MEMBERS='doconnect_memberships';
+let currentUser={username:'founder'}, selectedAccessType='public', selectedMain=null, selectedSub=null, selectedSubSub=null, currentGroupId=null;
+const defaultCategories=[
+{name:'Education and Learning',subs:[{name:'Formal Education',subsubs:['Primary','Secondary','Tertiary']},{name:'Informal Education',subsubs:['Reading Clubs','General Knowledge','Self-Learning']},{name:'Skills Development',subsubs:['Digital Skills','Vocational Skills','Entrepreneurship Training']},{name:'Academic Subjects',subsubs:['Mathematics','English','Science','History']}]},
+{name:'Business and Entrepreneurship',subs:[{name:'Business Types',subsubs:['Startups','Small Businesses','Large Businesses']},{name:'Business Industries',subsubs:['Retail','Manufacturing','Agriculture','Services']},{name:'Business Development',subsubs:['Sales','Leadership','Business Strategy']},{name:'Online Business',subsubs:['E-commerce','Affiliate Marketing','Digital Products']}]},
+{name:'Religion and Spirituality',subs:[{name:'Religious Communities',subsubs:['Congregations','Study Communities','Interfaith Communities']},{name:'Religious Activities',subsubs:['Worship Activities','Religious Education','Community Programmes']},{name:'Spiritual Development',subsubs:['Personal Reflection','Moral Development','Spiritual Study']}]},
+{name:'Health and Wellness',subs:[{name:'Physical Health',subsubs:['Exercise','General Health Education','Healthy Habits']},{name:'Mental Well-being',subsubs:['Stress Management','Emotional Well-being','Personal Resilience']},{name:'Healthy Living',subsubs:['Nutrition Education','Sleep','Fitness']}]},
+{name:'Technology and Science',subs:[{name:'Information Technology',subsubs:['Programming','Web Development','Cybersecurity']},{name:'Emerging Technologies',subsubs:['AI','Robotics','Blockchain']},{name:'Scientific Research',subsubs:['Experiments','Research Discussions','Discoveries']}]},
+{name:'Sports and Physical Activities',subs:[{name:'Team Sports',subsubs:['Football','Basketball','Volleyball']},{name:'Individual Sports',subsubs:['Athletics','Tennis','Swimming']},{name:'Fitness Activities',subsubs:['Gym Training','Running','Home Workouts']}]},
+{name:'Arts, Creativity and Design',subs:[{name:'Visual Arts',subsubs:['Drawing','Painting','Photography']},{name:'Design',subsubs:['Graphic Design','Fashion Design','UI/UX Design']},{name:'Creative Production',subsubs:['Illustration','Animation','Digital Art']}]},
+{name:'Entertainment and Recreation',subs:[{name:'Music',subsubs:['Gospel Music','Instrumental Music','Music Production']},{name:'Film and Television',subsubs:['Film Reviews','Acting','Filmmaking']},{name:'Games',subsubs:['Video Games','Board Games','Puzzles']},{name:'Leisure',subsubs:['Recreational Activities','Social Entertainment','General Fun']}]},
+{name:'Family and Relationships',subs:[{name:'Family Life',subsubs:['Family Communication','Family Activities','Household Management']},{name:'Relationships',subsubs:['Friendship','Communication Skills','Relationship Education']},{name:'Child and Youth Development',subsubs:['Child Development','Youth Mentoring','Life Skills']}]},
+{name:'Personal Development',subs:[{name:'Self-Improvement',subsubs:['Confidence','Discipline','Goal Setting']},{name:'Leadership',subsubs:['Team Leadership','Public Speaking','Decision-Making']},{name:'Productivity',subsubs:['Time Management','Habit Building','Personal Planning']}]},
+{name:'Finance and Investment',subs:[{name:'Personal Finance',subsubs:['Budgeting','Saving','Debt Management']},{name:'Investment Education',subsubs:['Investment Fundamentals','Risk Education','Financial Planning']},{name:'Digital Finance',subsubs:['Digital Payments','Financial Technology','Crypto Education']}]},
+{name:'Agriculture and Environment',subs:[{name:'Agriculture',subsubs:['Crop Farming','Livestock','Farm Management']},{name:'Food Production',subsubs:['Food Processing','Food Preservation','Agribusiness']},{name:'Environment',subsubs:['Conservation','Recycling','Environmental Education']}]},
+{name:'Travel and Tourism',subs:[{name:'Travel Purposes',subsubs:['Business Travel','Educational Travel','Leisure Travel']},{name:'Tourism',subsubs:['Local Tourism','Cultural Tourism','Adventure Tourism']},{name:'Travel Planning',subsubs:['Itineraries','Travel Tips','Destination Info']}]},
+{name:'News, Media and Communication',subs:[{name:'News',subsubs:['Local News','National News','International News']},{name:'Communication',subsubs:['Public Speaking','Writing','Digital Communication']},{name:'Media Literacy',subsubs:['Fact-Checking','Media Education','Information Verification']}]},
+{name:'Society and Culture',subs:[{name:'Culture',subsubs:['Cultural Heritage','Traditions','Languages']},{name:'History',subsubs:['Local History','World History','Historical Research']},{name:'Social Issues',subsubs:['Community Development','Social Awareness','Public Education']}]},
+{name:'Government, Law and Civics',subs:[{name:'Civic Education',subsubs:['Citizenship','Civic Responsibilities','Public Awareness']},{name:'Law and Legal Education',subsubs:['Legal Literacy','Rights Education','Legal Discussions']},{name:'Public Administration',subsubs:['Public Services','Governance','Administrative Studies']}]},
+{name:'Career and Employment',subs:[{name:'Employment',subsubs:['Job Opportunities','Interview Preparation','CV Writing']},{name:'Freelancing',subsubs:['Online Work','Client Management','Freelance Platforms']},{name:'Professional Development',subsubs:['Career Planning','Workplace Skills','Certifications']}]},
+{name:'Fashion and Beauty',subs:[{name:'Fashion',subsubs:['Clothing','Fashion Trends','Fashion Business']},{name:'Beauty',subsubs:['Skincare Education','Haircare','Makeup']},{name:'Personal Style',subsubs:['Styling','Wardrobe Planning','Fashion Advice']}]},
+{name:'Food and Cooking',subs:[{name:'Cooking',subsubs:['Baking','Traditional Cooking','International Recipes']},{name:'Food Types',subsubs:['Healthy Meals','Snacks','Desserts']},{name:'Food Business',subsubs:['Catering','Food Retail','Restaurant Management']}]},
+{name:'Community Service and Charity',subs:[{name:'Community Development',subsubs:['Local Projects','Community Improvement','Public Education']},{name:'Charity',subsubs:['Donations','Fundraising','Welfare Initiatives']},{name:'Volunteering',subsubs:['Volunteer Opportunities','Outreach','Skills-Based Volunteering']}]},
+{name:'Science, Space and Exploration',subs:[{name:'Natural Sciences',subsubs:['Biology','Chemistry','Physics']},{name:'Space',subsubs:['Astronomy','Space Exploration','Planetary Science']},{name:'Discovery',subsubs:['Scientific Discoveries','Experiments','Research Findings']}]},
+{name:'Hobbies and Special Interests',subs:[{name:'Collecting',subsubs:['Books','Coins','Memorabilia']},{name:'Outdoor Activities',subsubs:['Hiking','Camping','Nature Exploration']},{name:'Crafts',subsubs:['Handicrafts','DIY Projects','Handmade Products']}]},
+{name:'Networking and Professional Associations',subs:[{name:'Networking',subsubs:['Business Networking','Career Networking','Mentorship']},{name:'Associations',subsubs:['Professional Associations','Industry Groups','Alumni Networks']},{name:'Collaboration',subsubs:['Partnerships','Joint Projects','Knowledge Sharing']}]},
+{name:'Parenting, Children and Youth',subs:[{name:'Parenting',subsubs:['Parenting Education','Childcare','Family Support']},{name:'Children',subsubs:['Learning Activities','Creativity','Educational Support']},{name:'Youth',subsubs:['Youth Leadership','Career Guidance','Life Skills']}]},
+{name:'Other and Special-Purpose Groups',subs:[{name:'General Interest',subsubs:['Open Discussions','Shared Interests','Knowledge Exchange']},{name:'Temporary Groups',subsubs:['Events','Campaigns','Short-Term Projects']},{name:'Custom Groups',subsubs:['User-Defined Categories','Special Communities','Unique Interests']}]}
+];
+function load(k,f){try{let v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}} function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function openSection(name){
+document.getElementById('discoverSection').style.display=name==='discover'?'block':'none';
+document.getElementById('createSection').style.display=name==='create'?'block':'none';
+document.getElementById('mySection').style.display=name==='my'?'block':'none';
+document.getElementById('dashboardSection').style.display=name==='dashboard'?'block':'none';
+document.getElementById('groupViewSection').style.display=name==='group'?'block':'none';
+document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+let map={discover:'navDiscover',create:'navCreate',my:'navMy',dashboard:'navDash'}; if(map[name]){ const el=document.getElementById(map[name]); if(el) el.classList.add('active'); }
+if(window.closeDotMenu) window.closeDotMenu();
+if(name==='discover') renderDiscover(); if(name==='my') renderMyGroups(); if(name==='dashboard') renderDashboard();
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function goStep(n){
+for(let i=1;i<=5;i++){const ws=document.getElementById('wizardStep'+i), sb=document.getElementById('stepBadge'+i); if(ws) ws.classList.remove('active'); if(sb) sb.className='badge b-gray';}
+const nws=document.getElementById('wizardStep'+n), nsb=document.getElementById('stepBadge'+n); if(nws) nws.classList.add('active'); if(nsb) nsb.className='badge b-blue';
+if(n===5) renderFinalPreview();
+}
+function renderCategories(){
+let q=(document.getElementById('searchCat').value||'').toLowerCase();
+let html=''; defaultCategories.forEach((cat,ci)=>{
+if(q && !cat.name.toLowerCase().includes(q) && !cat.subs.some(s=>s.name.toLowerCase().includes(q))) return;
+html+=`<div class="card" style="padding:10px"><div class="category-option ${selectedMain===cat.name?'selected':''}" onclick="selectMain('${cat.name}')"><b>${ci+1}. ${cat.name}</b><span>${selectedMain===cat.name?'✅':'⭕'}</span></div>`;
+if(selectedMain===cat.name){ html+=`<div style="margin-left:12px;margin-top:6px">`; cat.subs.forEach((sub)=>{html+=`<div class="category-option ${selectedSub===sub.name?'selected':''}" onclick="selectSub('${sub.name}')" style="margin-left:10px"><span>↳ ${sub.name}</span><span>${selectedSub===sub.name?'✅':'⭕'}</span></div>`; if(selectedSub===sub.name){html+=`<div style="margin-left:24px;display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">`;sub.subsubs.forEach(ss=>{html+=`<span class="badge ${selectedSubSub===ss?'b-blue':'b-gray'}" style="cursor:pointer" onclick="selectSubSub('${ss}')">${ss}</span>`;});html+=`</div>`;}}); html+=`</div>`;}
+html+=`</div>`;});
+const cl=document.getElementById('catList'); if(cl) cl.innerHTML=html;
+const scb=document.getElementById('selectedCatBox'); if(scb) scb.innerHTML=selectedMain?`Selected: <b>${selectedMain}</b> → ${selectedSub||'Select Sub'} → ${selectedSubSub||''}`:'No category selected';
+let sel=document.getElementById('filterMainCat'); if(sel && sel.options.length<=1){defaultCategories.forEach(c=>{let o=document.createElement('option');o.value=c.name;o.textContent=c.name;sel.appendChild(o)});}
+}
+function selectMain(n){selectedMain=n;selectedSub=null;selectedSubSub=null;renderCategories()} function selectSub(n){selectedSub=n;selectedSubSub=null;renderCategories()} function selectSubSub(n){selectedSubSub=n;renderCategories()}
+function selectAccess(t){selectedAccessType=t;['public','private','hidden'].forEach(a=>{const ap=document.getElementById('access'+a.charAt(0).toUpperCase()+a.slice(1)), ch=document.getElementById('check'+a.charAt(0).toUpperCase()+a.slice(1)); if(ap) ap.classList.remove('selected'); if(ch) ch.textContent='⭕'});const at=document.getElementById('access'+t.charAt(0).toUpperCase()+t.slice(1)), ct=document.getElementById('check'+t.charAt(0).toUpperCase()+t.slice(1)); if(at) at.classList.add('selected'); if(ct) ct.textContent='✅';}
+function renderFinalPreview(){
+let name=document.getElementById('gName').value, about=document.getElementById('gAbout').value;
+const fp=document.getElementById('finalPreview'); if(fp) fp.innerHTML=`<div class="preview-box"><b>${name}</b> - ${about}<br>Main: ${selectedMain} → Sub: ${selectedSub} → Sub-Sub: ${selectedSubSub}<br>Access: ${selectedAccessType}<br>Mode: ${document.getElementById('discMode').value}<br><b>Two-Space Auto:</b> 1. ADMIN ANNOUNCEMENTS (owner only + DROP YOUR COMMENT) 2. GROUP DISCUSSION (thread per announcement persistent)</div>`;
+}
+function createGroupFinal(){
+let name=document.getElementById('gName').value.trim(), about=document.getElementById('gAbout').value.trim();
+if(!name||!about){alert('Fill mandatory - Step1');goStep(1);return}
+if(!selectedMain||!selectedSub){alert('Select Main + Sub - Step2');goStep(2);return}
+if(!document.getElementById('confirmRules').checked||!document.getElementById('finalConfirm').checked){alert('Confirm rules & final');return}
+let groups=load(LS_GROUPS,[]); let id='GRP_'+Date.now();
+let group={id:id,name:name,description:about,purpose:document.getElementById('gPurpose').value,benefits:document.getElementById('gBenefits').value,who:document.getElementById('gWho').value,lang:document.getElementById('gLang').value,location:document.getElementById('gLocation').value,scope:document.getElementById('gScope').value,logo:document.getElementById('gLogo').value,welcome:document.getElementById('gWelcome').value,mainCat:selectedMain,subCat:selectedSub,subSubCat:selectedSubSub||'',privacy:selectedAccessType,autoApproval:document.getElementById('autoApproval').checked,allowInvite:document.getElementById('allowInvite').checked,maxMembers:parseInt(document.getElementById('maxMembers').value)||0,visibleSearch:document.getElementById('visibleSearch').checked,rules:document.getElementById('gRules').value,discMode:document.getElementById('discMode').value,ownerId:currentUser.username,created_at:new Date().toISOString(),memberCount:1};
+groups.unshift(group); save(LS_GROUPS,groups);
+let members=load(LS_MEMBERS,[]); members.push({groupId:id,userId:currentUser.username,role:'owner',status:'active',join_date:new Date().toISOString()}); save(LS_MEMBERS,members);
+let anns=load(LS_ANNS,[]); let welcomeAnnId='ANN_'+Date.now(); let threadId='THR_'+Date.now();
+anns.unshift({id:welcomeAnnId,groupId:id,authorId:currentUser.username,title:'ANNOUNCEMENT #001: WELCOME TO '+name.toUpperCase(),body:document.getElementById('gWelcome').value+'\n\n'+about+'\nUse DROP YOUR COMMENT to discuss',attachment:'',status:'published',pinned:true,topic:'Welcome',created_at:new Date().toISOString(),edited:false,commentOpen:'open',threadId:threadId,views:0});
+save(LS_ANNS,anns);
+let threads=load(LS_THREADS,[]); threads.push({id:threadId,groupId:id,announcementId:welcomeAnnId,title:'DISCUSSION: WELCOME TO '+name.toUpperCase(),type:'announcement_linked',created_at:new Date().toISOString(),status:'active'}); save(LS_THREADS,threads);
+alert('Group Created - Two spaces auto-created + DROP YOUR COMMENT mandatory + New members see old'); openGroup(id);
+}
+function renderDiscover(){
+let groups=load(LS_GROUPS,[]), q=(document.getElementById('searchGroup').value||'').toLowerCase(), mainFilter=document.getElementById('filterMainCat').value;
+let filtered=groups.filter(g=>{if(g.privacy==='hidden') return false; if(mainFilter && g.mainCat!==mainFilter) return false; if(q && !(g.name.toLowerCase().includes(q)||g.description.toLowerCase().includes(q)||g.mainCat.toLowerCase().includes(q))) return false; return true;});
+let html=''; if(filtered.length===0) html=`<div class="card">No groups - Create first - 25 categories - Hidden not exposed</div>`;
+filtered.forEach(g=>{html+=`<div class="card"><div style="display:flex;justify-content:space-between"><div><b>${g.name}</b> <span class="badge ${g.privacy==='public'?'b-green':'b-orange'}">${g.privacy}</span><br><small>${g.mainCat} → ${g.subCat} → ${g.subSubCat} | ${g.location} | ${g.lang}</small><br><small>${g.description.substring(0,100)} - Members ${g.memberCount} - By ${g.ownerId}</small></div><div><button class="btn btn-blue" onclick="openGroup('${g.id}')">View Group</button><br><button class="btn btn-light" style="margin-top:6px" onclick="joinGroup('${g.id}')">Join</button></div></div></div>`;});
+const dl=document.getElementById('discoverList'); if(dl) dl.innerHTML=html;
+}
+function joinGroup(id){let members=load(LS_MEMBERS,[]); if(members.find(m=>m.groupId===id&&m.userId===currentUser.username)){alert('Already member');return} let groups=load(LS_GROUPS,[]); let g=groups.find(x=>x.id===id); let status=g.autoApproval?'active':'pending'; members.push({groupId:id,userId:currentUser.username,role:'member',status:status,join_date:new Date().toISOString()}); save(LS_MEMBERS,members); if(status==='active'){g.memberCount++; save(LS_GROUPS,groups);} alert(status==='active'?'Joined - Welcome shows how to find old announcements, use DROP YOUR COMMENT':'Request pending');}
+function openGroup(id){let groups=load(LS_GROUPS,[]); let g=groups.find(x=>x.id===id); if(!g) return; currentGroupId=id; const gh=document.getElementById('groupHeader'); if(gh) gh.innerHTML=`<div style="display:flex;gap:12px"><div style="width:60px;height:60px;background:linear-gradient(135deg,#0a1931,#c62828);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:24px">${g.name[0]}</div><div><h3>${g.name}</h3><div class="small">${g.mainCat} → ${g.subCat} → ${g.subSubCat} | ${g.location} | ${g.lang} | ${g.privacy} | ${g.discMode}</div><div class="small">Members ${g.memberCount} | Owner ${g.ownerId}</div><div style="margin-top:6px"><button class="btn btn-blue" onclick="openGroupTab('announcements')">Announcements</button> <button class="btn btn-light" onclick="openGroupTab('discussion')">Discussion</button></div></div></div>`; openSection('group'); openGroupTab('announcements');}
+function openGroupTab(tab){
+document.querySelectorAll('#groupViewSection .tab').forEach(t=>t.classList.remove('active'));
+let map={announcements:'tabAnn',discussion:'tabDisc',members:'tabMembers',about:'tabAbout'}; if(map[tab]){ const el=document.getElementById(map[tab]); if(el) el.classList.add('active'); }
+let groups=load(LS_GROUPS,[]); let g=groups.find(x=>x.id===currentGroupId); if(!g) return;
+let anns=load(LS_ANNS,[]).filter(a=>a.groupId===currentGroupId).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+let comments=load(LS_COMMENTS,[]);
+if(tab==='announcements'){
+let html=`<h4>ADMIN ANNOUNCEMENTS - One-way official - Only owner authorized - DROP YOUR COMMENT mandatory</h4><button class="btn btn-blue" style="margin-top:8px" onclick="openCreateAnnouncement()">+ Create Announcement - Only authorized - Test3</button>`;
+if(anns.length===0) html+=`<div class="card" style="margin-top:8px">No announcements</div>`;
+anns.forEach((a,i)=>{let actualCount=load(LS_COMMENTS,[]).filter(c=>c.threadId===a.threadId).length; html+=`<div class="announce-card"><div style="display:flex;justify-content:space-between"><b>${a.title}</b><span class="small">#${i+1} ${a.id} ${a.pinned?'Pinned':''}</span></div><div style="margin-top:6px;white-space:pre-wrap">${a.body}</div><div class="small" style="margin-top:6px">By ${a.authorId} - ${new Date(a.created_at).toLocaleString()} - Topic ${a.topic} - Views ${a.views} - ${a.commentOpen}</div><div style="margin-top:8px"><button class="btn btn-green" onclick="openThread('${a.threadId}')">💬 DROP YOUR COMMENT - ${actualCount} - Mandatory - Test4</button> <button class="btn btn-light">Like</button> <button class="btn btn-light">Save</button></div></div>`;});
+document.getElementById('groupContent').innerHTML=html;
+} else if(tab==='discussion'){
+let threadsAll=load(LS_THREADS,[]).filter(t=>t.groupId===currentGroupId);
+let html=`<h4>GROUP DISCUSSION - Announcement-linked threads + ${g.discMode}</h4><div class="small">Each announcement dedicated thread - Persistent - Do not create new unrelated thread every tap - Test4 Test6</div>`;
+threadsAll.forEach(th=>{let ann=anns.find(a=>a.id===th.announcementId); let comms=load(LS_COMMENTS,[]).filter(c=>c.threadId===th.id); html+=`<div class="discuss-card"><b>${th.title}</b> <span class="badge b-blue">${th.type}</span>${ann?`<div style="margin-top:6px;background:white;padding:8px;border-radius:8px"><b>${ann.title}</b><br>${ann.body.substring(0,200)}...</div>`:''}<div style="margin-top:8px">Comments (${comms.length}):</div>${comms.map(c=>`<div style="margin-left:12px;margin-top:6px;background:white;padding:6px;border-radius:8px"><b>${c.authorId}</b> ${new Date(c.created_at).toLocaleString()}<br>${c.body}</div>`).join('')||'<div class="small">No comments - Be first - Test5</div>'}<div style="display:flex;gap:6px;margin-top:8px"><input id="commentInput_${th.id}" class="input" placeholder="Write comment..." style="flex:1"><button class="btn btn-blue" onclick="postComment('${th.id}')">POST COMMENT - Test5</button></div></div>`;});
+document.getElementById('groupContent').innerHTML=html;
+} else if(tab==='members'){let members=load(LS_MEMBERS,[]).filter(m=>m.groupId===currentGroupId); document.getElementById('groupContent').innerHTML=`<h4>Members - ${members.length}</h4>${members.map(m=>`<div style="padding:6px;border-bottom:1px solid #e3e8f0"><b>${m.userId}</b> - Role ${m.role} - Status ${m.status}</div>`).join('')}`;}
+else if(tab==='about'){document.getElementById('groupContent').innerHTML=`<div class="card"><b>About ${g.name}</b><br>${g.description}<br><br>Purpose: ${g.purpose}<br>Benefits: ${g.benefits}<br>Main: ${g.mainCat} → Sub: ${g.subCat} → Sub-Sub: ${g.subSubCat}<br>Privacy: ${g.privacy} | Mode: ${g.discMode}<br>Rules: ${g.rules}</div>`;}
+}
+function openCreateAnnouncement(){let members=load(LS_MEMBERS,[]); let me=members.find(m=>m.groupId===currentGroupId&&m.userId===currentUser.username); if(!me || (me.role!=='owner'&&me.role!=='admin')){alert('Unauthorized - Only owner/authorized can publish - Backend enforced - Test8');return} document.getElementById('createAnnModal').classList.add('show');}
+function publishAnnouncement(){let title=document.getElementById('annTitle').value.trim(), body=document.getElementById('annBody').value.trim(); if(!title||!body){alert('Title + body required - Test2');return} let anns=load(LS_ANNS,[]); let threads=load(LS_THREADS,[]); let id='ANN_'+Date.now(), thrId='THR_'+Date.now(); anns.unshift({id:id,groupId:currentGroupId,authorId:currentUser.username,title:title,body:body,attachment:document.getElementById('annAttach').value,topic:document.getElementById('annTopic').value,status:'published',pinned:document.getElementById('annPin').checked,urgent:document.getElementById('annUrgent').checked,created_at:new Date().toISOString(),edited:false,commentOpen:document.getElementById('annCommentOpen').value,threadId:thrId,views:0}); save(LS_ANNS,anns); threads.push({id:thrId,groupId:currentGroupId,announcementId:id,title:'DISCUSSION: '+title,type:'announcement_linked',created_at:new Date().toISOString(),status:'active'}); save(LS_THREADS,threads); let groups=load(LS_GROUPS,[]); let g=groups.find(x=>x.id===currentGroupId); g.announcementCount=(g.announcementCount||0)+1; save(LS_GROUPS,groups); closeModal('createAnnModal'); alert('Published - Test3 - ID '+id+' - Thread '+thrId+' - DROP YOUR COMMENT mandatory - Test4'); openGroupTab('announcements');}
+function openThread(threadId){let threads=load(LS_THREADS,[]); let th=threads.find(t=>t.id===threadId); if(!th){alert('Thread temporarily unavailable - retry - Never create new unrelated thread every tap');return} let anns=load(LS_ANNS,[]); let ann=anns.find(a=>a.id===th.announcementId); let comms=load(LS_COMMENTS,[]).filter(c=>c.threadId===threadId); let html=`<h4>${th.title}</h4>${ann?`<div class="announce-card"><b>${ann.title}</b><br>${ann.body}<br><small>By ${ann.authorId} - ${new Date(ann.created_at).toLocaleString()}</small></div>`:''}<div style="max-height:400px;overflow:auto">${comms.map(c=>`<div style="padding:8px;background:#f5f7fb;margin-bottom:6px;border-radius:8px"><b>${c.authorId}</b> ${new Date(c.created_at).toLocaleString()}<br>${c.body}</div>`).join('')||'No comments - Test5'}</div><div style="display:flex;gap:6px;margin-top:10px"><input id="modalCommentInput" class="input" placeholder="Write comment..."><button class="btn btn-blue" onclick="postCommentModal('${threadId}')">POST</button></div>`; document.getElementById('threadModalContent').innerHTML=html; document.getElementById('threadModal').classList.add('show');}
+function postComment(threadId){let input=document.getElementById('commentInput_'+threadId); if(!input||!input.value.trim()){alert('Write comment');return} doPostComment(threadId,input.value.trim()); input.value=''; openGroupTab('discussion');}
+function postCommentModal(threadId){let input=document.getElementById('modalCommentInput'); if(!input.value.trim()) return; doPostComment(threadId,input.value.trim()); input.value=''; openThread(threadId); openGroupTab('discussion');}
+function doPostComment(threadId,body){let threads=load(LS_THREADS,[]); let th=threads.find(t=>t.id===threadId); if(!th) return; let anns=load(LS_ANNS,[]); let ann=anns.find(a=>a.threadId===threadId); if(ann && ann.commentOpen==='closed'){alert('Comments closed');return} let comments=load(LS_COMMENTS,[]); comments.push({id:'COM_'+Date.now(),threadId:threadId,groupId:th.groupId,announcementId:th.announcementId||'',authorId:currentUser.username,body:body,created_at:new Date().toISOString(),edited:false,status:'active'}); save(LS_COMMENTS,comments);}
+function renderMyGroups(){let members=load(LS_MEMBERS,[]).filter(m=>m.userId===currentUser.username); let groups=load(LS_GROUPS,[]); let html=''; if(members.length===0) html=`<div class="small">No groups</div>`; members.forEach(m=>{let g=groups.find(x=>x.id===m.groupId); if(!g) return; html+=`<div class="card"><b>${g.name}</b> - ${g.mainCat} - Role ${m.role} - <button class="btn btn-blue" onclick="openGroup('${g.id}')">Open</button></div>`;}); document.getElementById('myGroupsList').innerHTML=html;}
+function renderDashboard(){let groups=load(LS_GROUPS,[]).filter(g=>g.ownerId===currentUser.username); let anns=load(LS_ANNS,[]); let members=load(LS_MEMBERS,[]); let comments=load(LS_COMMENTS,[]); let html=''; if(groups.length===0) html=`<div class="small">No owned groups</div>`; groups.forEach(g=>{let gMems=members.filter(m=>m.groupId===g.id); let gAnns=anns.filter(a=>a.groupId===g.id); let gComms=comments.filter(c=>c.groupId===g.id); html+=`<div class="card"><h4>${g.name} Dashboard</h4><div class="grid-3"><div class="card" style="margin:0;text-align:center"><small>Members</small><br><b>${gMems.length}</b></div><div class="card" style="margin:0;text-align:center"><small>Announcements</small><br><b>${gAnns.length}</b></div><div class="card" style="margin:0;text-align:center"><small>Comments</small><br><b>${gComms.length}</b></div></div><button class="btn btn-blue" style="margin-top:8px" onclick="openGroup('${g.id}')">Manage</button></div>`;}); document.getElementById('dashContent').innerHTML=html;}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+renderDiscover(); renderCategories();
+</script>
+</body>
+</html>

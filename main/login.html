@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login - DOTGROUP</title>
+<style>
+body{font-family:Arial;background:#f3f6fb;margin:0}
+header{background:#0756a8;color:#fff;padding:12px;display:flex;justify-content:space-between}
+header a{color:#fff;text-decoration:none;font-weight:900}
+.box{background:#fff;max-width:400px;margin:30px auto;padding:20px;border-radius:14px;box-shadow:0 4px 12px #0001;color:#0b2a5b}
+input{width:100%;padding:14px;border:2px solid #0756a8;border-radius:8px;margin:8px 0;box-sizing:border-box;font-size:14px}
+button{width:100%;padding:14px;background:#0756a8;color:#fff;border:none;border-radius:8px;font-weight:900;margin-top:10px;cursor:pointer}
+button:active{transform:scale(.97)}
+.gray{background:#eee;color:#333}
+.msg{padding:10px;border-radius:8px;text-align:center;font-size:13px;margin:8px 0}
+.red{background:#ffebee;color:#b71c1c}.green{background:#e8f5e9;color:#2e7d32}.blue{background:#e3f2fd;color:#0d47a1}
+#forgotOverlay{position:fixed;inset:0;background:#061a3acc;display:none;place-items:center;z-index:9999;padding:12px}
+#forgotBox{background:#fff;width:min(400px,100%);border-radius:16px;padding:18px;box-shadow:0 10px 30px #0003}
+.step{display:none}.step.active{display:block}
+.code-inputs{display:flex;gap:6px;justify-content:center;margin:10px 0}
+.code-inputs input{width:42px;height:48px;text-align:center;font-size:20px;font-weight:900;border:2px solid #0756a8;border-radius:8px;padding:0}
+.small{font-size:11px;color:#666;text-align:center;margin-top:6px}
+.link{font-size:12px;color:#0756a8;font-weight:800;text-decoration:none;cursor:pointer}
+</style></head>
+<body>
+<header><a href="home.html">← Home</a><b>Sign In</b><a href="register.html">Sign Up</a></header>
+
+<div class="box">
+<h2 style="text-align:center">🔐 Sign In</h2>
+<div id="msg"></div>
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password (any)">
+<div style="text-align:right;margin:2px 0 6px 0"><a href="#" onclick="openForgot();return false;" class="link">Forgot Password?</a></div>
+<button onclick="doLogin()">✅ Sign In</button>
+<button class="gray" onclick="location.href='register.html'">No account? Register Free</button>
+<button class="gray" onclick="location.href='home.html'">Back to Home</button>
+<p style="font-size:11px;color:#666;margin-top:12px;text-align:center">After login, Home will show your name, Dowallet will appear in Menu, and Verify Account will show.</p>
+</div>
+
+<!-- FORGOT PASSWORD CORRECTED FLOW -->
+<div id="forgotOverlay">
+<div id="forgotBox">
+<div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#0756a8">🔑 Forgot Password</b><span onclick="closeForgot()" style="cursor:pointer;font-size:20px">✕</span></div>
+
+<!-- STEP 1: USERNAME + EMAIL -->
+<div id="step1" class="step active">
+<div id="fmsg1"></div>
+<p class="small" style="text-align:left">Enter your username and email to receive reset code.</p>
+<input id="fUsername" placeholder="Username - e.g. dgfd">
+<input id="fEmail" type="email" placeholder="Email - e.g. dgfd@gmail.com">
+<button onclick="sendCode()">📧 Send Reset Code</button>
+<button class="gray" onclick="closeForgot()">Cancel</button>
+</div>
+
+<!-- STEP 2: CHECK EMAIL + ENTER CODE -->
+<div id="step2" class="step">
+<div id="fmsg2"></div>
+<div class="msg blue" id="checkEmailText">Check your email — There is a code given — Enter it below</div>
+<p class="small">We sent 6-digit code to <b id="showEmail"></b></p>
+<p class="small" id="demoCode" style="background:#fff3cd;padding:6px;border-radius:6px;color:#856404"></p>
+<div class="code-inputs">
+<input id="c1" maxlength="1" oninput="moveNext(this,2)" onkeydown="movePrev(event,1)">
+<input id="c2" maxlength="1" oninput="moveNext(this,3)" onkeydown="movePrev(event,1)">
+<input id="c3" maxlength="1" oninput="moveNext(this,4)" onkeydown="movePrev(event,2)">
+<input id="c4" maxlength="1" oninput="moveNext(this,5)" onkeydown="movePrev(event,3)">
+<input id="c5" maxlength="1" oninput="moveNext(this,6)" onkeydown="movePrev(event,4)">
+<input id="c6" maxlength="1" oninput="checkAuto()" onkeydown="movePrev(event,5)">
+</div>
+<input id="fCodeFull" placeholder="Or paste 6-digit code here" style="text-align:center;letter-spacing:4px;font-weight:900">
+<button onclick="verifyCode()">✅ Verify Code — OK</button>
+<button class="gray" onclick="backToStep1()">← Change Email</button>
+<p class="small"><a href="#" onclick="sendCode(true);return false;" class="link">Resend code</a> — <span id="timer"></span></p>
+</div>
+
+<!-- STEP 3: RESET PASSWORD -->
+<div id="step3" class="step">
+<div id="fmsg3"></div>
+<div class="msg green">✅ Code verified! Now reset your password for <b id="showUser3"></b></div>
+<input id="newPass" type="password" placeholder="Enter new password (min 3 chars)">
+<input id="confirmPass" type="password" placeholder="Confirm new password">
+<button onclick="doReset()">🔐 Reset Password — OK</button>
+<button class="gray" onclick="closeForgot()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<script>
+function doLogin(){
+let u=document.getElementById('username').value.trim();
+let p=document.getElementById('password').value.trim();
+let msg=document.getElementById('msg');
+if(!u){msg.innerHTML='<div class="msg red">Enter username</div>';return;}
+if(!p){msg.innerHTML='<div class="msg red">Enter password</div>';return;}
+let savedPass=localStorage.getItem('dot_password_'+u.toUpperCase());
+if(savedPass && p!==savedPass){msg.innerHTML='<div class="msg red">Wrong password. Click Forgot Password to reset.</div>';return;}
+localStorage.setItem('dot_user', u);localStorage.setItem('dot_username', u);
+localStorage.setItem('dotgroup_user', u);localStorage.setItem('dot_logged_in', 'true');
+localStorage.setItem('dot_user_'+u, 'true');
+if(!savedPass){localStorage.setItem('dot_password_'+u.toUpperCase(), p);}
+let regKey='dot_registered_date_'+u.toUpperCase();
+if(!localStorage.getItem(regKey)){localStorage.setItem(regKey, new Date().toISOString());}
+msg.innerHTML='<div class="msg green">✅ Logged in as '+u+'! Going to Home...</div>';
+setTimeout(()=>{location.href='home.html';},800);
+}
+
+let resetUser=""; let resetEmail=""; let timerInt;
+
+function openForgot(){
+document.getElementById('forgotOverlay').style.display='grid';
+let u=document.getElementById('username').value.trim();
+if(u) document.getElementById('fUsername').value=u;
+showStep(1);
+}
+function closeForgot(){document.getElementById('forgotOverlay').style.display='none';clearInterval(timerInt);}
+function showStep(n){
+document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+document.getElementById('step'+n).classList.add('active');
+}
+function backToStep1(){showStep(1);}
+
+function sendCode(isResend=false){
+let u=document.getElementById('fUsername').value.trim();
+let e=document.getElementById('fEmail').value.trim();
+let m1=document.getElementById('fmsg1');
+if(!u){m1.innerHTML='<div class="msg red">Enter your username</div>';return;}
+if(!e || !e.includes('@')){m1.innerHTML='<div class="msg red">Enter valid email (e.g. dgfd@gmail.com)</div>';return;}
+resetUser=u; resetEmail=e;
+let code=Math.floor(100000+Math.random()*900000).toString();
+localStorage.setItem('dot_reset_code_'+u.toUpperCase(), code);
+localStorage.setItem('dot_reset_email_'+u.toUpperCase(), e);
+localStorage.setItem('dot_reset_time_'+u.toUpperCase(), Date.now().toString());
+document.getElementById('showEmail').textContent=e;
+document.getElementById('demoCode').innerHTML='DEMO: Your email code is <b>'+code+'</b> — In real production, this will be sent by email service — For now copy it';
+document.getElementById('fmsg1').innerHTML='';
+document.getElementById('fmsg2').innerHTML=isResend?'<div class="msg green">✅ New code sent to '+e+'</div>':'';
+document.getElementById('checkEmailText').innerHTML='📧 Check your email — <b>There is a code given</b> — Drop it below then click OK';
+['c1','c2','c3','c4','c5','c6'].forEach(id=>document.getElementById(id).value='');
+document.getElementById('fCodeFull').value='';
+showStep(2);
+startTimer();
+if(isResend) return;
+}
+
+function startTimer(){
+let s=60; clearInterval(timerInt);
+document.getElementById('timer').textContent=s+'s before resend';
+timerInt=setInterval(()=>{s--;document.getElementById('timer').textContent=s>0?s+'s before resend':'You can resend now'; if(s<=0) clearInterval(timerInt);},1000);
+}
+function moveNext(el,next){
+if(el.value.length===1){
+let n=document.getElementById('c'+next);
+if(n) n.focus();
+}
+checkAuto();
+}
+function movePrev(e,prev){
+if(e.key==='Backspace' && !e.target.value){
+let p=document.getElementById('c'+prev);
+if(p) p.focus();
+}
+}
+function getCodeFromInputs(){
+let c=['c1','c2','c3','c4','c5','c6'].map(id=>document.getElementById(id).value).join('');
+let full=document.getElementById('fCodeFull').value.trim();
+if(full.length===6) return full;
+return c;
+}
+function checkAuto(){let code=getCodeFromInputs(); if(code.length===6){}}
+
+function verifyCode(){
+let m2=document.getElementById('fmsg2');
+let entered=getCodeFromInputs();
+if(entered.length!==6){m2.innerHTML='<div class="msg red">Enter 6-digit code from email</div>';return;}
+let saved=localStorage.getItem('dot_reset_code_'+resetUser.toUpperCase());
+let savedTime=parseInt(localStorage.getItem('dot_reset_time_'+resetUser.toUpperCase())||'0');
+if(Date.now()-savedTime>10*60*1000){m2.innerHTML='<div class="msg red">Code expired (10min). Resend code.</div>';return;}
+if(entered!==saved){m2.innerHTML='<div class="msg red">Wrong code. Check your email — Code is '+saved+' (demo). Try again.</div>';return;}
+// OK — code verified
+document.getElementById('showUser3').textContent=resetUser;
+m2.innerHTML=''; showStep(3);
+}
+
+function doReset(){
+let m3=document.getElementById('fmsg3');
+let np=document.getElementById('newPass').value.trim();
+let cp=document.getElementById('confirmPass').value.trim();
+if(np.length<3){m3.innerHTML='<div class="msg red">Password too short (min 3 chars)</div>';return;}
+if(np!==cp){m3.innerHTML='<div class="msg red">Passwords do not match</div>';return;}
+localStorage.setItem('dot_password_'+resetUser.toUpperCase(), np);
+localStorage.removeItem('dot_reset_code_'+resetUser.toUpperCase());
+m3.innerHTML='<div class="msg green">✅ Password reset for '+resetUser+'! You can now Sign In.</div>';
+setTimeout(()=>{
+closeForgot();
+document.getElementById('username').value=resetUser;
+document.getElementById('password').value=np;
+document.getElementById('msg').innerHTML='<div class="msg green">✅ Password reset! Now click Sign In with new password.</div>';
+},1200);
+}
+</script>
+
+<!-- keep your dobot unchanged -->
+<button id="dobot-btn" onclick="dobotToggle()">🤖</button>
+<style>#dobot-btn{position:fixed;right:15px;bottom:15px;width:60px;height:60px;border-radius:50%;background:#0866ff;color:#fff;border:0;font-size:28px;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.3);cursor:pointer}#dobot-box{position:fixed;right:10px;bottom:80px;width:360px;max-width:calc(100% - 20px);height:480px;max-height:75vh;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.25);border:1px solid #ddd;z-index:99999;display:none;flex-direction:column;overflow:hidden;font-family:Arial}#dobot-head{background:#0866ff;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center}#dobot-msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#f0f2f5}.m{max-width:85%;padding:10px 14px;border-radius:18px;font-size:13px;line-height:1.4;word-break:break-word}.bot{align-self:flex-start;background:#fff;border:1px solid #e4e6eb} .me{align-self:flex-end;background:#0866ff;color:#fff}#dobot-in{display:flex;gap:6px;padding:10px;border-top:1px solid #ddd;background:#fff}#dobot-in input{flex:1;padding:10px;border:0;background:#f0f2f5;border-radius:20px}#dobot-in button{padding:10px 16px;background:#0866ff;color:#fff;border:0;border-radius:20px;font-weight:700}@media(max-width:600px){#dobot-box{left:0;right:0;bottom:0;width:100%;max-width:100%;height:80vh;border-radius:16px 16px 0 0}}</style>
+<div id="dobot-box"><div id="dobot-head"><b>DO Bot - Ask about company</b><span onclick="dobotToggle()" style="cursor:pointer;font-size:20px">✕</span></div><div id="dobot-msgs"></div><div id="dobot-in"><input id="botInput" placeholder="Ask about DOTGROUP..." onkeydown="if(event.key==='Enter')dobotSend()"><button onclick="dobotSend()">Send</button></div></div>
+<script>let dobotOpen=false;function dobotToggle(){dobotOpen=!dobotOpen;document.getElementById('dobot-box').style.display=dobotOpen?'flex':'none';if(dobotOpen&&document.getElementById('dobot-msgs').innerHTML==''){dobotAdd("Hi! I am DO Bot 🤖<br>Ask about DOTGROUP:<br>• What is DOTGROUP?<br>• How to shop?<br>• How to earn?<br>• How to verify?",'bot')}}function dobotAdd(t,f){let b=document.getElementById('dobot-msgs');let d=document.createElement('div');d.className='m '+f;d.innerHTML=t;b.appendChild(d);b.scrollTop=b.scrollHeight}function dobotSend(){let q=document.getElementById('botInput').value.trim();if(!q)return;dobotAdd(q,'me');document.getElementById('botInput').value='';let a="DOTGROUP = DOspace Social + E-Commerce (?shop=) + E-Learning + Wallets + Domains. One account auto logged.";let l=q.toLowerCase();if(l.includes('dotgroup')||l.includes('company'))a="DOTGROUP is your company - DOspace Social (like Facebook but modern), E-Commerce shops (?shop= link), E-Learning courses, Wallets. Founder FOUNDER. One account auto logged.";else if(l.includes('shop')||l.includes('buy'))a="To shop: Use ?shop=yourshop link - See products - Edit price no code - Owner gets % or $ - Orders go to Orders.";else if(l.includes('earn')||l.includes('money')||l.includes('tip')||l.includes('paid'))a="3 ways to earn: 1) Comment Tip - people tip comments $1-$10 2) Paid Post - only Verified can post paid - followers pay to unlock 3) Monetization - only verified withdraw - Verify $5.";else if(l.includes('verify'))a="Verify $5 (founder free demo) - Get ✓ blue tick, Post Paid Posts, Earn Tips, Withdraw. Menu > Verify Account.";else if(l.includes('dospace')||l.includes('newspace')||l.includes('social'))a="DOspace is social - Post, Like, Comment, Share, Chat, Stories. Fits phone, iPhone, iPad - Responsive - No sideways scroll.";setTimeout(()=>dobotAdd(a,'bot'),300);}</script>
+</body></html>

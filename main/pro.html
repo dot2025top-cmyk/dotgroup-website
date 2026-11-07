@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOTGROUP - Access Pass</title>
+<style>
+:root{--blue:#1a4db3;--green:#0a7a2a;--gold:#ffb800;--bg:#f6f8ff}
+*{box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+body{margin:0;background:var(--bg);padding:10px}
+.container{max-width:800px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a4db3,#0d2a6b);color:white;padding:18px;border-radius:16px;text-align:center}
+.promo{background:#fff3cd;border:2px dashed #ffb800;padding:12px;border-radius:12px;text-align:center;margin:12px 0;font-weight:700}
+.timer{font-size:20px;color:#d00000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:white;border-radius:14px;padding:14px;border:1px solid #e5e9f5;position:relative;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.card.best{border:2px solid var(--gold);background:linear-gradient(#fffef0,#fff)}
+.badge{position:absolute;top:-8px;right:10px;background:var(--gold);color:#000;font-size:11px;padding:4px 10px;border-radius:20px;font-weight:800}
+.price{font-size:26px;font-weight:900;color:var(--blue)}
+.perc{background:#eef3ff;color:var(--blue);padding:2px 8px;border-radius:20px;font-size:12px;font-weight:700}
+.save{color:var(--green);font-size:12px;font-weight:700;margin-top:4px}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;margin-top:10px;cursor:pointer}
+.btn-blue{background:var(--blue);color:white}
+.btn-gold{background:var(--gold);color:black}
+.old{text-decoration:line-through;color:#999;font-size:14px}
+.footer{text-align:center;font-size:12px;color:#777;margin:20px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<h2 style="margin:0">DOTGROUP ACCESS PASS</h2>
+<small>Verify first, then subscribe to unlock full platform</small><br>
+<small id="verStatus" style="background:rgba(255,255,255,.2);padding:4px 8px;border-radius:20px;margin-top:8px;display:inline-block">Checking verification...</small>
+</div>
+
+<div class="promo" id="promoBox">
+🔥 LAUNCH PROMO: Get 1 Year for <span style="color:#d00000">$30 (30%)</span> instead of $100! <br>
+<span class="old">$100</span> <span style="color:green">Save 70%</span><br>
+Promo Ends In: <span class="timer" id="timer">90 days 00:00:00</span>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<b>Daily Pass</b><br>
+<span class="perc">0.8%</span><br>
+<div class="price">$0.80 <small style="font-size:13px;color:#555">/ day</small></div>
+<div class="save">⚠️ Pay daily for 1 year = 292% ($292) - You lose 192%</div>
+<button class="btn btn-blue" onclick="pay('daily',0.8)">Activate Daily</button>
+</div>
+
+<div class="card">
+<b>Weekly Pass</b><br>
+<span class="perc">5%</span><br>
+<div class="price">$5.00 <small style="font-size:13px;color:#555">/ week</small></div>
+<div class="save">Pay weekly for 1 year = 260% ($260)</div>
+<button class="btn btn-blue" onclick="pay('weekly',5)">Activate Weekly</button>
+</div>
+
+<div class="card">
+<b>Monthly Pass</b><br>
+<span class="perc">15%</span><br>
+<div class="price">$15.00 <small style="font-size:13px;color:#555">/ month</small></div>
+<div class="save">Most popular - 180% yearly if you renew monthly</div>
+<button class="btn btn-blue" onclick="pay('monthly',15)">Activate Monthly</button>
+</div>
+
+<div class="card">
+<b>3 Months</b><br>
+<span class="perc">35%</span><br>
+<div class="price">$35.00</div>
+<div class="save">Save 20% vs monthly</div>
+<button class="btn btn-blue" onclick="pay('3months',35)">Activate 3 Months</button>
+</div>
+
+<div class="card">
+<b>4 Months</b><br>
+<span class="perc">42%</span><br>
+<div class="price">$42.00</div>
+<div class="save">Save 28% vs monthly</div>
+<button class="btn btn-blue" onclick="pay('4months',42)">Activate 4 Months</button>
+</div>
+
+<div class="card">
+<b>6 Months</b><br>
+<span class="perc">55%</span><br>
+<div class="price">$55.00</div>
+<div class="save">Pay 55% for half year</div>
+<button class="btn btn-blue" onclick="pay('6months',55)">Activate 6 Months</button>
+</div>
+
+<div class="card best" style="grid-column:1/-1">
+<span class="badge">BEST VALUE - 70% OFF</span>
+<b>1 Year Pass</b> - Cheapest Per Day<br>
+<span class="perc">100% → 30% PROMO</span><br>
+<div class="price"><span class="old">$100</span> $30.00 <small style="font-size:13px;color:green">/ year PROMO</small></div>
+<div class="save">✅ You pay only 30% - Save $70! After promo, renewal $100/year = 100%</div>
+<div class="save">💡 Daily user pays 292%, Yearly pays 100% (PROMO 30%) - Smartest choice!</div>
+<button class="btn btn-gold" onclick="pay('yearly-promo',30)">🔥 Get 1 Year for $30 Now</button>
+<small style="display:block;text-align:center;margin-top:6px">After 1 year, renewal $100/year</small>
+</div>
+
+</div>
+
+<div class="footer">DOTGROUP • Verification Required Before Access • All payments secured</div>
+</div>
+
+<script>
+// 1. CHECK VERIFICATION - MUST BE VERIFIED BEFORE SEEING THIS
+let level = parseInt(localStorage.getItem("DOTGROUP_LEVEL")||"0");
+let verEl = document.getElementById("verStatus");
+if(level < 2){
+  verEl.innerHTML = "❌ NOT VERIFIED - Redirecting to verification...";
+  verEl.style.background = "#ffcccc";
+  setTimeout(()=>{ window.location.href = "verification.html"; },2000);
+}else{
+  verEl.innerHTML = "✅ VERIFIED Level "+level+" - You can subscribe";
+  verEl.style.background = "#d1ffd1";
+  verEl.style.color = "#0a7a2a";
+}
+
+// 2. PROMO TIMER - 90 DAYS FROM NOW (First 3 months)
+let promoEnd = localStorage.getItem("PROMO_END");
+if(!promoEnd){
+  let d = new Date();
+  d.setDate(d.getDate()+90);
+  promoEnd = d.toISOString();
+  localStorage.setItem("PROMO_END", promoEnd);
+}
+function updateTimer(){
+  let now = new Date();
+  let end = new Date(promoEnd);
+  let diff = end - now;
+  if(diff<=0){
+    document.getElementById("promoBox").innerHTML = "Promo Ended - Yearly now $100 (100%)";
+    return;
+  }
+  let days = Math.floor(diff/(1000*60*60*24));
+  let h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  let m = Math.floor((diff%(1000*60*60))/(1000*60));
+  let s = Math.floor((diff%(1000*60))/1000);
+  document.getElementById("timer").innerText = days+" days "+h+":"+m+":"+s;
+}
+setInterval(updateTimer,1000);
+updateTimer();
+
+// 3. PAY FUNCTION
+function pay(plan, amount){
+  if(level<2){ alert("Please verify first!"); window.location.href="verification.html"; return; }
+  if(confirm("Pay $"+amount+" for "+plan+" Access Pass?")){
+    let expiry = new Date();
+    if(plan=="daily") expiry.setDate(expiry.getDate()+1);
+    if(plan=="weekly") expiry.setDate(expiry.getDate()+7);
+    if(plan=="monthly") expiry.setMonth(expiry.getMonth()+1);
+    if(plan=="3months") expiry.setMonth(expiry.getMonth()+3);
+    if(plan=="4months") expiry.setMonth(expiry.getMonth()+4);
+    if(plan=="6months") expiry.setMonth(expiry.getMonth()+6);
+    if(plan.includes("yearly")) expiry.setFullYear(expiry.getFullYear()+1);
+
+    localStorage.setItem("ACCESS_PASS_TYPE", plan);
+    localStorage.setItem("ACCESS_PASS_AMOUNT", amount);
+    localStorage.setItem("ACCESS_PASS_EXPIRY", expiry.toISOString());
+    localStorage.setItem("HAS_ACCESS", "true");
+
+    alert("✅ Success! "+plan+" activated until "+expiry.toDateString()+"\nYou paid "+ (plan.includes("yearly")?"30% ($30)":"")+ " - Access Granted!");
+    // Redirect to dashboard/wallet
+    window.location.href = "wallet.html";
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dobot+ Trial Agent</title>
+<style>
+body{margin:0;font-family:Arial;background:#f3f6fb}header{background:#073b8c;color:#fff;padding:14px}
+.card{background:#fff;margin:12px;padding:14px;border-radius:10px;border:1px solid #dce3ef}
+#msgs{height:380px;overflow:auto;display:flex;flex-direction:column;gap:8px;background:#f0f2f5;padding:10px;border-radius:8px}
+.m{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13px}.bot{background:#fff;border:1px solid #ddd}.me{background:#073b8c;color:#fff;align-self:flex-end}
+.row{display:flex;gap:6px;margin-top:8px}input{flex:1;padding:10px;border:1px solid #ccc;border-radius:20px}
+button{padding:10px 14px;border:0;border-radius:20px;font-weight:700;cursor:pointer}.b{background:#073b8c;color:#fff}.r{background:#d71920;color:#fff}.o{background:#d97706;color:#fff}
+.trial{background:#fff3cd;padding:8px;border-radius:8px;font-size:12px;margin-bottom:8px;border:1px solid #ffec99}
+</style>
+</head>
+<body>
+<header><b>Dobot+ - Your 3 Months Free Agent</b> <span id="userTag" style="font-size:12px"></span></header>
+
+<div class="card">
+<div id="trialInfo" class="trial"></div>
+<div id="msgs"></div>
+<div class="row"><input id="q" placeholder="Type here..." onkeydown="if(event.key==='Enter')send()"><button class="b" onclick="send()">Send</button></div>
+<div style="margin-top:8px;display:flex;gap:6px">
+<button class="o" onclick="resetBot()">Reset Bot</button>
+<button class="r" onclick="simulate90Days()">Test: Make 90 days pass</button>
+</div>
+</div>
+
+<script>
+let USER=(new URLSearchParams(location.search).get('shop')||'FOUNDER').toUpperCase();
+let KEY='dot_dobotplus_'+USER;
+let REG_KEY='dot_registered_'+USER;
+let VER_KEY='dot_verified_'+USER;
+let DATA=JSON.parse(localStorage.getItem(KEY)||'null');
+let STEP=0; let temp={};
+
+document.getElementById('userTag').innerText='?shop='+USER;
+
+// SET REGISTER DATE IF NEW USER
+if(!localStorage.getItem(REG_KEY)){
+ localStorage.setItem(REG_KEY, Date.now().toString());
+}
+
+function getTrialStatus(){
+ let reg=parseInt(localStorage.getItem(REG_KEY));
+ let now=Date.now();
+ let daysPassed=Math.floor((now-reg)/(1000*60*60*24));
+ let daysLeft=90-daysPassed;
+ let expired=daysLeft<=0;
+ let verified=localStorage.getItem(VER_KEY)==='true';
+ return {reg, daysPassed, daysLeft: daysLeft<0?0:daysLeft, expired, verified};
+}
+
+function showTrialInfo(){
+ let s=getTrialStatus();
+ let el=document.getElementById('trialInfo');
+ if(s.verified){
+  el.innerHTML='✅ <b>Verified</b> - Dobot+ will serve you forever. You paid.';
+  el.style.background='#d1e7dd';
+ } else if(s.expired){
+  el.innerHTML='❌ <b>Trial Ended</b> - Your 3 months free agent trial finished. Dobot+ has left you.<br>To bring me back, verify now with <b>$100</b> (You missed $30 trial price).';
+  el.style.background='#f8d7da';
+ } else {
+  el.innerHTML='⏳ <b>Trial: '+s.daysLeft+' days left of 90 days</b> - Company gives you free agent for 3 months.<br>Verify within trial: <b>$30</b> | After trial: <b>$100</b> | Dobot+ will leave you after 3 months if not verified.';
+  el.style.background='#fff3cd';
+ }
+}
+
+function add(t,f){
+ let m=document.createElement('div');m.className='m '+f;m.innerHTML=t;
+ document.getElementById('msgs').appendChild(m);
+ document.getElementById('msgs').scrollTop=9999;
+}
+
+function start(){
+ showTrialInfo();
+ let s=getTrialStatus();
+ if(s.verified){
+  if(!DATA){
+   add('Welcome back boss! I am your assistant 🤖<br>You are verified ✓ I will serve you forever.<br><br><b>What is your business name?</b>','bot'); STEP=1;
+  } else {
+   add('I am your assistant for <b>'+DATA.name+'</b> 🤖 Verified forever.<br><br>Say "edit" to update info. Or ask me as customer e.g. "how much?"','bot'); STEP=99;
+  }
+  return;
+ }
+ if(s.expired){
+  add('Hello '+USER+'<br><br>❌ Your 3 months trial has ended.<br><br>I told you I will serve you as agent for 3 months. Your time is finished and you did not verify.<br><br><b>I have left you now.</b><br><br>To bring me back, you need to verify with <b>$100</b>.<br>You missed the chance to verify with $30 within 3 months.<br><br>Click Verify button to pay $100 and I will come back.','bot');
+  return;
+ }
+ // NOT VERIFIED BUT IN TRIAL
+ if(!DATA){
+  add('Hello '+USER+'! 👋 I am Dobot+ 🤖<br><br><b>I will serve you as your agent for 3 months FREE.</b><br><br>This is trial base. Company is helping you for 3 months to see the benefit.<br><br>After 3 months, if you don\'t verify your account, <b>I will leave you.</b><br><br>Good news: If you verify within these 3 months, you will pay only <b>$30</b>.<br>If you miss it, after 3 months you will pay <b>$100</b> to verify.<br><br>So let me help you now. <b>What is your business name?</b>','bot'); STEP=1;
+ } else {
+  add('I am still your free agent for <b>'+s.daysLeft+' days left</b> 🤖<br>Business: <b>'+DATA.name+'</b><br><br>I am working in your absence now. Customers asking "how much?" I reply for you.<br><br><b>What other information do you want me to have?</b> Tell me more about your business so I can serve you better.<br><br>Or say "edit" to change info.','bot'); STEP=99;
+ }
+}
+
+function send(){
+ let v=document.getElementById('q').value.trim(); if(!v)return;
+ add(v,'me'); document.getElementById('q').value='';
+ setTimeout(()=>{
+  let s=getTrialStatus();
+  if(s.expired && !s.verified){ add('Trial ended. I have left you. Verify with $100 to bring me back.','bot'); return; }
+
+  if(STEP==1){ temp.name=v; add('Nice! <b>'+v+'</b> saved ✓<br><br>What do you sell? What do you do?','bot'); STEP=2; }
+  else if(STEP==2){ temp.what=v; add('Got it!<br><br>What are your products and prices? e.g. Shirt $20, Shoe $50','bot'); STEP=3; }
+  else if(STEP==3){ temp.prices=v; add('Perfect! WhatsApp number?','bot'); STEP=4; }
+  else if(STEP==4){ temp.wa=v; add('Great! Shop location?','bot'); STEP=5; }
+  else if(STEP==5){ temp.loc=v; add('Almost done!<br><br><b>What other information do you want me to have?</b><br>e.g. Opening hours, delivery, payment method, anything else?','bot'); STEP=6; }
+  else if(STEP==6){
+   temp.extra=v; temp.saved=new Date().toLocaleString();
+   localStorage.setItem(KEY,JSON.stringify(temp)); DATA=temp;
+   let left=s.daysLeft;
+   add('✅ Saved! Thank you!<br><br><b>Your Agent Setup:</b><br>Name: '+temp.name+'<br>What: '+temp.what+'<br>Prices: '+temp.prices+'<br>WhatsApp: '+temp.wa+'<br>Location: '+temp.loc+'<br>Extra: '+temp.extra+'<br><br><b>I will now serve you as agent for '+left+' days left (3 months trial).</b><br><br>Remember:<br>• Verify within 3 months = <b>$30</b><br>• After 3 months = <b>$100</b><br>• If you don\'t verify, I will leave you after trial.<br><br>You will see benefit of verifying! I work even when you sleep.<br><br>Test me: Type "how much is shirt?"','bot'); STEP=99;
+  }
+  else if(STEP==99){
+   if(v.toLowerCase()=='edit'){ add('What is your business name?','bot'); temp={}; STEP=1; return; }
+   // AGENT WORKING IN ABSENCE
+   let d=DATA; let l=v.toLowerCase(); let r=d.name+' Bot 🤖: ';
+   if(l.includes('price')||l.includes('how much')) r+='Prices: '+d.prices+'. '+d.what;
+   else if(l.includes('where')||l.includes('location')) r+='We are at '+d.loc+'. WhatsApp '+d.wa;
+   else if(l.includes('whatsapp')||l.includes('contact')) r+='WhatsApp: '+d.wa+' for '+d.name;
+   else if(d.extra) r+='Thanks for messaging '+d.name+'! We sell '+d.what+'. Prices: '+d.prices+'. Extra info: '+d.extra+'. WhatsApp: '+d.wa+'. Location: '+d.loc;
+   else r+='Thanks for messaging '+d.name+'! We sell '+d.what+'. Prices: '+d.prices+'. WhatsApp: '+d.wa+'. Location: '+d.loc;
+   add(r,'bot');
+  }
+ },400);
+}
+
+function resetBot(){ localStorage.removeItem(KEY); location.reload(); }
+function simulate90Days(){
+ let old=parseInt(localStorage.getItem(REG_KEY));
+ localStorage.setItem(REG_KEY, (old - 91*24*60*60*1000).toString());
+ location.reload();
+}
+
+start();
+</script>
+</body>
+</html>

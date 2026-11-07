@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DOTGROUP Shortener</title>
+<script>
+  // LOCKED RULE
+  // Short: peter.docart
+  // Full: peter.docart.dotgroup.top
+  // System go add .dotgroup.top for back automatic
+
+  // Get short from link: dotgroup.top/go?peter.docart
+  // Or: dotgroup.top/go/peter.docart
+  let short = "";
+
+  if (window.location.search) {
+    short = window.location.search.replace("?", "").trim();
+  } else {
+    let path = window.location.pathname.replace("/go", "").replace(/\//g, "").trim();
+    short = path;
+  }
+
+  // If na main dot account, no shorten, no touch
+  // Example: dotgroup.top/peter - leave am
+
+  if (short) {
+    // Automatic: add .dotgroup.top for back
+    let full = "https://" + short + ".dotgroup.top";
+    window.location.href = full;
+  } else {
+    document.write("No short link found.");
+  }
+</script>
+</head>
+<body>
+  <p>Going... Please wait</p>
+</body>
+</html>

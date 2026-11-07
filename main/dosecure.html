@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOSECURE CENTER V8.0 - COMPLETE - GLOBAL DOTGROUP</title>
+<style>
+:root{--blue:#0a3cff;--blue2:#4f8cff;--red:#dc2626;--bg:#f7f8fc;--card:#fff;--text:#0f172a;--muted:#64748b;--green:#059669;--amber:#d97706;--border:#e2e8f0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,sans-serif}
+body{background:var(--bg);color:var(--text)}
+.header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.logo{font-weight:900;font-size:16px} .logo span{color:var(--blue)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:#f1f5f9;font-size:12px;font-weight:700;cursor:pointer}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.section{display:none} .section.active{display:block}
+.hero{background:linear-gradient(135deg,var(--blue),#6a5cff);color:#fff;border-radius:20px;padding:22px;margin-bottom:18px}
+.hero.red{background:linear-gradient(135deg,#0f172a,#dc2626)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px}
+.card h3{font-size:13px;color:var(--blue);margin-bottom:6px;display:flex;justify-content:space-between}
+.small{font-size:11px;color:var(--muted);line-height:1.5}
+.badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:700}
+.b-ok{background:#dcfce7;color:#059669} .b-warn{background:#fef3c7;color:#d97706} .b-danger{background:#fee2e2;color:#dc2626} .b-blue{background:#dbeafe;color:#0a3cff}
+.btn{width:100%;padding:9px;border-radius:10px;border:0;font-weight:700;cursor:pointer;margin-top:8px;font-size:12px}
+.btn-blue{background:var(--blue);color:#fff} .btn-red{background:var(--red);color:#fff} .btn-white{background:#f1f5f9;border:1px solid var(--border)}
+.input{width:100%;padding:9px;border:1px solid var(--border);border-radius:8px;margin:5px 0;font-size:12px}
+.danger-zone{border:2px solid var(--red);background:#fff5f5}
+.section-title{font-size:17px;font-weight:900;margin:22px 0 10px;color:var(--blue);border-left:4px solid var(--blue);padding-left:10px}
+.list{list-style:none;font-size:11px} .list li{padding:5px 0;border-bottom:1px dashed #e2e8f0;display:flex;justify-content:space-between}
+.score-ring{width:80px;height:80px;border-radius:50%;border:5px solid #e0e7ff;border-top-color:var(--blue);display:grid;place-items:center;font-weight:900}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="logo">DOT<span>GROUP</span> • DOSECURE CENTER V8.0 COMPLETE</div>
+<div class="tabs">
+<button class="tab active" onclick="showTab('dashboard')">Dashboard & Login (1-11)</button>
+<button class="tab" onclick="showTab('wallet')">Wallet & Identity & Bio (12-38)</button>
+<button class="tab" onclick="showTab('recovery')">Recovery Privacy Admin (39-65) + Arch</button>
+</div>
+</div>
+<div class="container">
+<div id="dashboard" class="section active">
+<div class="hero"><h2>DOSECURE CENTER V8.0 — GLOBAL ACCOUNT, IDENTITY, DEVICE, PRIVACY AND FINANCIAL PROTECTION SYSTEM</h2><p style="font-size:12px;opacity:.9">Parent: DOTGROUP • Route: /security-center • Blue White Red • Preserves existing auth/wallets/users — Migrations only — Real backend enforcement</p></div>
+<div class="grid">
+<div class="card"><h3>Security Score - Real Calculation <span class="badge b-blue">Not Fabricated</span></h3><div style="display:flex;justify-content:space-between"><div class="small">Password Argon2id + 2FA + Passkey WebAuthn verified + Trusted device + Recovery ready + Wallet lock + Verification — High score ≠ guarantee unhackable — Don't award high score for only uploading ID doc</div><div class="score-ring" id="scoreRing">60%</div></div></div>
+<div class="card"><h3>Dashboard Cards 14</h3><ul class="list"><li>Overall Score <span id="scoreVal">60%</span></li><li>Verification <span class="badge b-warn">Tier1</span></li><li>Password & Passkey <span class="badge b-ok">OK</span></li><li>2FA <span class="badge b-ok">Enabled</span></li><li>Devices <span class="badge b-blue">3</span></li><li>Biometric <span class="badge b-ok">Platform Auth</span></li><li>Wallet <span class="badge b-ok">Locked</span></li><li>Withdrawal <span class="badge b-ok">Allowlist ON</span></li><li>Recent Login</li><li>Active Sessions</li><li>Pending Actions <span class="badge b-warn">1</span></li><li>Threat Alerts</li><li>Recovery Readiness</li><li>Privacy</li></ul></div>
+</div>
+<div class="section-title">FEATURES 1-11 - LOGIN AUTH</div>
+<div class="grid">
+<div class="card"><h3>1. Password - Argon2id No Plaintext</h3><p class="small">Modern hashing, no plaintext, policy, change, protect reset, rate-limit, detect credential stuffing, don't reveal if username exists, notify. Do NOT replace working auth without migration.</p></div>
+<div class="card"><h3>2. 2FA TOTP - Not SMS only for high-risk</h3><p class="small">Secure enrollment, verification before activation, safe removal, recovery codes, alerts. SMS may be offered but NOT only for financial due to SIM-swap.</p></div>
+<div class="card"><h3>3. Passkeys WebAuthn Backend Validated</h3><p class="small">Register, view, remove after reauth, recover via alternative. Must be validated by backend - NOT visual button only.</p></div>
+<div class="card"><h3>4. Device Manager - No Full IDs Exposed</h3><p class="small">Nickname, type, browser/app, approx location, last active, reg date, current indicator. Rename, remove trusted, revoke, mark unfamiliar.</p></div>
+<div class="card"><h3>5. Login History - Report Unfamiliar</h3><p class="small">Date/time, outcome, method, device/browser, approx location, risk warnings. Retain per privacy policy.</p></div>
+<div class="card"><h3>6. Anti-Phishing DOT-9X2L - Not password</h3><input class="input" value="DOT-9X2L"><p class="small">Display in official security emails. Not public profile, not password/recovery secret.</p></div>
+<div class="card"><h3>7. Unusual Login Alerts - Risk Based</h3><p class="small">Unfamiliar device, frequency, failed auth, location change, new device + high-risk tx. Extra auth/notify/restrict/review.</p></div>
+<div class="card"><h3>8. Session Management - Secure Cookies</h3><p class="small">View active, sign out individual/all other, creation times. HttpOnly Secure SameSite.</p></div>
+<div class="card"><h3>9. Facial Auth - Platform Result NOT Raw Images</h3><p class="small">Via passkeys/platform authenticators. App receives result, NOT raw facial images. Don't promise universal Face ID. Alternative if unavailable.</p></div>
+<div class="card"><h3>10. Fingerprint Auth - Platform - No Raw Storage in DB</h3><p class="small">Device fingerprint to unlock/approve. Don't store raw images in DOTGROUP DB. OS handles comparison.</p></div>
+<div class="card"><h3>11. Step-Up Auth</h3><p class="small">Stronger auth for: change email, recovery methods, new trusted device, disable 2FA, change TX PIN, add withdrawal destination, high-risk tx.</p></div>
+</div>
+</div>
+
+<div id="wallet" class="section">
+<div class="hero"><h2>WALLET (12-24) + IDENTITY (25-32) + BIOMETRICS DEVICE (33-38)</h2><p style="font-size:12px">Financial interface must reflect actual backend — No invented balances — Identity separate from login — Limits configurable</p></div>
+<div class="section-title">12-24 Wallet Financial</div>
+<div class="grid">
+<div class="card"><h3>12. Transaction PIN - Hashed</h3><p class="small">Secure enrollment, rate limits + increasing delays, secure recovery, anti-guessing, no plaintext. Short PIN alone ≠ sufficient.</p></div>
+<div class="card"><h3>13. Withdrawal Allowlist</h3><p class="small">Verify destination, notify add/change, configurable cooling-off, extra auth, secure removal. Only where rails support.</p></div>
+<div class="card"><h3>14. Limits - Configurable NOT Hardcoded</h3><input class="input" value="Daily: Configurable"><input class="input" value="Per Tx: Configurable"></div>
+<div class="card"><h3>15. Cooling-Off - Risk Based</h3><p class="small">New destination, recent recovery change, new trusted device, high-risk after recovery. Display reason, remaining time.</p></div>
+<div class="card"><h3>16. Dual Approval - Separation</h3><p class="small">Org wallets, treasury, large business. Second approver independently authenticated. Initiator cannot approve own.</p></div>
+<div class="card"><h3>17. Transaction Confirmation</h3><p class="small">Asset, amount, destination, fees, net, warnings, confirm/cancel. Require auth per risk. Screen alone ≠ proof.</p></div>
+<div class="card"><h3>18. Auth Records - No Secrets Logged</h3><p class="small">Tx ID, Account ID, method, time, details/ref, risk checks, status, policy version. Don't log passwords/PINs/biometrics/private keys.</p></div>
+<div class="card"><h3>19. Payment Alerts</h3><p class="small">Success, failed, withdrawal request, new destination, changed limit, suspicious attempt, reversed.</p></div>
+<div class="card"><h3>20. Analytics - Real Data Only</h3><p class="small">By period, counts, incoming/outgoing, failed, pending, reversed. Distinguish pending vs completed. No fabricated.</p></div>
+<div class="card"><h3>21. Auto Wallet Lock</h3><select class="input"><option>5 min timeout</option><option>10 min</option></select></div>
+<div class="card"><h3>22. Suspicious Tx Detection</h3><p class="small">Repeated failed, sudden size change, new destinations + risk, rapid after recovery, device changes, bypass attempts. Proportionate.</p></div>
+<div class="card"><h3>23. Duplicate & Replay Protection</h3><p class="small">Server IDs, idempotency, state validation, backend balance checks, concurrency. Don't rely on disabling button only.</p></div>
+<div class="card danger-zone"><h3>24. Emergency Financial Freeze</h3><p class="small">Disable withdrawals, block sensitive tx, revoke sessions, suspend new destinations, notify, incident. State what frozen/what available. Don't promise reversing external tx.</p><button class="btn btn-red">FREEZE Withdrawals</button></div>
+</div>
+<div class="section-title">25-32 Identity Verification</div>
+<div class="grid">
+<div class="card"><h3>25. Tiered Verification - Configurable</h3><p class="small">Tier1 Basic, Tier2 Enhanced Identity, Tier3 Enhanced Due Diligence. Requirements/limits configurable. Don't hardcode $500/$5000. Don't imply satisfies every country's law.</p></div>
+<div class="card"><h3>26. Document Vault - AES-256 Encrypted</h3><p class="small">Encrypted transmission, protected storage, strict permissions, validation, malware scan, retention, secure deletion, audit, masking. Don't expose to unrelated admins.</p></div>
+<div class="card"><h3>27. Facial Comparison - Consent Required</h3><p class="small">Where compliant provider, ID doc vs live capture. Consent, purpose disclosure, privacy notices, secure processing, retention, manual review/fallback. Don't represent simple comparison as reliable proof.</p></div>
+<div class="card"><h3>28. Liveness - With Fallback</h3><p class="small">Motion, challenge-response, device signals, passive detection. Don't promise blinking/head turn makes spoofing impossible. Don't claim 3D depth on every device.</p></div>
+<div class="card"><h3>29. Live Video - Disclose Automated</h3><p class="small">Explain purpose, consent, request doc, checks, status, route uncertain for review, notify outcome. Don't promise 30/60 sec always. Don't make DO BOT appear human.</p></div>
+<div class="card"><h3>30. Address - Only Where Deliverable</h3><input class="input" placeholder="Enter 6-digit postal code"><p class="small">One-time postal code, recognized service, official doc. Postal only where can deliver. Expiration, attempt limits, resend. Don't impose postcard on all.</p></div>
+<div class="card"><h3>31. In-Person Hub - Only If Partnership Exists</h3><p class="small">Agent needs unique account, permissions, verified org affiliation, strong auth, record each, revocation, audit. Don't allow assign highest trust by button. Don't claim global hubs unless partnerships exist.</p></div>
+<div class="card"><h3>32. Verification Status</h3><p class="small">Not started, In progress, Additional info required, Pending review, Verified, Rejected, Expired, Suspended, Appeal available. Provide explanation/next steps. Don't reveal internal fraud rules.</p></div>
+</div>
+<div class="section-title">33-38 Biometrics & Device</div>
+<div class="grid">
+<div class="card"><h3>33. Secure Biometric Enrollment - No Raw Storage</h3><p class="small">Require explicit action, explain benefits/limitations, verify enrollment, allow disable, provide alternative, notify changes.</p></div>
+<div class="card"><h3>34. Biometric Tx Approval - Server Verified + Tx Binding</h3><p class="small">Server verifies assertion valid & associated with session/challenge. Backend validates tx details. Where strong binding required, use mechanism binding approval to intended tx.</p></div>
+<div class="card"><h3>35. High-Risk Tx Protection - Configurable</h3><p class="small">Ordinary: standard auth + confirmation. Elevated: additional auth or verified device. High-risk: stronger auth + destination checks + cooling-off. Combining face+fingerprint+PIN ≠ automatically impossible.</p></div>
+<div class="card"><h3>36. Trusted Device Binding - No Permanent HW ID Claim</h3><p class="small">Register via secure auth. Detect changes via signals. Notify new devices, revoke trusted, extra checks unfamiliar, avoid relying exclusively on HW ID/SIM. Browser cannot obtain universally reliable permanent HW ID.</p></div>
+<div class="card"><h3>37. SIM-Swap Protection - Independent Channel</h3><p class="small">Where signals available, detect phone number changes/indicators SIM takeover. Notify independent channel, require stronger auth, restrict high-risk temporarily. Don't assume detect every SIM swap without service. Don't auto-lock 72h for every change.</p></div>
+<div class="card"><h3>38. Recovery Card - Future Secure Design</h3><p class="small">May contain secure recovery identifier/cryptographic component. Don't print passwords/PINs/secrets readable. Don't make QR with permanent bearer secret sole factor. Must not bypass identity/recovery/tx auth. Don't claim works without internet unless architecture supports.</p></div>
+</div>
+</div>
+
+<div id="recovery" class="section">
+<div class="hero red"><h2>RECOVERY (39-45) + PRIVACY (46-54) + THREAT (55-60) + ADMIN (61-65) + DO BOT + ARCHITECTURE</h2></div>
+<div class="section-title">39-45 Recovery</div>
+<div class="grid">
+<div class="card"><h3>39. Password Recovery - Single-Use Time-Limited</h3><p class="small">Time-limited single-use tokens, avoid exposing if account exists, rate-limit, notify owner, revoke/review sessions.</p></div>
+<div class="card"><h3>40. PIN Recovery - No Reveal Previous</h3><p class="small">Don't reveal previous PIN, don't store plaintext, require reauth, additional controls, notify, cooling-off.</p></div>
+<div class="card danger-zone"><h3>41. Account Freeze - Emergency</h3><p class="small">Revoke sessions, restrict login/sensitive, freeze withdrawals where supported, disable recovery method changes, notify, create case. Recovery route. Don't confuse freezing with reversing completed tx.</p><button class="btn btn-red">🧊 FREEZE ACCOUNT NOW</button></div>
+<div class="card"><h3>42. Trusted Contacts - No Auto Wallet Access</h3><p class="small">Consent, verify method, explain what can/cannot do, don't disclose sensitive without auth. Should NOT gain access to balances/messages/passwords/wallets.</p></div>
+<div class="card"><h3>43. Duress Safeguards - SAFE No Fake Balance</h3><p class="small">Don't implement deceptive duress PIN. Instead safe workflow: discreet help, emergency contact, additional controls, safety warnings, emergency plan. Avoid danger if discovered.</p></div>
+<div class="card"><h3>44. Inheritance - Legal Review</h3><p class="small">Designated contact/beneficiary where permitted, eligibility rules, identity/legal-doc review, restrictions, audit records. Don't grant automatic wallet access based solely on self-declared relationship.</p></div>
+<div class="card"><h3>45. Recovery Readiness - No Secrets Displayed</h3><p class="small">Checklist: recovery email/method, second factor, passkey, reviewed trusted devices, saved recovery codes safely, understood freeze process.</p></div>
+</div>
+<div class="section-title">46-54 Privacy</div>
+<div class="grid">
+<div class="card"><h3>46. Hide Balance - Display Privacy Only</h3><p class="small">Hide amounts, avoid in notifications, clear control to show again, preserve records. Not security boundary from compromised account.</p></div>
+<div class="card"><h3>47. Hide Sensitive Activity</h3><p class="small">Configure display selected sensitive info. Don't promise hide tx info from parties legally entitled.</p></div>
+<div class="card"><h3>48. Connected Apps - Only If Exists</h3><p class="small">Name, permissions, connection date, last used, revocation. Scoped permissions. Don't display integrations that don't exist.</p></div>
+<div class="card"><h3>49. Privacy Dashboard</h3><p class="small">Profile visibility, contact visibility, security notifications, device history, viewing-history, data-sharing prefs, consent records, marketing prefs.</p></div>
+<div class="card"><h3>50. Data Export - Auth Required</h3><button class="btn btn-white">Export My Data</button><p class="small">Include supported account data without disclosing other person's private info or internal secrets.</p></div>
+<div class="card"><h3>51. Correction & Deletion</h3><p class="small">Explain what can be deleted, retention exceptions, verify identity, track status, record completion/reason refusal.</p></div>
+<div class="card"><h3>52. Consent Management</h3><p class="small">Record what agreed, when, notice/policy version, when withdrawn.</p></div>
+<div class="card"><h3>53. Data Masking - Default Masked ****1234</h3><p class="small">Mask ID numbers, account identifiers, recovery details. Reveal only when necessary/authorized. Access logging for high-risk access.</p></div>
+<div class="card"><h3>54. Retention & Secure Deletion</h3><p class="small">Retention rules for: login events, security alerts, ID docs, verification records, device records, recovery records, tx approvals, support cases. Don't keep indefinitely without purpose.</p></div>
+</div>
+<div class="section-title">55-60 Threat Monitoring</div>
+<div class="grid">
+<div class="card"><h3>55. Threat Feed</h3><p class="small">New device, unfamiliar login, password changed, passkey added/removed, recovery changed, withdrawal destination added, high-risk tx blocked, freeze activated, verification status changed.</p></div>
+<div class="card"><h3>56. Suspicious Activity - Risk Engine Multi-Signal</h3><p class="small">Repeated failed logins, unusual device changes, rapid recovery changes, multiple sensitive actions short period, high-risk after recovery, bypass attempts, suspicious admin. Don't rely on one signal alone.</p></div>
+<div class="card"><h3>57. Rate Limiting - 10/min Login etc</h3><p class="small">Login, password resets, PIN verification 5/min + increasing delay, passkey reg, recovery, ID verification, tx submissions, device registration, code requests. Bot protections.</p></div>
+<div class="card"><h3>58. Incident Management</h3><p class="small">Incident ID, affected account/service, event time, risk level, status, actions taken, reviewer/team, resolution, audit history.</p></div>
+<div class="card"><h3>59. Notifications - No Secrets</h3><p class="small">Password changed, new passkey, new device trusted, recovery changed, freeze activated, high-risk tx blocked, new withdrawal destination. Avoid passwords/PINs/ID docs/secrets.</p></div>
+<div class="card"><h3>60. Audit Log - Protected Append-Only</h3><p class="small">Actor, action, target record, time, outcome, request/correlation ID, authorized context. Protect against modification. Don't log passwords, raw biometric data, tokens, recovery secrets, private keys.</p></div>
+</div>
+<div class="section-title">61-65 Admin Security + DO BOT + Architecture 13-20</div>
+<div class="grid">
+<div class="card"><h3>61. RBAC - Configurable - No Unrestricted Access</h3><p class="small">Super Admin, Security Admin, Identity Verification Officer, Financial Ops Officer, Fraud Review Officer, Support Agent, Read-Only Auditor. Clearly defined permissions.</p></div>
+<div class="card"><h3>62. Multi-Admin Approval - Initiator Cannot Approve Own</h3><p class="small">Changing policies affecting all users, increasing max limits, changing verification requirements, accessing sensitive records, modifying emergency controls.</p></div>
+<div class="card"><h3>63. Admin Login Protection - Passkey/MFA Short Session</h3><p class="small">Passkeys/security keys, mandatory MFA, shorter session lifetimes, reauth for sensitive changes, alerts unfamiliar devices, session revocation.</p></div>
+<div class="card"><h3>64. Admin Action Logs - Immutable</h3><p class="small">User restrictions, verification-status changes, policy changes, tx reviews, incident decisions, recovery approvals, role assignments. Cannot be casually edited/deleted by same admin.</p></div>
+<div class="card danger-zone"><h3>65. Emergency Controls - No Universal Kill Switch</h3><p class="small">Disable compromised integration, suspend vulnerable operation, restrict tx types, revoke sessions, disable compromised credentials, increase auth requirements. Authorization, logging, post-incident review.</p></div>
+<div class="card"><h3>12. DO BOT - Assistant ONLY</h3><p class="small">May Help: Understand settings, Navigate Center, Explain alerts, Register passkey, Understand verification, Find recovery, Report suspicious, Understand warnings<br><br>Must NOT: Ask passwords, Ask TX PINs, Ask raw fingerprint, Request private keys/recovery phrases, Override server-side auth, Assign privileged admin roles, Bypass financial approval, Declare ID verification successful without authorized result, Promise completely unhackable<br>Guide to secure workflow. If cannot verify status, must say so.</p></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#fff">13. Technical Architecture - Backend Enforcement</h3><p style="color:#94a3b8" class="small">Backend must enforce auth, authorization, session validation, device registration, passkey WebAuthn verification, rate limits, recovery, tx limits SELECT FOR UPDATE, withdrawal restrictions, ID verification state, admin permissions RBAC, audit log append-only, freeze states. Hiding button in JS is NOT security. Encryption: HTTPS/TLS, AES-256, KMS, key rotation. No private API keys in frontend. Database: RLS, constraints, backups, migrations, retention. Never make private data public to simplify dev. Transaction Integrity: Validate all requests backend, verify authorization before execution, prevent duplicate via server IDs + idempotency, consistent states, concurrency controls. Don't assume biometric buttons make financial logic secure.</p></div>
+<div class="card"><h3>14. Physical Expansion - Distinguish Implemented vs Planned</h3><p class="small">Before launch: actual locations, partner agreements, staff auth, procedures, privacy notices, recordkeeping, fraud-prevention, complaints/appeals, legal reviews. Don't display physical badge until actually completed.</p></div>
+<div class="card"><h3>15. Configurable Policies + 16. UX + 17. Testing + 18-20 Delivery Phases Final</h3><p class="small">15. Configurable: auth methods, risk thresholds, limits, cooling-off, device-trust, verification-tier, recovery, alerts, timeouts, rate limits, retention. Safe defaults. Record previous/new value, actor, time, reason, approval.<br><br>16. UX: States Not started, In progress, Awaiting verification/approval, Completed, Failed, Cancelled, Temporarily restricted, Expired, Requires support. Helpful next steps. Never display Verified/Approved/Frozen/Completed/Secured unless backend confirms.<br><br>17. Testing: Auth, Device/Biometrics verify raw biometric NOT stored, Financial duplicate submission freeze unfreeze, Identity, Recovery Privacy data export auth, Admin verify roles multi-approval audit logs immutable, Platform Integration existing login profiles wallet operations no deletion.<br><br>18. Delivery: Dashboard, auth & session integration, biometric & passkey details, device management, wallet protection integration, identity workflows, recovery workflows, privacy controls, notifications, admin controls, DB changes/migrations, external services, config, test results, incomplete features list, deployment/rollback. Don't label mockup as completed.<br><br>19. Phases: Phase1 Account, Phase2 Wallet, Phase3 Identity, Phase4 Advanced Protection, Phase5 Admin & Physical. Don't enable advanced before dependencies ready.<br><br>20. Final: Real security system integrated into existing DOTGROUP platform. Prioritize backend protection, secure auth, tx integrity, privacy, recovery, clear communication over visual effects. Don't delete/rebuild existing modules. Don't fabricate scores/status/transactions/ID checks/biometric results/physical services. Don't store raw fingerprints/facial templates/passwords/PINs/private keys/recovery secrets in ordinary tables. Don't claim impossible to hack. Arrange independent security review before deployment.</p></div>
+</div>
+</div>
+</div>
+<script>
+function showTab(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');event.target.classList.add('active');window.scrollTo(0,0)}
+</script>
+</body>
+</html>

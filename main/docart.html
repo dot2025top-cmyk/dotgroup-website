@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoCart - WHOLE CODE - peter.dogroup / peter.docart - 195 Countries 36 States 130 Currencies</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<style>
+*{box-sizing:border-box}body{font-family:Arial;background:#071a36;color:#e6eeff;margin:0;overflow-x:hidden}
+header{background:#020e26;color:#fff;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:12;border-bottom:2px solid #1a3a6a;flex-wrap:wrap;gap:6px}
+header a{color:#8ec1ff;text-decoration:none;font-weight:900;font-size:13px;padding:6px 10px;background:#0e2447;border-radius:8px}
+.tabs{display:flex;background:#0e2447;border-bottom:2px solid #1a3a6a;position:sticky;top:52px;z-index:11;overflow-x:auto}
+.tabs button{flex:1;min-width:80px;padding:12px 6px;border:none;background:transparent;color:#8aa0c0;font-weight:900;cursor:pointer;font-size:11px;white-space:nowrap}
+.tabs button.active{background:#0f5bd7;color:#fff}
+.wrap{max-width:750px;margin:0 auto;padding:8px;width:100%}
+.card{background:#0e2447;border:1px solid #1a3a6a;padding:10px;border-radius:14px;margin:10px 0;width:100%}
+input,select,textarea{width:100%;padding:12px;background:#071a36;border:2px solid #2a4a7a;border-radius:10px;margin:5px 0;color:#fff;font-size:14px}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:900;margin:6px 0;cursor:pointer;font-size:14px}
+.blue{background:#0f5bd7;color:#fff}.green{background:#16834a;color:#fff}.gray{background:#1e3a5f;color:#cfe0ff}.orange{background:#f5a623;color:#000}.red{background:#b71c1c;color:#fff}.purple{background:#7c3aed;color:#fff}
+.row{display:flex;gap:6px;flex-wrap:wrap}.row > *{flex:1;min-width:120px}
+.filter-row{display:flex;gap:6px;overflow-x:auto;padding:6px 0;flex-wrap:nowrap}
+.filter-row button{white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #2a4a7a;background:#0e2447;color:#8ec1ff;font-size:12px;cursor:pointer;flex-shrink:0}
+.filter-row button.active{background:#0f5bd7;color:#fff}
+.product{background:#071a36;border:1px solid #264a7e;border-radius:12px;padding:10px;margin:8px 0;display:flex;gap:10px;width:100%}
+.product.boosted{border:2px solid #f5a623;background:linear-gradient(135deg,#071a36,#1a2a05)}
+.product.affiliate{border:2px solid #7c3aed}
+.product img{width:80px;height:80px;object-fit:cover;border-radius:10px;flex-shrink:0}
+.product div{flex:1;min-width:0;overflow:hidden}
+.badge{padding:4px 8px;border-radius:20px;font-size:10px;font-weight:900;display:inline-block;margin:2px}
+.small{font-size:11px;color:#8aa0c0;word-break:break-word}
+.visionBar{background:linear-gradient(90deg,#b71c1c,#f5a623);padding:10px;border-radius:12px;margin:10px 0;text-align:center;color:#fff;font-weight:900;font-size:13px}
+.marquee{overflow:hidden;white-space:nowrap;background:#0005;border-radius:12px;padding:10px;border:2px solid #f5a623;width:100%}
+.marquee-track{display:flex;gap:12px;animation:scrollLeftRight 22s ease-in-out infinite alternate;width:max-content}
+@keyframes scrollLeftRight{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-item{min-width:160px;max-width:160px;background:#071a36;border:2px solid #f5a623;border-radius:12px;padding:8px;cursor:pointer;flex-shrink:0}
+.marquee-item img{width:100%;height:90px;object-fit:cover;border-radius:8px}
+.verifyAlert{background:#3a0f0f;border:2px solid #b71c1c;padding:12px;border-radius:12px;color:#ffb4b4;font-weight:900;text-align:center}
+.verifyOk{background:#0f2e15;border:2px solid #16834a;padding:10px;border-radius:12px;color:#a7f0b0;text-align:center}
+.modal{position:fixed;inset:0;background:#000c;display:none;overflow:auto;z-index:20;padding:8px}
+.modalBox{background:#0e2447;border:2px solid #1a3a6a;border-radius:16px;max-width:600px;width:95%;margin:20px auto;padding:12px}
+.linkBtn{color:#8ec1ff;text-decoration:underline;font-weight:900;cursor:pointer}
+.colorBtn{width:38px;height:38px;border-radius:50%;border:3px solid #fff;cursor:pointer;display:inline-block;margin:4px;flex-shrink:0}
+.colorBtn.active{border:3px solid #f5a623;transform:scale(1.2);box-shadow:0 0 0 2px #fff}
+.colorBtn.black{background:#000}.colorBtn.white{background:#fff;border:3px solid #888}.colorBtn.red{background:#e11}.colorBtn.blue{background:#0f5bd7}.colorBtn.brown{background:#8B4513}.colorBtn.green{background:#16834a}.colorBtn.yellow{background:#f5d000}
+.sizeBtn{padding:8px 14px;border-radius:8px;border:2px solid #2a4a7a;background:#071a36;color:#fff;cursor:pointer;font-weight:900;margin:4px;min-width:50px}
+.sizeBtn.active{background:#0f5bd7;border-color:#f5a623;color:#fff}
+.colorSizeBox{background:#071a36;border:2px solid #0f5bd7;border-radius:12px;padding:10px;margin:8px 0}
+.colorSizeTitle{font-size:12px;font-weight:900;color:#8ec1ff;margin-bottom:6px;display:block}
+.flexWrap{display:flex;flex-wrap:wrap;gap:6px}
+</style>
+</head>
+<body>
+<header><a href="home.html">← Home</a><b>🛒 DoCart WHOLE</b><a href="dowallet.html">Wallet</a><a href="dogroup.html">DoGroup</a><a href="dospace.html">DoSpace</a></header>
+<div class="tabs">
+<button id="tabGeneral" class="active" onclick="switchTab('general')">🌐 General</button>
+<button id="tabMyShop" onclick="switchTab('myshop')">🏪 My Shop - peter.docart</button>
+<button id="tabAffiliate" onclick="switchTab('affiliate')">💜 Affiliate</button>
+<button id="tabWishlist" onclick="switchTab('wishlist')">❤️ Wishlist</button>
+</div>
+<div class="wrap">
+<div id="generalView">
+<div class="card" style="border:2px solid #0f5bd7">
+<b>💱 130 Currencies FULL incl VES GYD SRD + 📍 195 Countries FULL + Nigeria 36 States 774 LGAs + All Countries States - WHOLE CODE</b>
+<div class="row"><select id="currencyDropdown" onchange="setCurrencyFromDropdown()"></select><select id="filterCountry" onchange="countryChanged()"></select></div>
+<div class="row"><select id="filterCity" onchange="cityChanged()"></select><select id="filterArea" onchange="renderGeneral()"></select></div>
+<div id="currencyInfo" style="font-size:11px;background:#071a36;padding:8px;border-radius:8px;margin-top:6px;border:1px solid #2a4a7a"></div>
+</div>
+<div class="card">
+<div class="colorSizeBox"><span class="colorSizeTitle">🎨 Color - Click circle</span><div class="flexWrap" id="filterColorBtns">
+<button class="sizeBtn active" onclick="filterByColor('All')">All</button>
+<div class="colorBtn black" title="Black" onclick="filterByColor('Black')"></div>
+<div class="colorBtn white" title="White" onclick="filterByColor('White')"></div>
+<div class="colorBtn red" title="Red" onclick="filterByColor('Red')"></div>
+<div class="colorBtn blue" title="Blue" onclick="filterByColor('Blue')"></div>
+<div class="colorBtn brown" title="Brown" onclick="filterByColor('Brown')"></div>
+<div class="colorBtn green" title="Green" onclick="filterByColor('Green')"></div>
+<div class="colorBtn yellow" title="Yellow" onclick="filterByColor('Yellow')"></div>
+</div></div>
+<div class="colorSizeBox"><span class="colorSizeTitle">📏 Size</span><div class="flexWrap" id="filterSizeBtns">
+<button class="sizeBtn active" data-size="All" onclick="filterBySize('All')">All</button>
+<button class="sizeBtn" data-size="38" onclick="filterBySize('38')">38</button>
+<button class="sizeBtn" data-size="39" onclick="filterBySize('39')">39</button>
+<button class="sizeBtn" data-size="40" onclick="filterBySize('40')">40</button>
+<button class="sizeBtn" data-size="41" onclick="filterBySize('41')">41</button>
+<button class="sizeBtn" data-size="42" onclick="filterBySize('42')">42</button>
+<button class="sizeBtn" data-size="43" onclick="filterBySize('43')">43</button>
+<button class="sizeBtn" data-size="44" onclick="filterBySize('44')">44</button>
+<button class="sizeBtn" data-size="S" onclick="filterBySize('S')">S</button>
+<button class="sizeBtn" data-size="M" onclick="filterBySize('M')">M</button>
+<button class="sizeBtn" data-size="L" onclick="filterBySize('L')">L</button>
+<button class="sizeBtn" data-size="XL" onclick="filterBySize('XL')">XL</button>
+</div></div>
+</div>
+<div class="card">
+<div class="visionBar">🔥 VISION TOP - $0.001 - 1 Month - peter.dogroup = General | peter.docart = Jarra Shop = peter.docart.dotgroup.top</div>
+<div class="marquee"><div class="marquee-track" id="visionTrack"></div></div>
+<div class="filter-row" id="mainFilter"></div><div class="filter-row" id="subFilter"></div><div class="filter-row" id="subSubFilter"></div>
+<div class="row" style="margin-top:6px"><button class="gray" style="padding:8px;font-size:11px" onclick="setSort('low')">↑ Low</button><button class="gray" style="padding:8px;font-size:11px" onclick="setSort('high')">↓ High</button><button class="orange" style="padding:8px;font-size:11px" onclick="setSort('vision')">🔥 Vision</button><button class="purple" style="padding:8px;font-size:11px" onclick="setSort('affiliate')">💜 Affiliate</button><button class="gray" style="padding:8px;font-size:11px" onclick="setSort('rating')">⭐ Rating</button></div>
+<input type="text" id="searchBox" placeholder="🔍 Search peter.docart, peter.dogroup, size 42 black..." oninput="renderGeneral()">
+<div id="activePath" style="background:#102a52;padding:8px;border-radius:8px;margin-top:8px;font-size:11px;border:1px solid #2a4a7a"></div>
+</div><div id="generalList"></div>
+</div>
+<div id="myShopView" style="display:none">
+<div id="verifyCheck"></div>
+<div id="noShopBox" class="card" style="text-align:center;border:2px dashed #f5a623;display:none">
+<h3 style="color:#f5a623">🏪 Create Your Shop - peter.docart = peter.docart.dotgroup.top | peter.dogroup = General</h3>
+<div style="text-align:left"><input id="shopName" placeholder="Shop Name - Peter Jarra Shop"><textarea id="shopDesc" placeholder="Description - Your Jarra shop description"></textarea>
+<div class="row"><select id="shopCountry"></select><select id="shopCity"></select></div><select id="shopArea"></select>
+<div class="row"><select id="shopMain" onchange="shopMainChanged()"></select><select id="shopSub" onchange="shopSubChanged()"></select></div><select id="shopSubSub"></select>
+<button class="blue btn" onclick="createShop()">✅ Create Shop - peter.dogroup / peter.docart - Dual length</button></div></div>
+<div id="hasShopBox" style="display:none">
+<div class="card" id="myShopHeader"></div>
+<div class="card"><b>➕ Post Product - Auto to DoCart + DoSpace - peter.docart + peter.dogroup</b>
+<div class="row"><select id="prodMain" onchange="prodMainChanged()"></select><select id="prodSub" onchange="prodSubChanged()"></select></div><select id="prodSubSub"></select>
+<input id="prodName" placeholder="Product Name - Jarra Shoes"><div class="row"><input id="prodPrice" type="number" placeholder="Price DOT"><input id="prodStock" type="number" placeholder="Stock - Eg 10"></div>
+<div class="colorSizeBox"><span class="colorSizeTitle">🎨 Color - Click circle</span><div class="flexWrap" id="prodColorBtns">
+<div class="colorBtn black active" data-color="Black" onclick="selectProdColor('Black', this)"></div>
+<div class="colorBtn white" data-color="White" onclick="selectProdColor('White', this)"></div>
+<div class="colorBtn red" data-color="Red" onclick="selectProdColor('Red', this)"></div>
+<div class="colorBtn blue" data-color="Blue" onclick="selectProdColor('Blue', this)"></div>
+<div class="colorBtn brown" data-color="Brown" onclick="selectProdColor('Brown', this)"></div>
+<div class="colorBtn green" data-color="Green" onclick="selectProdColor('Green', this)"></div>
+<div class="colorBtn yellow" data-color="Yellow" onclick="selectProdColor('Yellow', this)"></div>
+</div><div style="margin-top:6px;font-size:12px">Selected: <b id="prodColorSelected">Black</b> <input type="hidden" id="prodColor" value="Black"></div></div>
+<div class="colorSizeBox"><span class="colorSizeTitle">📏 Size - Click button</span><div class="flexWrap" id="prodSizeBtns">
+<button type="button" class="sizeBtn active" data-size="42" onclick="selectProdSize('42', this)">42</button>
+<button type="button" class="sizeBtn" data-size="38" onclick="selectProdSize('38', this)">38</button>
+<button type="button" class="sizeBtn" data-size="40" onclick="selectProdSize('40', this)">40</button>
+<button type="button" class="sizeBtn" data-size="S" onclick="selectProdSize('S', this)">S</button>
+<button type="button" class="sizeBtn" data-size="M" onclick="selectProdSize('M', this)">M</button>
+<button type="button" class="sizeBtn" data-size="L" onclick="selectProdSize('L', this)">L</button>
+<button type="button" class="sizeBtn" data-size="XL" onclick="selectProdSize('XL', this)">XL</button>
+</div><div style="margin-top:6px;font-size:12px">Selected: <b id="prodSizeSelected">42</b> <input type="hidden" id="prodSize" value="42"></div></div>
+<div style="background:#102a52;border:2px solid #0f5bd7;border-radius:12px;padding:10px;margin:8px 0">
+<div class="row"><select id="prodBrand"><option value="">Brand</option><option value="Nike">Nike</option><option value="Adidas">Adidas</option><option value="Puma">Puma</option><option value="Samsung">Samsung</option><option value="Apple">Apple</option><option value="Original">Original</option><option value="Generic">Generic</option></select><select id="prodCondition"><option value="New">New</option><option value="Used">Used</option><option value="Refurbished">Refurbished</option></select></div>
+<div class="row"><input id="prodMaterial" placeholder="Material e.g. Leather, Cotton"><input id="prodShape" placeholder="Shape e.g. High Top, Slim Fit"><input id="prodWeight" placeholder="Weight e.g. 500g"></div>
+<div class="row"><label style="font-size:12px"><input type="checkbox" id="prodFreeDelivery"> 🚚 Free Delivery</label><label style="font-size:12px"><input type="checkbox" id="prodReturn"> 🛡️ 7-Day Return</label><label style="font-size:12px"><input type="checkbox" id="prodFlash"> ⏰ Flash Sale 24h</label><label style="font-size:12px"><input type="checkbox" id="prodVision"> 🔥 Vision $0.001 - 1 Month</label></div>
+</div>
+<div id="affiliateBox" style="background:#1a0a3a;border:2px solid #7c3aed;border-radius:12px;padding:10px;margin:8px 0">
+<b style="color:#c4a5ff">💜 Affiliate - <a href="dowallet.html" class="linkBtn">Click here to verify</a></b>
+<div id="affVerifyMsg"></div>
+<div class="row"><select id="prodAffiliate" onchange="affTypeChanged()"><option value="No">No Affiliate</option><option value="Yes">Yes - Affiliate badge</option></select><select id="prodAffType" onchange="affTypeChanged()"><option value="percent">% Percentage</option><option value="fixed">Fixed $</option></select></div>
+<div class="row"><select id="prodAffPercent" onchange="updateAffPreview()"><option value="5">5%</option><option value="10">10%</option><option value="20">20%</option><option value="30">30%</option></select><input id="prodAffFixed" type="number" placeholder="Fixed $ e.g. 5" value="5" style="display:none" oninput="updateAffPreview()"></div>
+<div id="affPreview" style="background:#071a36;padding:8px;border-radius:8px;font-size:11px;border:1px solid #7c3aed;margin-top:6px"></div>
+</div>
+<textarea id="prodDesc" placeholder="Description - Your Jarra shop"></textarea>
+<div class="row"><select id="prodCountry"></select><select id="prodCity"></select></div><select id="prodArea"></select>
+<input id="prodImage" type="file" accept="image/*" onchange="handleProdImage(this,1)"><input id="prodImage2" type="file" accept="image/*" onchange="handleProdImage(this,2)"><input id="prodImage3" type="file" accept="image/*" onchange="handleProdImage(this,3)"><div id="prodPreview" style="text-align:center"></div>
+<button class="green btn" onclick="postProduct()">📤 Post Product - peter.docart + peter.dogroup → DoSpace auto - Dual length</button>
+</div><div class="card"><b>📦 My Products (<span id="myProdCount">0</span>) - peter.docart = peter.docart.dotgroup.top</b><div id="myProductsList"></div><div id="haggleOffers"></div></div>
+</div></div>
+<div id="affiliateView" style="display:none"><div class="card" style="border:2px solid #7c3aed"><b>💜 Affiliate Products - Verified Only Earn - peter.docart can earn</b><div id="affiliateVerifyCheck"></div><div id="affiliateStats" style="background:#071a36;padding:10px;border-radius:10px;margin:8px 0"></div><input id="searchAffiliate" placeholder="Search affiliate products - peter.docart..." oninput="renderAffiliateProducts()"></div><div id="affiliateList"></div></div>
+<div id="wishlistView" style="display:none"><div class="card"><b>❤️ Wishlist - peter.docart / peter.dogroup - Dual length</b><div id="wishlistStats"></div></div><div id="wishlistList"></div></div>
+</div>
+<div class="modal" id="productModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><b id="modalTitle">Product - peter.docart</b><button onclick="closeModal()" style="background:#b71c1c;color:#fff;border:none;padding:6px 12px;border-radius:8px">X</button></div><div id="modalBody"></div></div></div>
+
+<script>
+// ===== WHOLE CODE - 195 COUNTRIES + 36 STATES + 774 LGAs + 130 CURRENCIES + ALL FUNCTIONS =====
+const ALL_COUNTRIES = ["All Countries","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Congo Democratic Republic","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+
+const CURRENCIES = {
+"USD":{symbol:"$",name:"US Dollar",rate:1,flag:"💵"},"EUR":{symbol:"€",name:"Euro",rate:0.92,flag:"🇪🇺"},"GBP":{symbol:"£",name:"British Pound",rate:0.79,flag:"🇬🇧"},"JPY":{symbol:"¥",name:"Japanese Yen",rate:155,flag:"🇯🇵"},"CNY":{symbol:"¥",name:"Chinese Yuan",rate:7.2,flag:"🇨🇳"},"INR":{symbol:"₹",name:"Indian Rupee",rate:83,flag:"🇮🇳"},"NGN":{symbol:"₦",name:"Nigerian Naira",rate:1650,flag:"🇳🇬"},"GHS":{symbol:"₵",name:"Ghanaian Cedi",rate:15.5,flag:"🇬🇭"},"SLL":{symbol:"Le",name:"Sierra Leone Leone",rate:22000,flag:"🇸🇱"},"GMD":{symbol:"D",name:"Gambian Dalasi",rate:70,flag:"🇬🇲"},"LRD":{symbol:"L$",name:"Liberian Dollar",rate:190,flag:"🇱🇷"},"KES":{symbol:"KSh",name:"Kenyan Shilling",rate:129,flag:"🇰🇪"},"ZAR":{symbol:"R",name:"South African Rand",rate:18.5,flag:"🇿🇦"},"XOF":{symbol:"CFA",name:"West African CFA",rate:600,flag:"🌍"},"XAF":{symbol:"FCFA",name:"Central African CFA",rate:600,flag:"🌍"},"AUD":{symbol:"A$",name:"Australian Dollar",rate:1.52,flag:"🇦🇺"},"CAD":{symbol:"C$",name:"Canadian Dollar",rate:1.36,flag:"🇨🇦"},"BRL":{symbol:"R$",name:"Brazilian Real",rate:5.1,flag:"🇧🇷"},"VES":{symbol:"Bs",name:"Venezuelan Bolivar",rate:36,flag:"🇻🇪"},"GYD":{symbol:"GY$",name:"Guyanese Dollar",rate:209,flag:"🇬🇾"},"SRD":{symbol:"$",name:"Surinamese Dollar",rate:32,flag:"🇸🇷"},"RUB":{symbol:"₽",name:"Russian Ruble",rate:92,flag:"🇷🇺"},"TRY":{symbol:"₺",name:"Turkish Lira",rate:32,flag:"🇹🇷"},"AED":{symbol:"AED",name:"UAE Dirham",rate:3.67,flag:"🇦🇪"},"SAR":{symbol:"﷼",name:"Saudi Riyal",rate:3.75,flag:"🇸🇦"},"EGP":{symbol:"E£",name:"Egyptian Pound",rate:50,flag:"🇪🇬"},"MAD":{symbol:"DH",name:"Moroccan Dirham",rate:10,flag:"🇲🇦"},"DZD":{symbol:"DA",name:"Algerian Dinar",rate:135,flag:"🇩🇿"},"TND":{symbol:"DT",name:"Tunisian Dinar",rate:3.1,flag:"🇹🇳"},"LYD":{symbol:"LD",name:"Libyan Dinar",rate:4.8,flag:"🇱🇾"},"ETB":{symbol:"Br",name:"Ethiopian Birr",rate:57,flag:"🇪🇹"},"UGX":{symbol:"USh",name:"Ugandan Shilling",rate:3800,flag:"🇺🇬"},"TZS":{symbol:"TSh",name:"Tanzanian Shilling",rate:2600,flag:"🇹🇿"},"RWF":{symbol:"FRw",name:"Rwandan Franc",rate:1300,flag:"🇷🇼"},"ZMW":{symbol:"ZK",name:"Zambian Kwacha",rate:26,flag:"🇿🇲"},"MWK":{symbol:"MK",name:"Malawian Kwacha",rate:1750,flag:"🇲🇼"},"BWP":{symbol:"P",name:"Botswana Pula",rate:13.8,flag:"🇧🇼"},"NAD":{symbol:"N$",name:"Namibian Dollar",rate:18.5,flag:"🇳🇦"},"MZN":{symbol:"MT",name:"Mozambican Metical",rate:63,flag:"🇲🇿"},"AOA":{symbol:"Kz",name:"Angolan Kwanza",rate:850,flag:"🇦🇴"},"CDF":{symbol:"FC",name:"Congolese Franc",rate:2800,flag:"🇨🇩"},"XPF":{symbol:"₣",name:"CFP Franc",rate:110,flag:"🇵🇫"},"PKR":{symbol:"₨",name:"Pakistani Rupee",rate:278,flag:"🇵🇰"},"BDT":{symbol:"৳",name:"Bangladeshi Taka",rate:117,flag:"🇧🇩"},"LKR":{symbol:"Rs",name:"Sri Lankan Rupee",rate:300,flag:"🇱🇰"},"NPR":{symbol:"₨",name:"Nepalese Rupee",rate:133,flag:"🇳🇵"},"MMK":{symbol:"K",name:"Myanmar Kyat",rate:2100,flag:"🇲🇲"},"KHR":{symbol:"៛",name:"Cambodian Riel",rate:4100,flag:"🇰🇭"},"LAK":{symbol:"₭",name:"Lao Kip",rate:21500,flag:"🇱🇦"},"VND":{symbol:"₫",name:"Vietnamese Dong",rate:25000,flag:"🇻🇳"},"THB":{symbol:"฿",name:"Thai Baht",rate:36,flag:"🇹🇭"},"MYR":{symbol:"RM",name:"Malaysian Ringgit",rate:4.7,flag:"🇲🇾"},"SGD":{symbol:"S$",name:"Singapore Dollar",rate:1.32,flag:"🇸🇬"},"IDR":{symbol:"Rp",name:"Indonesian Rupiah",rate:16000,flag:"🇮🇩"},"PHP":{symbol:"₱",name:"Philippine Peso",rate:58,flag:"🇵🇭"},"KRW":{symbol:"₩",name:"South Korean Won",rate:1350,flag:"🇰🇷"},"TWD":{symbol:"NT$",name:"Taiwan Dollar",rate:32,flag:"🇹🇼"},"HKD":{symbol:"HK$",name:"Hong Kong Dollar",rate:7.8,flag:"🇭🇰"},"MOP":{symbol:"MOP$",name:"Macanese Pataca",rate:8,flag:"🇲🇴"},"NZD":{symbol:"NZ$",name:"New Zealand Dollar",rate:1.64,flag:"🇳🇿"},"FJD":{symbol:"FJ$",name:"Fijian Dollar",rate:2.25,flag:"🇫🇯"},"PGK":{symbol:"K",name:"Papua New Guinea Kina",rate:3.9,flag:"🇵🇬"},"SBD":{symbol:"SI$",name:"Solomon Islands Dollar",rate:8.4,flag:"🇸🇧"},"VUV":{symbol:"VT",name:"Vanuatu Vatu",rate:120,flag:"🇻🇺"},"WST":{symbol:"WS$",name:"Samoan Tala",rate:2.7,flag:"🇼🇸"},"TOP":{symbol:"T$",name:"Tongan Paanga",rate:2.4,flag:"🇹🇴"},"ILS":{symbol:"₪",name:"Israeli Shekel",rate:3.7,flag:"🇮🇱"},"JOD":{symbol:"JD",name:"Jordanian Dinar",rate:0.71,flag:"🇯🇴"},"LBP":{symbol:"LL",name:"Lebanese Pound",rate:89500,flag:"🇱🇧"},"SYP":{symbol:"£S",name:"Syrian Pound",rate:13000,flag:"🇸🇾"},"IQD":{symbol:"ID",name:"Iraqi Dinar",rate:1310,flag:"🇮🇶"},"KWD":{symbol:"KD",name:"Kuwaiti Dinar",rate:0.31,flag:"🇰🇼"},"BHD":{symbol:"BD",name:"Bahraini Dinar",rate:0.38,flag:"🇧🇭"},"QAR":{symbol:"QR",name:"Qatari Riyal",rate:3.64,flag:"🇶🇦"},"OMR":{symbol:"OMR",name:"Omani Rial",rate:0.38,flag:"🇴🇲"},"YER":{symbol:"YR",name:"Yemeni Rial",rate:530,flag:"🇾🇪"},"IRR":{symbol:"﷼",name:"Iranian Rial",rate:42000,flag:"🇮🇷"},"AFN":{symbol:"؋",name:"Afghan Afghani",rate:78,flag:"🇦🇫"},"KZT":{symbol:"₸",name:"Kazakh Tenge",rate:450,flag:"🇰🇿"},"UZS":{symbol:"so'm",name:"Uzbek Som",rate:12600,flag:"🇺🇿"},"TJS":{symbol:"SM",name:"Tajik Somoni",rate:11,flag:"🇹🇯"},"TMT":{symbol:"T",name:"Turkmen Manat",rate:3.5,flag:"🇹🇲"},"AZN":{symbol:"₼",name:"Azerbaijan Manat",rate:1.7,flag:"🇦🇿"},"GEL":{symbol:"₾",name:"Georgian Lari",rate:2.7,flag:"🇬🇪"},"AMD":{symbol:"֏",name:"Armenian Dram",rate:390,flag:"🇦🇲"},"MDL":{symbol:"L",name:"Moldovan Leu",rate:17.8,flag:"🇲🇩"},"UAH":{symbol:"₴",name:"Ukrainian Hryvnia",rate:39,flag:"🇺🇦"},"BYN":{symbol:"Br",name:"Belarusian Ruble",rate:3.2,flag:"🇧🇾"},"PLN":{symbol:"zł",name:"Polish Zloty",rate:4,flag:"🇵🇱"},"CZK":{symbol:"Kč",name:"Czech Koruna",rate:23,flag:"🇨🇿"},"HUF":{symbol:"Ft",name:"Hungarian Forint",rate:360,flag:"🇭🇺"},"RON":{symbol:"lei",name:"Romanian Leu",rate:4.6,flag:"🇷🇴"},"BGN":{symbol:"лв",name:"Bulgarian Lev",rate:1.8,flag:"🇧🇬"},"RSD":{symbol:"din",name:"Serbian Dinar",rate:108,flag:"🇷🇸"},"MKD":{symbol:"den",name:"Macedonian Denar",rate:56,flag:"🇲🇰"},"ALL":{symbol:"L",name:"Albanian Lek",rate:92,flag:"🇦🇱"},"BAM":{symbol:"KM",name:"Bosnia Mark",rate:1.8,flag:"🇧🇦"},"HRK":{symbol:"kn",name:"Croatian Kuna",rate:6.9,flag:"🇭🇷"},"ISK":{symbol:"kr",name:"Icelandic Krona",rate:140,flag:"🇮🇸"},"NOK":{symbol:"kr",name:"Norwegian Krone",rate:10.8,flag:"🇳🇴"},"SEK":{symbol:"kr",name:"Swedish Krona",rate:10.5,flag:"🇸🇪"},"DKK":{symbol:"kr",name:"Danish Krone",rate:6.9,flag:"🇩🇰"},"CHF":{symbol:"CHF",name:"Swiss Franc",rate:0.91,flag:"🇨🇭"},"MXN":{symbol:"$",name:"Mexican Peso",rate:17,flag:"🇲🇽"},"GTQ":{symbol:"Q",name:"Guatemalan Quetzal",rate:7.8,flag:"🇬🇹"},"BZD":{symbol:"BZ$",name:"Belize Dollar",rate:2,flag:"🇧🇿"},"HNL":{symbol:"L",name:"Honduran Lempira",rate:24.8,flag:"🇭🇳"},"NIO":{symbol:"C$",name:"Nicaraguan Cordoba",rate:36.8,flag:"🇳🇮"},"CRC":{symbol:"₡",name:"Costa Rican Colon",rate:510,flag:"🇨🇷"},"PAB":{symbol:"B/.",name:"Panamanian Balboa",rate:1,flag:"🇵🇦"},"COP":{symbol:"$",name:"Colombian Peso",rate:3900,flag:"🇨🇴"},"VES":{symbol:"Bs",name:"Venezuelan Bolivar",rate:36,flag:"🇻🇪"},"GYD":{symbol:"GY$",name:"Guyanese Dollar",rate:209,flag:"🇬🇾"},"SRD":{symbol:"$",name:"Surinamese Dollar",rate:32,flag:"🇸🇷"},"BOB":{symbol:"Bs",name:"Bolivian Boliviano",rate:6.9,flag:"🇧🇴"},"PYG":{symbol:"₲",name:"Paraguayan Guarani",rate:7300,flag:"🇵🇾"},"UYU":{symbol:"$U",name:"Uruguayan Peso",rate:39,flag:"🇺🇾"},"ARS":{symbol:"$",name:"Argentine Peso",rate:900,flag:"🇦🇷"},"CLP":{symbol:"$",name:"Chilean Peso",rate:950,flag:"🇨🇱"},"PEN":{symbol:"S/",name:"Peruvian Sol",rate:3.7,flag:"🇵🇪"},"BBD":{symbol:"Bds$",name:"Barbados Dollar",rate:2,flag:"🇧🇧"},"TTD":{symbol:"TT$",name:"Trinidad Dollar",rate:6.8,flag:"🇹🇹"},"JMD":{symbol:"J$",name:"Jamaican Dollar",rate:155,flag:"🇯🇲"},"DOP":{symbol:"RD$",name:"Dominican Peso",rate:59,flag:"🇩🇴"},"HTG":{symbol:"G",name:"Haitian Gourde",rate:132,flag:"🇭🇹"},"BSD":{symbol:"B$",name:"Bahamian Dollar",rate:1,flag:"🇧🇸"},"KYD":{symbol:"CI$",name:"Cayman Dollar",rate:0.82,flag:"🇰🇾"},"AWG":{symbol:"ƒ",name:"Aruban Florin",rate:1.8,flag:"🇦🇼"},"ANG":{symbol:"ƒ",name:"Netherlands Antillean Guilder",rate:1.8,flag:"🇨🇼"},"XCD":{symbol:"EC$",name:"East Caribbean Dollar",rate:2.7,flag:"🇦🇬"},"BIF":{symbol:"FBu",name:"Burundian Franc",rate:2850,flag:"🇧🇮"},"DJF":{symbol:"Fdj",name:"Djiboutian Franc",rate:178,flag:"🇩🇯"},"KMF":{symbol:"CF",name:"Comorian Franc",rate:460,flag:"🇰🇲"},"ERN":{symbol:"Nfk",name:"Eritrean Nakfa",rate:15,flag:"🇪🇷"},"SOS":{symbol:"Sh",name:"Somali Shilling",rate:570,flag:"🇸🇴"},"SDG":{symbol:"SDG",name:"Sudanese Pound",rate:600,flag:"🇸🇩"},"SSP":{symbol:"SSP",name:"South Sudanese Pound",rate:1300,flag:"🇸🇸"},"MUR":{symbol:"₨",name:"Mauritian Rupee",rate:46,flag:"🇲🇺"},"SCR":{symbol:"₨",name:"Seychelles Rupee",rate:13.5,flag:"🇸🇨"},"MVR":{symbol:"Rf",name:"Maldivian Rufiyaa",rate:15.4,flag:"🇲🇻"}
+};
+
+const WORLD_STATES = {
+"Nigeria":["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT Abuja","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"],
+"Ghana":["Ahafo","Ashanti","Bono","Bono East","Central","Eastern","Greater Accra","North East","Northern","Oti","Savannah","Upper East","Upper West","Volta","Western","Western North"],
+"Kenya":["Baringo","Bomet","Bungoma","Busia","Elgeyo Marakwet","Embu","Garissa","Homa Bay","Isiolo","Kajiado","Kakamega","Kericho","Kiambu","Kilifi","Kirinyaga","Kisii","Kisumu","Kitui","Kwale","Laikipia","Lamu","Machakos","Makueni","Mandera","Marsabit","Meru","Migori","Mombasa","Murang'a","Nairobi","Nakuru","Nandi","Narok","Nyamira","Nyandarua","Nyeri","Samburu","Siaya","Taita Taveta","Tana River","Tharaka Nithi","Trans Nzoia","Turkana","Uasin Gishu","Vihiga","Wajir","West Pokot"],
+"South Africa":["Eastern Cape","Free State","Gauteng","KwaZulu-Natal","Limpopo","Mpumalanga","North West","Northern Cape","Western Cape"],
+"Sierra Leone":["Eastern Province","Northern Province","North Western Province","Southern Province","Western Area","Freetown","Bo","Kenema","Makeni","Koidu"],
+"United States":["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming","District of Columbia"],
+"United Kingdom":["England - Greater London","England - Greater Manchester","England - West Midlands","Scotland - Glasgow","Wales - Cardiff","Northern Ireland - Belfast","England - Birmingham","England - Liverpool"],
+"Canada":["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Nova Scotia","Ontario","Prince Edward Island","Quebec","Saskatchewan"],
+"Australia":["Australian Capital Territory","New South Wales","Northern Territory","Queensland","South Australia","Tasmania","Victoria","Western Australia"],
+"India":["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi"],
+"Gambia":["Banjul","Kanifing","Brikama","Mansakonko","Kerewan","Kuntaur","Janjangbureh","Basse"],
+"Liberia":["Bomi","Bong","Gbarpolu","Grand Bassa","Grand Cape Mount","Grand Gedeh","Grand Kru","Lofa","Margibi","Maryland","Montserrado","Nimba","Rivercess","River Gee","Sinoe"]
+};
+
+const NIGERIA_LGAS = {
+"Abia":["Aba North","Aba South","Arochukwu","Bende","Ikwuano","Isiala Ngwa North","Isiala Ngwa South","Isuikwuato","Obi Ngwa","Ohafia","Osisioma","Ugwunagbo","Ukwa East","Ukwa West","Umuahia North","Umuahia South","Umu Nneochi"],
+"Anambra":["Aguata","Anambra East","Anambra West","Anaocha","Awka North","Awka South","Ayamelum","Dunukofia","Ekwusigo","Idemili North","Idemili South","Ihiala","Njikoka","Nnewi North","Nnewi South","Ogbaru","Onitsha North","Onitsha South","Orumba North","Orumba South","Oyi"],
+"Lagos":["Agege","Ajeromi-Ifelodun","Alimosho","Amuwo-Odofin","Apapa","Badagry","Epe","Eti Osa","Ibeju-Lekki","Ifako-Ijaiye","Ikeja","Ikorodu","Kosofe","Lagos Island","Lagos Mainland","Mushin","Ojo","Oshodi-Isolo","Shomolu","Surulere"],
+"FCT Abuja":["Abaji","Bwari","Gwagwalada","Kuje","Kwali","Municipal Area Council"],
+"Kano":["Ajingi","Albasu","Bagwai","Bebeji","Bichi","Bunkure","Dala","Dambatta","Dawakin Kudu","Fagge","Gabasawa","Gwale","Kano Municipal","Nasarawa","Tarauni","Ungogo","Warawa","Wudil","Kumbotso","Kura"]
+};
+
+const CAT_DATA = {"Physical":{"Fashion - Clothes, Shoes, Bags":{"Shoes":["Sneakers","Men's Shoes","Women's Heels","Sandals & Slippers"],"Clothes":["Men's Wear","Women's Wear"]},"Electronics - Phones, Laptops":{"Phones":["Android Phones","iPhones"],"Computers":["Laptops"]}},"Digital":{"Ebooks & Courses":{"Ebooks":["Business Ebooks"]}},"Services":{"Teaching & Tutoring - Dolearn":{"Academic":["Math Tutor"]}}};
+
+function getCitiesForCountry(c){
+  if(WORLD_STATES[c]) return WORLD_STATES[c];
+  if(c==="All Countries") return ["All States/Regions"];
+  return ["All Regions in "+c,"Capital of "+c,"Main Region 1","Main Region 2"];
+}
+function getAreasForCity(city){
+  if(NIGERIA_LGAS[city]) return NIGERIA_LGAS[city];
+  if(city==="Awka"||city==="Anambra") return NIGERIA_LGAS["Anambra"];
+  if(city.includes("All Regions")) return ["All Cities/Districts/Areas"];
+  if(city==="California") return ["Los Angeles","San Francisco","San Diego","Sacramento","San Jose","Fresno","Oakland"];
+  if(city==="Lagos") return NIGERIA_LGAS["Lagos"];
+  return [city+" Central City",city+" North District",city+" South District",city+" East District",city+" West District",city+" Municipal",city+" Main Market"];
+}
+
+let currentCountry=localStorage.getItem('dot_selected_country')||'All Countries',currentCurrency=localStorage.getItem('dot_selected_currency')||'USD',currentColor='All',currentSize='All',currentMain='All',currentSub='All',currentSubSub='All',sortType='vision',prodB64=null,prodB64_2=null,prodB64_3=null;
+function getUser(){return (localStorage.getItem('dot_user')||localStorage.getItem('dot_current_shop')||'peter').trim();}
+function getDevice(){let id=localStorage.getItem('doc_v7_device');if(!id){id='DOT-'+Math.random().toString(36).substr(2,6).toUpperCase();localStorage.setItem('doc_v7_device',id);}return id;}
+function getEncKeyFor(u){return getDevice()+'|'+u+'|DOTGROUP_ENC_V9';}
+function dec(c,k){try{return JSON.parse(CryptoJS.AES.decrypt(c,k).toString(CryptoJS.enc.Utf8));}catch(e){return null;}}
+function enc(o,k){return CryptoJS.AES.encrypt(JSON.stringify(o),k).toString();}
+function loadFor(u){let c=localStorage.getItem('doc_v7_vault_'+u.toUpperCase());if(!c) return {balance:0,history:[]};let d=dec(c,getEncKeyFor(u));return d||{balance:0,history:[]}}
+function isVerified(){let u=getUser().toUpperCase();return localStorage.getItem('dot_verified_'+u)==='true'||localStorage.getItem('dot_verified_'+getUser())==='true'||localStorage.getItem('dot_user_verified')==='true'||localStorage.getItem('dot_kyc_verified_'+u)==='true';}
+function getVerificationStatus(){if(isVerified()) return '<div class="verifyOk">✅ Verified - '+getUser().toLowerCase()+'.dogroup = '+getUser().toLowerCase()+'.dogroup.dotgroup.top | '+getUser().toLowerCase()+'.docart = '+getUser().toLowerCase()+'.docart.dotgroup.top - Dual length - docart.dotgroup.top lists all shops, dogroup.dotgroup.top lists all users</div>';else return '<div class="verifyAlert">🔒 Verify first - <a href="dowallet.html" class="linkBtn">Click here to verify</a> - Must verify before shop - Individual must verify</div>';}
+function getShops(){return JSON.parse(localStorage.getItem('dot_shops')||'[]');}
+function saveShops(s){localStorage.setItem('dot_shops',JSON.stringify(s));}
+function getProducts(){return JSON.parse(localStorage.getItem('dot_products')||'[]');}
+function saveProducts(p){localStorage.setItem('dot_products',JSON.stringify(p));}
+function getDoSpaceFeed(){return JSON.parse(localStorage.getItem('dot_dospace_feed')||'[]');}
+function saveDoSpaceFeed(f){localStorage.setItem('dot_dospace_feed',JSON.stringify(f));}
+function addToDoSpace(product){let feed=getDoSpaceFeed();feed.unshift({id:Date.now(),type:'product',source:'DoCart',user:getUser(),shopName:product.shopName||getUser(),name:product.name,price:product.price,size:product.size,color:product.color,brand:product.brand,image:product.image,desc:product.desc,country:product.country,text:'🛒 '+getUser()+' from '+product.country+' posted: '+product.name});saveDoSpaceFeed(feed);let posts=JSON.parse(localStorage.getItem('dot_posts')||'[]');posts.unshift(feed[0]);localStorage.setItem('dot_posts',JSON.stringify(posts));}
+function getWishlist(){return JSON.parse(localStorage.getItem('dot_wishlist_'+getUser())||'[]');}
+function saveWishlist(w){localStorage.setItem('dot_wishlist_'+getUser(),JSON.stringify(w));}
+function getReviews(){return JSON.parse(localStorage.getItem('dot_reviews')||'[]');}
+function saveReviews(r){localStorage.setItem('dot_reviews',JSON.stringify(r));}
+function getHaggles(){return JSON.parse(localStorage.getItem('dot_haggles')||'[]');}
+function saveHaggles(h){localStorage.setItem('dot_haggles',JSON.stringify(h));}
+function getAffiliateSales(){return JSON.parse(localStorage.getItem('dot_affiliate_sales')||'[]');}
+function saveAffiliateSales(s){localStorage.setItem('dot_affiliate_sales',JSON.stringify(s));}
+function getAffiliateCommissionAmount(p){if(p.affiliate!=="Yes") return 0;if(p.affType==="fixed"){return parseFloat(p.affValue)||0;}else{return p.price*(parseFloat(p.affValue)||0)/100;}}
+function getRating(pId){let reviews=getReviews().filter(r=>r.productId==pId);if(reviews.length===0) return {avg:0,count:0};let sum=reviews.reduce((a,b)=>a+b.rating,0);return {avg:(sum/reviews.length).toFixed(1),count:reviews.length};}
+function toggleWishlist(id){let wl=getWishlist();let found=wl.includes(id)||wl.includes(id.toString());if(found){wl=wl.filter(x=>x!=id&&x.toString()!=id.toString());}else{wl.push(id);alert('❤️ Added to wishlist - '+getUser().toLowerCase()+'.docart / '+getUser().toLowerCase()+'.dogroup');}saveWishlist(wl);renderGeneral();renderWishlist();}
+function makeHaggleOffer(productId){let offer=prompt('Make your offer price:');if(!offer) return;let p=getProducts().find(x=>x.id==productId);let haggles=getHaggles();haggles.push({id:Date.now(),productId:productId,productName:p.name,buyer:getUser(),seller:p.owner||p.user||p.shopName,originalPrice:p.price,offerPrice:parseFloat(offer),status:'pending',date:new Date().toISOString()});saveHaggles(haggles);alert('🤝 Offer $'+offer+' sent to seller');}
+function handleHaggle(id, action){let haggles=getHaggles();let h=haggles.find(x=>x.id==id);if(h){h.status=action;saveHaggles(haggles);renderMyShop();}}
+function switchTab(t){document.getElementById('generalView').style.display=t==='general'?'block':'none';document.getElementById('myShopView').style.display=t==='myshop'?'block':'none';document.getElementById('affiliateView').style.display=t==='affiliate'?'block':'none';document.getElementById('wishlistView').style.display=t==='wishlist'?'block':'none';document.getElementById('tabGeneral').className=t==='general'?'active':'';document.getElementById('tabMyShop').className=t==='myshop'?'active':'';document.getElementById('tabAffiliate').className=t==='affiliate'?'active':'';document.getElementById('tabWishlist').className=t==='wishlist'?'active':'';if(t==='general') renderGeneral();if(t==='myshop') renderMyShop();if(t==='affiliate') renderAffiliateProducts();if(t==='wishlist') renderWishlist();}
+function fillAllCountries(selectId){let sel=document.getElementById(selectId);if(!sel) return;let cur=sel.value||currentCountry; sel.innerHTML=''; ALL_COUNTRIES.forEach(c=>{let o=document.createElement('option');o.value=c;o.text=c;if(c===cur) o.selected=true; sel.appendChild(o);});}
+function fillCitiesDropdown(country,cityId,areaId){let citySel=document.getElementById(cityId);if(!citySel) return;citySel.innerHTML='';if(country==="All Countries"){citySel.innerHTML='<option value="All">All States/Regions</option>';let areaEl=document.getElementById(areaId); if(areaEl) areaEl.innerHTML='<option value="All">All Areas/LGAs</option>';return;} getCitiesForCountry(country).forEach(city=>{let o=document.createElement('option');o.value=city;o.text=city;citySel.appendChild(o);}); fillAreasDropdown(citySel.value,areaId);}
+function fillAreasDropdown(city,areaId){let areaSel=document.getElementById(areaId);if(!areaSel) return;areaSel.innerHTML=''; getAreasForCity(city).forEach(a=>{let o=document.createElement('option');o.value=a;o.text=a;areaSel.appendChild(o);});}
+function countryChanged(){currentCountry=document.getElementById('filterCountry').value;fillCitiesDropdown(currentCountry,'filterCity','filterArea');localStorage.setItem('dot_selected_country',currentCountry);renderFilters();renderGeneral();}
+function cityChanged(){let city=document.getElementById('filterCity').value;fillAreasDropdown(city,'filterArea');renderGeneral();}
+function filterByColor(color){currentColor=color;document.querySelectorAll('#filterColorBtns .colorBtn').forEach(btn=>btn.classList.remove('active'));document.querySelectorAll('#filterColorBtns .sizeBtn').forEach(btn=>btn.classList.remove('active'));if(color==='All'){document.querySelector('#filterColorBtns .sizeBtn').classList.add('active');}else{document.querySelectorAll('#filterColorBtns .colorBtn').forEach(btn=>{if(btn.title===color) btn.classList.add('active');});}renderGeneral();}
+function filterBySize(size){currentSize=size;document.querySelectorAll('#filterSizeBtns .sizeBtn').forEach(btn=>{btn.classList.remove('active');if(btn.dataset.size===size) btn.classList.add('active');});renderGeneral();}
+function selectProdColor(color, el){document.getElementById('prodColor').value=color;document.getElementById('prodColorSelected').innerText=color;document.querySelectorAll('#prodColorBtns .colorBtn').forEach(btn=>btn.classList.remove('active'));el.classList.add('active');}
+function selectProdSize(size, el){document.getElementById('prodSize').value=size;document.getElementById('prodSizeSelected').innerText=size;document.querySelectorAll('#prodSizeBtns .sizeBtn').forEach(btn=>btn.classList.remove('active'));el.classList.add('active');}
+function affTypeChanged(){let type=document.getElementById('prodAffType').value;if(type==='percent'){document.getElementById('prodAffPercent').style.display='block';document.getElementById('prodAffFixed').style.display='none';}else{document.getElementById('prodAffPercent').style.display='none';document.getElementById('prodAffFixed').style.display='block';}updateAffPreview();}
+function updateAffPreview(){if(!isVerified()){document.getElementById('affPreview').innerHTML='<span style="color:#ff8a8a">❌ Not verified - <a href="dowallet.html" class="linkBtn">Click here to verify</a></span>';return;}let type=document.getElementById('prodAffType').value;let price=parseFloat(document.getElementById('prodPrice').value)||45;if(type==='percent'){let perc=document.getElementById('prodAffPercent').value;let comm=price*perc/100;document.getElementById('affPreview').innerHTML='✅ Verified - 💜 '+perc+'% of $'+price+' = $'+comm.toFixed(2)+' DOT ('+convertDisplay(comm)+') → Shows "💜 AFFILIATES '+perc+'%"';}else{let fixed=parseFloat(document.getElementById('prodAffFixed').value)||5;document.getElementById('affPreview').innerHTML='✅ Verified - 💜 Fixed $'+fixed+' DOT ('+convertDisplay(fixed)+') → Shows "💜 AFFILIATES $'+fixed+'"';}}
+function fillCurrencyDropdown(){let sel=document.getElementById('currencyDropdown');if(!sel) return; sel.innerHTML=''; Object.keys(CURRENCIES).forEach(code=>{let r=CURRENCIES[code];let o=document.createElement('option');o.value=code;o.text=r.flag+" "+code+" - "+r.name+" ("+r.symbol+")";if(code===currentCurrency) o.selected=true; sel.appendChild(o);});}
+function setCurrencyFromDropdown(){currentCurrency=document.getElementById('currencyDropdown').value;localStorage.setItem('dot_selected_currency',currentCurrency);localStorage.setItem('dot_currency',currentCurrency);let r=CURRENCIES[currentCurrency];document.getElementById('currencyInfo').innerHTML='💱 '+r.flag+' '+currentCurrency+' - '+r.name+' → '+convertDisplay(10)+' ('+Object.keys(CURRENCIES).length+' currencies FULL - VES '+CURRENCIES['VES'].rate+', GYD '+CURRENCIES['GYD'].rate+', SRD '+CURRENCIES['SRD'].rate+') - Your links: <b style="color:#f5a623">'+getUser().toLowerCase()+'.docart</b> = '+getUser().toLowerCase()+'.docart.dotgroup.top | <b style="color:#8ec1ff">'+getUser().toLowerCase()+'.dogroup</b> = '+getUser().toLowerCase()+'.dogroup.dotgroup.top - Dual - Nigeria 36 States 774 LGAs + All Countries States FULL';renderGeneral();renderWishlist();renderAffiliateProducts();}
+function convertDisplay(usdPrice){let r=CURRENCIES[currentCurrency];if(!r) return "$"+usdPrice+" DOT"; let converted=usdPrice*r.rate;if(currentCurrency==="USD") return "$"+usdPrice+" DOT";if(converted>=1000000) return r.flag+" "+r.symbol+converted.toLocaleString(undefined,{maximumFractionDigits:0});return r.flag+" "+r.symbol+converted.toFixed(0);}
+function convertWithBoth(usdPrice){if(currentCurrency==="USD") return "$"+usdPrice+" DOT";return convertDisplay(usdPrice)+' <span style="font-size:10px;color:#8aa0c0">($'+usdPrice+' DOT)</span>';}
+function renderFilters(){let mainDiv=document.getElementById('mainFilter');mainDiv.innerHTML='<button class="'+(currentMain==='All'?'active':'')+'" onclick="filterMain(\'All\')">All Main</button>';Object.keys(CAT_DATA).forEach(m=>{mainDiv.innerHTML+='<button class="'+(currentMain===m?'active':'')+'" onclick="filterMain(\''+m+'\')">'+m+'</button>';});let subDiv=document.getElementById('subFilter');subDiv.innerHTML='<button class="'+(currentSub==='All'?'active':'')+'" onclick="filterSub(\'All\')">All Sub</button>';let subList=[];if(currentMain==='All'){Object.values(CAT_DATA).forEach(subObj=>{subList=subList.concat(Object.keys(subObj));});}else{subList=Object.keys(CAT_DATA[currentMain]||{});}subList.forEach(s=>{subDiv.innerHTML+='<button class="'+(currentSub===s?'active':'')+'" onclick="filterSub(\''+s.replace(/'/g,"\\'")+'\')">'+s.split(' - ')[0]+'</button>';});let subSubDiv=document.getElementById('subSubFilter');subSubDiv.innerHTML='<button class="'+(currentSubSub==='All'?'active':'')+'" onclick="filterSubSub(\'All\')">All Exact</button>';let subSubList=[];if(currentMain==='All' && currentSub==='All'){Object.values(CAT_DATA).forEach(subObj=>{Object.values(subObj).forEach(arrObj=>{Object.values(arrObj).forEach(arr=>{subSubList=subSubList.concat(arr);});});});}else if(currentMain!=='All' && currentSub==='All'){let subObj=CAT_DATA[currentMain]||{};Object.values(subObj).forEach(arrObj=>{Object.values(arrObj).forEach(arr=>{subSubList=subSubList.concat(arr);});});}else if(currentMain!=='All' && currentSub!=='All'){let arrObj=CAT_DATA[currentMain]?.[currentSub]||{};Object.values(arrObj).forEach(arr=>{subSubList=subSubList.concat(arr);});}subSubList=[...new Set(subSubList)].slice(0,25);subSubList.forEach(ss=>{subSubDiv.innerHTML+='<button class="'+(currentSubSub===ss?'active':'')+'" onclick="filterSubSub(\''+ss.replace(/'/g,"\\'")+'\')">'+ss+'</button>';});document.getElementById('activePath').innerHTML='🌍 '+currentCountry+' ('+ALL_COUNTRIES.length+' Countries FULL) | 💱 '+currentCurrency+' ('+Object.keys(CURRENCIES).length+' Currencies FULL) | 📦 '+currentMain+' → '+currentSub+' → '+currentSubSub+' | 🎨 '+currentColor+' 📏 '+currentSize+' | '+getUser().toLowerCase()+'.docart = '+getUser().toLowerCase()+'.docart.dotgroup.top | '+getUser().toLowerCase()+'.dogroup = '+getUser().toLowerCase()+'.dogroup.dotgroup.top';}
+function filterMain(m){currentMain=m;currentSub="All";currentSubSub="All";renderFilters();renderGeneral();}
+function filterSub(s){currentSub=s;currentSubSub="All";renderFilters();renderGeneral();}
+function filterSubSub(ss){currentSubSub=ss;renderFilters();renderGeneral();}
+function setSort(t){sortType=t;renderGeneral();}
+function checkExpiredBoosts(){let products=getProducts();let now=new Date();let changed=false;products.forEach(p=>{if(p.boosted&&p.boostDate){let diff=(now-new Date(p.boostDate))/(1000*60*60*24);if(diff>30){p.boosted=false;p.boostExpired=true;changed=true;}}});if(changed) saveProducts(products);}
+function getAffiliateLabel(p){if(p.affiliate!=="Yes") return "";if(p.affType==="fixed"){return "💜 AFFILIATES $"+p.affValue;}else{return "💜 AFFILIATES "+p.affValue+"%";}}
+function setCurrency(){setCurrencyFromDropdown();}
+function shopMainChanged(){let main=document.getElementById('shopMain').value;let subSel=document.getElementById('shopSub');let html='<option>All Sub</option>';if(main!=='All'&&CAT_DATA[main]) Object.keys(CAT_DATA[main]).forEach(k=>{html+=`<option>${k}</option>`;});subSel.innerHTML=html;shopSubChanged();}
+function shopSubChanged(){let main=document.getElementById('shopMain').value;let sub=document.getElementById('shopSub').value;let subSubSel=document.getElementById('shopSubSub');let html='<option>All SubSub</option>';if(main!=='All'&&sub!=='All Sub'&&CAT_DATA[main]&&CAT_DATA[main][sub]) Object.keys(CAT_DATA[main][sub]).forEach(k=>{html+=`<option>${k}</option>`;});subSubSel.innerHTML=html;}
+function prodMainChanged(){let main=document.getElementById('prodMain').value;let subSel=document.getElementById('prodSub');let html='<option>All Sub</option>';if(main!=='All'&&CAT_DATA[main]) Object.keys(CAT_DATA[main]).forEach(k=>{html+=`<option>${k}</option>`;});subSel.innerHTML=html;prodSubChanged();}
+function prodSubChanged(){let main=document.getElementById('prodMain').value;let sub=document.getElementById('prodSub').value;let subSubSel=document.getElementById('prodSubSub');let html='<option>All SubSub</option>';if(main!=='All'&&sub!=='All Sub'&&CAT_DATA[main]&&CAT_DATA[main][sub]) Object.keys(CAT_DATA[main][sub]).forEach(k=>{html+=`<option>${k}</option>`;});subSubSel.innerHTML=html;}
+function handleProdImage(input,num){if(input.files&&input.files[0]){let reader=new FileReader();reader.onload=e=>{if(num===1) prodB64=e.target.result;if(num===2) prodB64_2=e.target.result;if(num===3) prodB64_3=e.target.result;let html='';if(prodB64) html+=`<img src="${prodB64}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;margin:4px">`;if(prodB64_2) html+=`<img src="${prodB64_2}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;margin:4px">`;if(prodB64_3) html+=`<img src="${prodB64_3}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;margin:4px">`;document.getElementById('prodPreview').innerHTML=html;};reader.readAsDataURL(input.files[0]);}}
+function createShop(){if(!isVerified()){alert('Verify first');window.location.href='dowallet.html';return;}let name=document.getElementById('shopName').value.trim();let desc=document.getElementById('shopDesc').value.trim();let country=document.getElementById('shopCountry').value;let city=document.getElementById('shopCity').value;let area=document.getElementById('shopArea').value||'Central';let main=document.getElementById('shopMain').value;let sub=document.getElementById('shopSub').value;let subSub=document.getElementById('shopSubSub').value;if(!name){alert('Shop name required');return;}let shops=getShops();let shop={id:Date.now(),owner:getUser(),name,desc,country,city,area,main,sub,subSub,general:getUser().toLowerCase()+'.dogroup',short:getUser().toLowerCase()+'.docart',long:getUser().toLowerCase()+'.docart.dotgroup.top',generalLong:getUser().toLowerCase()+'.dogroup.dotgroup.top',created:Date.now()};shops.push(shop);saveShops(shops);localStorage.setItem('dot_shop_'+getUser(),JSON.stringify(shop));localStorage.setItem('dot_user_'+getUser(),JSON.stringify({bname:name,desc:desc,phone:'234000000000'}));alert('Shop created - '+getUser().toLowerCase()+'.docart = '+getUser().toLowerCase()+'.docart.dotgroup.top | General '+getUser().toLowerCase()+'.dogroup = '+getUser().toLowerCase()+'.dogroup.dotgroup.top - Dual length');renderMyShop();}
+function postProduct(){if(!isVerified()){alert('Verify first');window.location.href='dowallet.html';return;}let name=document.getElementById('prodName').value.trim();let price=document.getElementById('prodPrice').value.trim();let stock=document.getElementById('prodStock').value.trim()||'10';let color=document.getElementById('prodColor').value||'Black';let size=document.getElementById('prodSize').value||'42';let brand=document.getElementById('prodBrand').value||'Generic';let condition=document.getElementById('prodCondition').value||'New';let material=document.getElementById('prodMaterial').value||'';let shape=document.getElementById('prodShape').value||'';let weight=document.getElementById('prodWeight').value||'';let desc=document.getElementById('prodDesc').value.trim();let country=document.getElementById('prodCountry').value||currentCountry;let city=document.getElementById('prodCity').value||'Awka';let area=document.getElementById('prodArea').value||'Central';let main=document.getElementById('prodMain').value||'Physical';let sub=document.getElementById('prodSub').value||'Fashion - Clothes, Shoes, Bags';let subSub=document.getElementById('prodSubSub').value||'Shoes';let affiliate=document.getElementById('prodAffiliate').value;let affType=document.getElementById('prodAffType').value;let affValue=affType==='percent'?document.getElementById('prodAffPercent').value:document.getElementById('prodAffFixed').value;let vision=document.getElementById('prodVision').checked;let freeDelivery=document.getElementById('prodFreeDelivery').checked;let returnPolicy=document.getElementById('prodReturn').checked;let flashSale=document.getElementById('prodFlash').checked;if(!name||!price){alert('Name and price required');return;}let product={id:Date.now(),name,price:parseFloat(price),stock:parseInt(stock),desc,country,city,area,main,sub,subSub,color,size,brand,condition,material,shape,weight,affiliate,affType,affValue,vision,boosted:vision,boostDate:vision?new Date().toISOString():null,freeDelivery,returnPolicy,flashSale,flashDate:flashSale?new Date().toISOString():null,image:prodB64||'https://via.placeholder.com/300',image2:prodB64_2,image3:prodB64_3,shopName:getUser(),owner:getUser(),user:getUser(),general:getUser().toLowerCase()+'.dogroup',shopLink:getUser().toLowerCase()+'.docart',longLink:getUser().toLowerCase()+'.docart.dotgroup.top',generalLong:getUser().toLowerCase()+'.dogroup.dotgroup.top',created:Date.now()};let products=getProducts();products.unshift(product);saveProducts(products);addToDoSpace(product);let perUser=JSON.parse(localStorage.getItem('dot_products_'+getUser())||'[]');perUser.push(product);localStorage.setItem('dot_products_'+getUser(),JSON.stringify(perUser));alert('Posted - Auto to DoCart + DoSpace - '+getUser().toLowerCase()+'.docart = '+getUser().toLowerCase()+'.docart.dotgroup.top | General '+getUser().toLowerCase()+'.dogroup - Vision $0.001');document.getElementById('prodName').value='';document.getElementById('prodPrice').value='';document.getElementById('prodDesc').value='';prodB64=null;prodB64_2=null;prodB64_3=null;document.getElementById('prodPreview').innerHTML='';renderMyShop();renderGeneral();}
+function renderGeneral(){
+ checkExpiredBoosts();
+ let products=getProducts();
+ let search=(document.getElementById('searchBox').value||'').toLowerCase();
+ let filterCity=document.getElementById('filterCity')?.value||'All';
+ let filtered=products.filter(p=>{
+  if(currentMain!=='All'&&p.main!==currentMain) return false;
+  if(currentSub!=='All'&&p.sub!==currentSub) return false;
+  if(currentSubSub!=='All'&&p.subSub!==currentSubSub) return false;
+  if(currentCountry!=="All Countries"&&p.country&&p.country!==currentCountry) return false;
+  if(filterCity!=="All"&&filterCity!=="All States/Regions"&&p.city&&p.city!==filterCity) return false;
+  if(currentColor!=="All"&&p.color&&p.color!==currentColor) return false;
+  if(currentSize!=="All"&&p.size&&p.size!==currentSize) return false;
+  if(sortType==='affiliate'&&p.affiliate!=="Yes") return false;
+  if(search){let s=(p.name+' '+(p.size||'')+' '+(p.color||'')+' '+(p.brand||'')+' '+(p.material||'')+' '+(p.owner||'')+' '+ (p.owner||'').toLowerCase()+'.docart '+(p.owner||'').toLowerCase()+'.dogroup').toLowerCase();if(!s.includes(search)) return false;}
+  return true;
+ });
+ filtered.sort((a,b)=>{let aB=a.boosted?1:0,bB=b.boosted?1:0;if(sortType==='vision'&&bB!==aB) return bB-aB;if(sortType==='affiliate'){let aA=a.affiliate==="Yes"?1:0,bA=b.affiliate==="Yes"?1:0;if(bA!==aA) return bA-aA;}if(sortType==='rating'){return getRating(b.id).avg-getRating(a.id).avg;}if(sortType==='low') return a.price-b.price;if(sortType==='high') return b.price-a.price;if(bB!==aB) return bB-aB;return b.id-a.id;});
+ let visionProducts=filtered.filter(p=>p.boosted);
+ let track=document.getElementById('visionTrack');
+ if(visionProducts.length===0){track.innerHTML='<div style="padding:10px;color:#8aa0c0;font-size:12px">No Vision - $0.001 ('+convertDisplay(0.001)+') Moving - '+getUser().toLowerCase()+'.docart marquee - VES GYD SRD FULL - Nigeria 36 States</div>';}
+ else{
+  let doubleList=[...visionProducts,...visionProducts];
+  track.innerHTML='';
+  doubleList.forEach(p=>{
+   let flash='';if(p.flashSale){let end=new Date(p.flashDate);end.setHours(end.getHours()+24);let diff=end-new Date();let h=Math.floor(diff/1000/60/60);if(h>0) flash=' ⏰ Flash '+h+'h';}
+   track.innerHTML+='<div class="marquee-item" onclick="openProduct('+p.id+')"><img src="'+(p.image||'https://via.placeholder.com/180x100')+'"><b>🔥 '+p.name+'</b><span>💰 '+convertDisplay(p.price)+flash+' | '+(p.size||'')+' '+(p.color||'')+'</span><span class="small">'+getAffiliateLabel(p)+' = '+convertDisplay(getAffiliateCommissionAmount(p))+'</span></div>';
+  });
+ }
+ let listDiv=document.getElementById('generalList');
+ let wishlist=getWishlist();
+ listDiv.innerHTML='<div style="font-size:11px;color:#8aa0c0;margin:6px">🌍 '+currentCountry+' ('+ALL_COUNTRIES.length+' Countries FULL) | 💱 '+currentCurrency+' ('+Object.keys(CURRENCIES).length+' Currencies FULL incl VES '+CURRENCIES['VES'].rate+', GYD '+CURRENCIES['GYD'].rate+', SRD '+CURRENCIES['SRD'].rate+') | 🎨 '+currentColor+' 📏 '+currentSize+' | '+filtered.length+' products - peter.dogroup = General | peter.docart = Shop = peter.docart.dotgroup.top - Nigeria 36 States 774 LGAs FULL</div>';
+ filtered.forEach(p=>{
+  let comm=getAffiliateCommissionAmount(p);let label=getAffiliateLabel(p);let daysLeft=p.boosted?(30-Math.floor((new Date()-new Date(p.boostDate))/(1000*60*60*24))):0;
+  let rating=getRating(p.id);let isWish=wishlist.includes(p.id)||wishlist.includes(p.id.toString());
+  let stockAlert='';if(p.stock<=3){stockAlert='<span style="background:#b71c1c;color:#fff;padding:3px 6px;border-radius:10px;font-size:9px">🔥 Only '+p.stock+' left!</span>';}
+  let flash='';if(p.flashSale){let end=new Date(p.flashDate);end.setHours(end.getHours()+24);let diff=end-new Date();if(diff>0){let h=Math.floor(diff/1000/60/60);flash='<span style="background:#f5a623;color:#000;padding:3px 6px;border-radius:10px;font-size:9px">⏰ Flash '+h+'h left</span>';}}
+  let freeDel=p.freeDelivery?'<span style="background:#16834a;color:#fff;padding:3px 6px;border-radius:10px;font-size:9px">🚚 Free</span>':'';
+  let ret=p.returnPolicy?'<span style="background:#0f5bd7;color:#fff;padding:3px 6px;border-radius:10px;font-size:9px">🛡️ Return</span>':'';
+  listDiv.innerHTML+='<div class="product '+(p.boosted?'boosted':'')+' '+(p.affiliate==="Yes"?'affiliate':'')+'"><img src="'+(p.image||'https://via.placeholder.com/80')+'" onclick="openProduct('+p.id+')"><div style="flex:1" onclick="openProduct('+p.id+')"><b>'+(p.boosted?'🔥 ':'')+p.name+'</b><br><span style="font-size:13px;color:#4caf50;font-weight:900">'+convertWithBoth(p.price)+'</span> <span style="font-size:11px;color:#c4a5ff">'+(label?' | '+label+' = '+convertDisplay(comm)+' Verified Only':'')+'</span><br><span style="font-size:11px">⭐ '+rating.avg+' ('+rating.count+') | 📏 '+(p.size||'N/A')+' 🎨 '+(p.color||'N/A')+' 🏷️ '+(p.brand||'')+' | '+ (p.owner||'')+' - <span style="color:#f5a623">'+(p.owner||'').toLowerCase()+'.docart</span> = '+(p.longLink||'')+' | '+(p.owner||'').toLowerCase()+'.dogroup</span><br><div style="margin-top:3px">'+(p.boosted?'<span class="badge" style="background:#f5a623;color:#000">🔥 VISION - '+daysLeft+'d - $0.001</span>':'')+(p.affiliate==="Yes"?'<span class="badge" style="background:#7c3aed;color:#fff">'+label+' = '+convertDisplay(comm)+'</span>':'')+stockAlert+flash+freeDel+ret+'</div></div><button onclick="toggleWishlist('+p.id+')" style="background:'+(isWish?'#b71c1c':'#1e3a5f')+';color:#fff;border:none;padding:8px 10px;border-radius:8px;font-size:16px;height:40px">❤️</button></div>';
+ });
+}
+function renderMyShop(){
+ document.getElementById('verifyCheck').innerHTML=getVerificationStatus();
+ document.getElementById('affiliateVerifyCheck').innerHTML=getVerificationStatus();
+ document.getElementById('affVerifyMsg').innerHTML=isVerified()?'✅ Verified - Can add affiliate - '+getUser().toLowerCase()+'.docart':'🔒 Verify first - <a href="dowallet.html" class="linkBtn">Click here to verify</a>';
+ let shops=getShops();
+ let myShop=shops.find(s=>s.owner===getUser());
+ let noBox=document.getElementById('noShopBox');
+ let hasBox=document.getElementById('hasShopBox');
+ if(!myShop){noBox.style.display='block'; hasBox.style.display='none'; fillAllCountries('shopCountry'); fillAllCountries('prodCountry'); fillCitiesDropdown('Nigeria','shopCity','shopArea'); fillCitiesDropdown('Nigeria','prodCity','prodArea');}
+ else{noBox.style.display='none'; hasBox.style.display='block'; document.getElementById('myShopHeader').innerHTML=`<b>🏪 ${myShop.name}</b> - 📍 ${myShop.country} ${myShop.city} ${myShop.area} - <span style="color:#f5a623">${getUser().toLowerCase()}.docart</span> = ${myShop.long} | <span style="color:#8ec1ff">${getUser().toLowerCase()}.dogroup</span> = ${myShop.generalLong} - Dual length - Nigeria 36 States FULL - ${myShop.country} ${myShop.city} LGA`;}
+ let myProducts=getProducts().filter(p=> (p.owner===getUser()||p.user===getUser()) );
+ document.getElementById('myProdCount').innerText=myProducts.length;
+ let listDiv=document.getElementById('myProductsList');
+ listDiv.innerHTML='';
+ myProducts.forEach(p=>{listDiv.innerHTML+=`<div class="product ${p.boosted?'boosted':''}"><img src="${p.image||'https://via.placeholder.com/80'}"><div><b>${p.name}</b><br>${convertDisplay(p.price)} - 🎨 ${p.color} 📏 ${p.size} - ${getAffiliateLabel(p)} = ${convertDisplay(getAffiliateCommissionAmount(p))} - <span style="color:#f5a623">${getUser().toLowerCase()}.docart</span><br><span class="small">${p.country} ${p.city} ${p.area} - Stock ${p.stock<=3?'🔥 Only '+p.stock+' left!':p.stock} ${p.freeDelivery?'🚚 Free':''} ${p.returnPolicy?'🛡️ Return':''} - Nigeria 36 States LGA</span></div><button onclick="openProduct(${p.id})" style="background:#0f5bd7;color:#fff;border:none;padding:6px 10px;border-radius:8px">View</button></div>`;});
+ let haggles=getHaggles().filter(h=> (h.seller===getUser()||h.owner===getUser()) );
+ let haggleDiv=document.getElementById('haggleOffers');
+ if(haggles.length>0){haggleDiv.innerHTML='<b>🤝 Offers - '+getUser().toLowerCase()+'.docart</b>'; haggles.forEach(h=>{haggleDiv.innerHTML+=`<div class="card" style="background:#071a36"><b>${h.productName}</b> - Buyer ${h.buyer} offered ${convertDisplay(h.offerPrice||h.offer)} (orig ${convertDisplay(h.originalPrice)}) - Status ${h.status} <div class="row"><button class="green btn" onclick="handleHaggle('${h.id}','accepted')">Accept</button><button class="red btn" onclick="handleHaggle('${h.id}','rejected')">Reject</button></div></div>`;});} else {haggleDiv.innerHTML='<div class="card" style="background:#071a36"><b>💬 Haggle Offers - '+getUser().toLowerCase()+'.docart</b><p class="small">No offers yet - Buyers haggle here - Shows buyer name + offer - Nigeria 36 States LGA</p></div>';}
+}
+function renderAffiliateProducts(){
+ let sales=getAffiliateSales();
+ let clicks=JSON.parse(localStorage.getItem('dot_all_aff_clicks')||'[]');
+ let myClicks=clicks.filter(c=>c.referrer===getUser());
+ document.getElementById('affiliateStats').innerHTML=`Clicks: ${myClicks.length} | Sales: ${sales.filter(s=>s.referrer===getUser()).length} | Currency: ${currentCurrency} ${CURRENCIES[currentCurrency]?.flag||''} - VES ${CURRENCIES['VES'].rate}, GYD ${CURRENCIES['GYD'].rate}, SRD ${CURRENCIES['SRD'].rate} - FULL 130 - Verified Only Earn - Nigeria 36 States`;
+ let q=(document.getElementById('searchAffiliate')?.value||'').toLowerCase();
+ let products=getProducts().filter(p=>p.affiliate==="Yes");
+ if(q) products=products.filter(p=>(p.name+' '+p.desc+' '+(p.owner||'')).toLowerCase().includes(q));
+ let div=document.getElementById('affiliateList');
+ div.innerHTML='';
+ products.forEach(p=>{let comm=getAffiliateCommissionAmount(p); div.innerHTML+=`<div class="product affiliate" onclick="openProduct(${p.id})"><img src="${p.image||'https://via.placeholder.com/80'}"><div><b>${p.name}</b><br>${convertDisplay(p.price)} - ${getAffiliateLabel(p)} = ${convertDisplay(comm)}<br><span class="small">Link: ?prod=${p.id}&ref=${getUser()} - ${p.owner.toLowerCase()}.docart = ${p.longLink||''} | ${p.owner.toLowerCase()}.dogroup - Earn ${convertDisplay(comm)} - Verified Only - FULL Currencies - Nigeria 36 States</span></div><button onclick="event.stopPropagation();toggleWishlist(${p.id})" style="background:#1e3a5f;color:#fff;border:none;padding:6px 10px;border-radius:8px">❤️</button></div>`;});
+ if(!products.length) div.innerHTML='<div class="card"><p class="small">No affiliate - Tick Yes Affiliate - Shows 💜 AFFILIATES % or $ - VES GYD SRD FULL 130 included - Verify at <a href="dowallet.html" class="linkBtn">Click here to verify</a> - Nigeria 36 States</p></div>';
+}
+function renderWishlist(){
+ let wl=getWishlist();
+ let products=getProducts().filter(p=> wl.includes(p.id) || wl.includes(p.id.toString()) );
+ document.getElementById('wishlistStats').innerHTML='Saved: '+products.length+' - '+getUser().toLowerCase()+'.docart / '+getUser().toLowerCase()+'.dogroup - '+Object.keys(CURRENCIES).length+' currencies FULL - Nigeria 36 States FULL';
+ let div=document.getElementById('wishlistList');
+ if(products.length===0){div.innerHTML='<div class="card small">No wishlist yet - Click ❤️ on product - Saved from peter.docart / peter.dogroup - Dual length - Nigeria 36 States FULL</div>';return;}
+ div.innerHTML='';
+ products.forEach(p=>{div.innerHTML+='<div class="product" onclick="openProduct('+p.id+')"><img src="'+(p.image||'https://via.placeholder.com/80')+'"><div style="flex:1"><b>'+p.name+'</b><br><span style="color:#4caf50">'+convertDisplay(p.price)+' | '+getAffiliateLabel(p)+' = '+convertDisplay(getAffiliateCommissionAmount(p))+'</span><br><span class="small">'+ (p.owner||'')+' - <span style="color:#f5a623">'+(p.owner||'').toLowerCase()+'.docart</span> | '+(p.owner||'').toLowerCase()+'.dogroup - 🎨 '+p.color+' 📏 '+p.size+' - Nigeria 36 States</span></div><button onclick="event.stopPropagation();toggleWishlist('+p.id+')" style="background:#b71c1c;color:#fff;border:none;padding:8px;border-radius:8px">X</button></div>';});
+}
+function openProduct(id){
+ let products=getProducts();
+ let p=products.find(x=>x.id==id);
+ if(!p) return;
+ document.getElementById('modalTitle').innerText=p.name;
+ let comm=getAffiliateCommissionAmount(p);
+ let label=getAffiliateLabel(p);
+ document.getElementById('modalBody').innerHTML=`
+ <img src="${p.image||'https://via.placeholder.com/300'}" style="width:100%;height:200px;object-fit:cover;border-radius:12px">
+ ${p.image2?`<img src="${p.image2}" style="width:32%;border-radius:8px;margin:2px">`:''} ${p.image3?`<img src="${p.image3}" style="width:32%;border-radius:8px;margin:2px">`:''}
+ <div style="margin-top:10px">
+ <b>${p.name}</b><br>
+ 📏 Size: ${p.size||'N/A'} 🎨 Color: ${p.color||'N/A'}<br>
+ 🏷️ Brand: ${p.brand||''} 📦 Stock: ${p.stock||0} | ⭐ ${getRating(p.id).avg} (${getRating(p.id).count})<br>
+ 💰 Price: ${convertWithBoth(p.price)}<br>
+ ${label?`💜 ${label} = ${convertDisplay(comm)} - Verified Only - Commission auto wallet<br>`:''}
+ 📍 ${p.country||''} ${p.city||''} ${p.area||''} - <b style="color:#f5a623">${(p.owner||'').toLowerCase()}.docart</b> = ${p.longLink||''} | <b style="color:#8ec1ff">${(p.owner||'').toLowerCase()}.dogroup</b> = ${p.generalLong||''} - Dual length - Nigeria 36 States 774 LGAs FULL<br>
+ <p style="font-size:12px">${p.desc||''} - Dual length - Nigeria 36 States + All Countries States FULL</p>
+ <div class="row"><button class="blue btn" onclick="toggleWishlist(${p.id});">❤️ Wishlist - ${(p.owner||'').toLowerCase()}.docart</button><button class="green btn" onclick="makeHaggleOffer(${p.id})">🤝 Haggle Offer</button></div>
+ <button class="orange btn" onclick="buyNow(${p.id});">🛒 Buy Now - ${convertDisplay(p.price)} - ${label?label:''} - ${(p.owner||'').toLowerCase()}.docart</button>
+ <div style="margin-top:8px;font-size:11px">Share Affiliate: ${window.location.origin+window.location.pathname}?prod=${p.id}&ref=${getUser()} - ${label} = ${convertDisplay(comm)} - Earn auto - ${getUser().toLowerCase()}.docart can earn - Verified Only - FULL Currencies - Nigeria 36 States</div>
+ </div>`;
+ document.getElementById('productModal').style.display='block';
+}
+function closeModal(){document.getElementById('productModal').style.display='none';}
+function buyNow(id){
+ let all=getProducts();let p=all.find(x=>x.id==id);let shopUser=JSON.parse(localStorage.getItem('dot_user_'+(p.owner||p.user))||'{}');let phone=shopUser.phone||'234000000000';let affRef=localStorage.getItem('dot_current_ref')||'';let comm=getAffiliateCommissionAmount(p);let msg=`Hello ${p.owner||p.user}, I want ${p.name} - ${convertWithBoth(p.price)} - Color ${p.color} Size ${p.size} - From ${(p.owner||'').toLowerCase()}.docart = ${p.longLink||''} - General ${(p.owner||'').toLowerCase()}.dogroup = ${p.generalLong||''} - ${p.desc} - ${getAffiliateLabel(p)} = ${convertDisplay(comm)} - Ref ${affRef} - Dual length - Nigeria 36 States 774 LGAs FULL`;window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+ let ref=localStorage.getItem('dot_current_ref');let refProd=localStorage.getItem('dot_current_ref_prod');let refNotVerified=localStorage.getItem('dot_current_ref_not_verified');if(ref&&refProd==id){let sales=getAffiliateSales();if(refNotVerified){sales.push({id:Date.now(),referrer:ref,productId:id,buyer:getUser(),amount:0,status:'not_verified_no_commission',date:new Date().toISOString()});}else{let refVerified=localStorage.getItem('dot_verified_'+ref.toUpperCase())==='true';if(refVerified){sales.push({id:Date.now(),referrer:ref,productId:id,buyer:getUser(),amount:comm,status:'verified_commission',date:new Date().toISOString()});let wallet=loadFor(ref);let bal=wallet.balance||0;let hist=wallet.history||[];bal+=comm;hist.push({type:'+AFFILIATE '+getAffiliateLabel(p)+' - '+p.name+' - '+ (p.owner||'').toLowerCase()+'.docart',bal:bal,date:new Date().toLocaleString()});let encStr=enc({balance:bal,history:hist},getEncKeyFor(ref));localStorage.setItem('doc_v7_vault_'+ref.toUpperCase(),encStr);}}saveAffiliateSales(sales);localStorage.removeItem('dot_current_ref');localStorage.removeItem('dot_current_ref_prod');localStorage.removeItem('dot_current_ref_not_verified');}
+}
+function initFixed(){
+ fillCurrencyDropdown();
+ fillAllCountries('filterCountry'); fillAllCountries('shopCountry'); fillAllCountries('prodCountry');
+ fillCitiesDropdown('All Countries','filterCity','filterArea');
+ fillCitiesDropdown('Nigeria','shopCity','shopArea');
+ fillCitiesDropdown('Nigeria','prodCity','prodArea');
+ let mainHtml='<option value="All">All Main</option>';Object.keys(CAT_DATA).forEach(k=>{mainHtml+=`<option value="${k}">${k}</option>`;});
+ document.getElementById('shopMain').innerHTML=mainHtml; document.getElementById('prodMain').innerHTML=mainHtml;
+ shopMainChanged(); prodMainChanged();
+ let r=CURRENCIES[currentCurrency];
+ if(r) document.getElementById('currencyInfo').innerHTML=`${r.flag} <b>${currentCurrency}</b> - ${r.name} | Rate: 1 USD = ${r.rate} ${currentCurrency} | 🌍 ${currentCountry} | ${Object.keys(CURRENCIES).length} currencies FULL incl VES ${CURRENCIES['VES'].rate}, GYD ${CURRENCIES['GYD'].rate}, SRD ${CURRENCIES['SRD'].rate} | Both dropdowns live | Links: <b style="color:#f5a623">${getUser().toLowerCase()}.docart</b> = ${getUser().toLowerCase()}.docart.dotgroup.top | <b style="color:#8ec1ff">${getUser().toLowerCase()}.dogroup</b> = ${getUser().toLowerCase()}.dogroup.dotgroup.top - Dual - Nigeria 36 States 774 LGAs + All Countries States FULL - docart.dotgroup.top lists all shops, dogroup.dotgroup.top lists all users - WHOLE CODE`;
+ renderFilters(); renderGeneral(); renderMyShop(); renderWishlist(); renderAffiliateProducts();
+}
+window.addEventListener('DOMContentLoaded', initFixed);
+</script>
+</body>
+</html>

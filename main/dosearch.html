@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoSearch Global — Don't Just Search. Do.</title>
+<style>
+  :root{--blue:#0A2E8A; --blue2:#1A4FFF; --red:#D90429; --bg:#FFFFFF; --gray:#F7F9FF; --text:#101828;}
+  *{box-sizing:border-box}
+  body{margin:0; font-family: 'Inter', Segoe UI, Arial, sans-serif; background:var(--bg); color:var(--text); text-align:center; overflow-x:hidden;}
+  /* Ornature - subtle organic global shapes */
+  .ornature-bg{position:fixed; top:-120px; right:-120px; width:420px; height:420px; background:radial-gradient(60% 60% at 50% 50%, rgba(26,79,255,0.12) 0%, rgba(217,4,41,0.06) 60%, transparent 100%); border-radius:50%; z-index:-1; filter:blur(1px);}
+  .ornature-bg2{position:fixed; bottom:-150px; left:-150px; width:500px; height:500px; background:radial-gradient(60% 60% at 50% 50%, rgba(10,46,138,0.10) 0%, rgba(10,46,138,0.03) 100%); border-radius:50%; z-index:-1;}
+  .nav{padding:14px 24px; display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto;}
+  .nav-logo{font-weight:900; font-size:20px; letter-spacing:-0.5px;}
+  .nav-logo b{color:var(--blue);} .nav-logo r{color:var(--red);}
+  .nav-links a{text-decoration:none; margin-left:10px; font-size:13px; font-weight:600; padding:8px 14px; border-radius:100px;}
+  .link-main{background:var(--blue); color:#fff;}
+  .link-reward{background:#fff; color:var(--blue); border:1px solid #D0D5DD;}
+  .link-red{background:var(--red); color:#fff;}
+  .hero{margin-top:70px; padding:0 20px;}
+  .logo{font-size:72px; font-weight:900; letter-spacing:-3px; line-height:1;}
+  .logo .b{color:var(--blue);} .logo .r{color:var(--red);}
+  .tag{margin-top:10px; font-size:15px; color:#475467; letter-spacing:0.2px;}
+  .tag span{color:var(--blue); font-weight:700;}
+  .search-wrap{margin:36px auto 0; width:92%; max-width:680px; position:relative;}
+  .search-box{display:flex; align-items:center; border:1.5px solid #D0D5DD; border-radius:100px; padding:6px 8px 6px 20px; background:#fff; box-shadow:0 10px 30px rgba(10,46,138,0.08); transition:0.2s;}
+  .search-box:focus-within{border-color:var(--blue2); box-shadow:0 10px 30px rgba(26,79,255,0.18);}
+  .search-box input{border:none; outline:none; width:100%; padding:14px 10px; font-size:16px; background:transparent;}
+  .search-icon{color:#98A2B3;}
+  .search-btn{background:var(--blue); color:#fff; border:none; padding:12px 22px; border-radius:100px; font-weight:700; cursor:pointer; font-size:14px;}
+  .chips{margin-top:18px; display:flex; justify-content:center; gap:8px; flex-wrap:wrap;}
+  .chip{font-size:12px; padding:6px 12px; border-radius:100px; background:var(--gray); border:1px solid #E4E7EC; color:#344054;}
+  .wallet-bar{margin:28px auto; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
+  .w-card{background:#fff; border:1px solid #E4E7EC; border-radius:16px; padding:10px 16px; display:flex; align-items:center; gap:10px; min-width:200px; box-shadow:0 2px 10px rgba(0,0,0,0.04);}
+  .w-dot{width:10px; height:10px; border-radius:50%;}
+  .w-card.main .w-dot{background:var(--blue);} .w-card.reward .w-dot{background:var(--red);}
+  .w-card b{font-size:13px;} .w-card span{font-size:11px; color:#667085; display:block; text-align:left;}
+  .grid{margin:50px auto; max-width:900px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; padding:0 20px; text-align:left;}
+  .card{background:#fff; border:1px solid #E4E7EC; border-radius:20px; padding:18px; position:relative; overflow:hidden;}
+  .card:before{content:""; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--blue);}
+  .card.red:before{background:var(--red);}
+  .card h4{margin:0 0 6px; font-size:13px; color:var(--blue);}
+  .card p{margin:0; font-size:12.5px; color:#475467; line-height:1.5;}
+  .footer{margin-top:70px; padding:18px; font-size:12px; background:var(--text); color:#fff; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;}
+  .footer a{color:#98A2B3; text-decoration:none;}
+  /* Ad Modal Global */
+  #adBox{display:none; position:fixed; inset:0; background:rgba(16,24,40,0.75); backdrop-filter:blur(6px); z-index:100; justify-content:center; align-items:center;}
+  .ad-modal{background:#fff; width:90%; max-width:420px; border-radius:24px; padding:24px; text-align:left; border-top:5px solid var(--blue);}
+  .ad-modal h3{margin:0; color:var(--blue);} .ad-modal p{font-size:13px; color:#475467;}
+  .ad-visual{height:120px; background:var(--gray); border-radius:14px; display:flex; align-items:center; justify-content:center; color:#667085; font-size:12px; border:1px dashed #D0D5DD; margin:14px 0;}
+  .ad-timer{background:var(--blue); color:#fff; padding:8px 16px; border-radius:100px; font-weight:800; display:inline-block;}
+</style>
+</head>
+<body>
+
+<div class="ornature-bg"></div>
+<div class="ornature-bg2"></div>
+
+<div class="nav">
+  <div class="nav-logo"><b>Do</b><r>Search</r></div>
+  <div class="nav-links">
+    <a class="link-reward" href="#">Reward: <b id="rewardCount">0.125</b> Do</a>
+    <a class="link-main" href="#">Main: <b id="mainCount">2.500</b> Do</a>
+    <a class="link-red" href="#">Sign In</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="logo"><span class="b">Do</span><span class="r">S</span><span class="b">earch</span></div>
+  <div class="tag">Global Search Infrastructure — <span>Search. Earn. Do Business.</span></div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="searchInput" placeholder="Search globally — Businesses, Products, Services..." onkeypress="if(event.key==='Enter'){doSearch()}">
+    <button class="search-btn" onclick="doSearch()">Search</button>
+  </div>
+  <div class="chips">
+    <div class="chip">🌍 150+ Countries</div>
+    <div class="chip">💼 Verified Businesses Only</div>
+    <div class="chip">🔒 No Tracking Ads</div>
+    <div class="chip">⚡ Reward = Store Credit</div>
+  </div>
+</div>
+
+<div class="wallet-bar">
+  <div class="w-card main"><div class="w-dot"></div><div><b id="mainCount2">2.500 Do Coin</b><span>Main Wallet — Tradable</span></div></div>
+  <div class="w-card reward"><div class="w-dot"></div><div><b id="rewardCount2">0.125 Do Coin</b><span>Reward Wallet — Buy Product Only • No Withdrawal</span></div></div>
+</div>
+
+<div class="grid">
+  <div class="card"><h4>Search-to-Earn Protocol</h4><p>Watch 5 sec brand ad → Earn 0.001 Do Coin to Reward Wallet. Funded by advertisers, not by us. Global CPM model.</p></div>
+  <div class="card red"><h4>Dual Wallet System</h4><p>Main Wallet for trading. Reward Wallet locked for marketplace purchases only — compliant, circular economy, no cash-out risk.</p></div>
+  <div class="card"><h4>Global Business Graph</h4><p>Every search indexes verified suppliers. Pay 5 Do Coin to unlock high-intent buyer lead. B2B monetization layer.</p></div>
+</div>
+
+<div class="footer">
+  <span>© 2026 DoSearch Global Inc.</span>
+  <a href="#">Privacy</a><a href="#">Terms — Reward is Store Credit</a><a href="#">For Business</a><a href="#">API</a>
+</div>
+
+<div id="adBox">
+  <div class="ad-modal">
+    <h3>Brand Partner Advert</h3>
+    <p>This search is sponsored. Watch 5 seconds to unlock global results and earn 0.001 Do Coin to your Reward Wallet.</p>
+    <div class="ad-visual">GLOBAL ADVERT SPACE — 728x90</div>
+    <div class="ad-timer" id="adTimer">5s</div>
+    <p style="font-size:11px; color:var(--red); margin-top:12px;">Reward → Reward Wallet • No withdrawal • Use to buy product globally</p>
+  </div>
+</div>
+
+<script>
+  let mainBal=2.5, rewardBal=0.125, count=0;
+  function doSearch(){
+    let q=document.getElementById('searchInput').value.trim();
+    if(!q){alert('Enter global query'); return;}
+    document.getElementById('adBox').style.display='flex';
+    let c=5; document.getElementById('adTimer').innerText=c+'s';
+    let t=setInterval(()=>{
+      c--; document.getElementById('adTimer').innerText=c+'s';
+      if(c<0){
+        clearInterval(t);
+        document.getElementById('adBox').style.display='none';
+        rewardBal+=0.001; count++;
+        document.getElementById('rewardCount').innerText=rewardBal.toFixed(3);
+        document.getElementById('rewardCount2').innerText=rewardBal.toFixed(3)+' Do Coin';
+        if(count%10===0){ lucky(); } else { alert('Global Result for: '+q+'\n+0.001 Do → Reward Wallet\nBalance: '+rewardBal.toFixed(3));}
+      }
+    },1000);
+  }
+  function lucky(){
+    let a=prompt('Global Compliance Check — Capital of Japan? (Skill to unlock 10x bonus)');
+    if(a && a.toLowerCase().includes('tokyo')){ rewardBal+=0.01; document.getElementById('rewardCount').innerText=rewardBal.toFixed(3); document.getElementById('rewardCount2').innerText=rewardBal.toFixed(3)+' Do Coin'; alert('Verified! +0.010 Bonus → Reward Wallet');}
+  }
+</script>
+</body>
+</html>

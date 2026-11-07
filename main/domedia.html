@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>DOTGROUP DOMEDIA - V6 SIMPLE DO COIN - Logo 32px Whole Circle</title>
+<link rel="stylesheet" href="dot-header.css">
+<link rel="stylesheet" href="dot-footer.css">
+<style>
+:root{--blue:#0a1931;--blue2:#102a54;--red:#c62828;--red2:#e53935;--white:#fff;--light:#f5f7fb;--green:#2e7d32;--orange:#ef6c00;--gray:#607d8b;--border:#e3e8f0;--gold:#f9a825;--gold2:#ffca28}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;background:var(--light);color:var(--blue);line-height:1.5;-webkit-tap-highlight-color:transparent}
+.nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center} 
+.nav button{background:rgba(255,255,255,.15);border:1px solid var(--border);color:var(--blue);padding:7px 14px;border-radius:20px;font-size:11px;cursor:pointer;font-weight:700;transition:.18s}
+.nav button.active{background:var(--blue);color:white}
+.top-strip{background:var(--blue);border-bottom:5px solid var(--red);padding:7px 12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;color:white;font-size:10px;font-weight:800}
+.container{max-width:1280px;margin:0 auto;padding:12px}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(10,25,49,.06)}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+.b-blue{background:#e3f2fd;color:#0d47a1} .b-green{background:#e8f5e9;color:#2e7d32} .b-red{background:#ffebee;color:#b71c1c} .b-orange{background:#fff3e0;color:#e65100} .b-gray{background:#f5f5f5;color:#424242} .b-gold{background:#fff8e1;color:#f57f17;border:1px solid #ffecb3}
+.btn{padding:9px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:12px;transition:.18s}
+.btn-blue{background:var(--blue);color:white} .btn-green{background:var(--green);color:white} .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#3e2723} .btn-red{background:var(--red);color:white} .btn-light{background:var(--light);color:var(--blue);border:1px solid var(--border)} .btn-sm{padding:7px 12px;font-size:11px}
+.input,.select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13px;margin:6px 0;background:white;outline:none}
+.input:focus,.select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,25,49,.12)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px} .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px} .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}} @media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+.tabs{display:flex;gap:6px;overflow-x:auto;flex-wrap:wrap} .tab{padding:8px 14px;border-radius:20px;background:var(--light);border:1px solid var(--border);cursor:pointer;white-space:nowrap;font-size:11px;font-weight:600;transition:.18s}
+.tab.active{background:var(--blue);color:white}
+.type-card{border:1.5px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-align:center;background:white;transition:.2s}
+.type-card:hover{border-color:var(--blue);background:#e3f2fd;transform:translateY(-2px);box-shadow:0 4px 12px rgba(10,25,49,.1)}
+.type-card.selected{border-color:var(--blue);background:#e3f2fd;box-shadow:0 4px 12px rgba(10,25,49,.15)}
+.pub-card{border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;background:white;display:flex;gap:12px;cursor:pointer;transition:.18s}
+.pub-card:hover{box-shadow:0 4px 12px rgba(10,25,49,.1);border-color:var(--blue)}
+.pub-cover{width:70px;height:90px;background:linear-gradient(135deg,#0a1931,#c62828);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:20px;flex-shrink:0}
+.preview-box{background:linear-gradient(135deg,#e3f2fd,#f5f7fb);border:2px dashed var(--blue2);border-radius:12px;padding:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:200;padding:12px}
+.modal.show{display:flex} .modal-box{background:white;border-radius:16px;padding:16px;max-width:700px;width:100%;max-height:92vh;overflow:auto;animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.editor{border:1px solid var(--border);border-radius:10px;padding:10px;min-height:200px;background:white}
+.small{font-size:11px;color:var(--gray)} .req{color:var(--red)}
+.wizard{display:none} .wizard.active{display:block}
+.section{display:none} .section.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.search-wrap{position:relative;flex:1}
+.search-suggest{position:absolute;left:0;right:0;top:100%;background:white;border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:50;max-height:280px;overflow:auto;display:none;margin-top:6px}
+.search-suggest.show{display:block}
+.suggest-item{padding:10px 12px;font-size:12px;cursor:pointer;border-bottom:1px solid #f1f4f9;display:flex;justify-content:space-between;align-items:center}
+.suggest-item:hover{background:#e3f2fd}
+.stepper{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.instruction{background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px 12px;font-size:11px;color:#6d4c00;margin:8px 0}
+.instruction-blue{background:#e3f2fd;border-color:#bbdefb;color:#0d3a6e}
+.empty-state{text-align:center;padding:32px 16px}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.coin-card{background:linear-gradient(135deg,#0a1931,#1a237e);color:white;border-radius:16px;padding:16px;position:relative;overflow:hidden}
+.coin-balance{font-size:32px;font-weight:900;color:#ffca28;display:flex;align-items:center;gap:8px}
+.coin-badge{background:linear-gradient(135deg,#f9a825,#ffca28);color:#3e2723;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:900;display:inline-flex;align-items:center;gap:4px}
+.coin-convert-box{background:linear-gradient(135deg,#fff8e1,#ffecb3);border:1px solid #ffe082;border-radius:12px;padding:16px;margin-top:10px}
+.convert-result{background:white;border:2px solid #f9a825;border-radius:12px;padding:14px;margin-top:12px;text-align:center;display:none}
+.convert-result.show{display:block}
+.convert-result .big{font-size:28px;font-weight:900;color:#0a1931}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- NEW HEADER SAME PATTERN — 32px WHOLE CIRCLE VISIBLE + 3-LINE DROPDOWN -->
+<header id="dotHeader" class="dot-header" style="position:sticky;top:0;z-index:100">
+  <div class="dot-header-left">
+    <img src="dot-logo-small-32.png" alt="DOTGROUP Logo Whole Circle 32px" class="dot-logo-small" width="32" height="32">
+    <div class="dot-brand">
+      <div class="dot-brand-title"><span class="c-blue">DOTGROUP</span> <span class="c-dark">DOMEDIA</span> <span class="c-red">V6 DO COIN</span></div>
+      <div class="dot-brand-sub">WRITE • READ • PUBLISH • DISCOVER • EARN • Do Coin — 2 Do Coin = 1 Dollar — Logo 32px Whole Circle Visible</div>
+    </div>
+  </div>
+  <div class="dot-header-right"><button class="dot-hamburger" id="dotHamburger"><span></span><span></span><span></span></button></div>
+  <nav class="dot-dropdown" id="dotDropdown">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px"><strong style="font-size:11px;color:#0a1931">MENU — DOMEDIA V6 DO COIN</strong><button id="ddClose" style="border:1px solid #e2e8f0;background:#f8fafc;padding:5px 10px;border-radius:8px;font-weight:800">✕</button></div>
+    <div class="dd-grid">
+      <div class="dd-group"><h4>🏠 DISCOVER</h4><button onclick="openSec('home')">Home — Write Read Publish Discover Earn — Do Coin 2 = 1 Dollar — Convert to your currency</button><button onclick="openSec('explore')">Explore — Live search — Earn Do Coins</button><button onclick="openSec('categories')">23 Types — All Listed Down — Books Articles Journals Stories Poems Research Courses Manuals Guides Reports Magazines Newspapers Comics Scripts Lyrics Blogs Essays Theses Whitepapers Newsletters Novels Biography Others</button></div>
+      <div class="dd-group"><h4>📝 PUBLISH + EARN</h4><button onclick="openSec('publish')">Publish — Earn Do Coins — 10 Do Coins = $5 per publish — 4 Steps Type Details Content Publish</button><button onclick="openSec('library')">My Library — All Published Drafts Saved</button><button onclick="openSec('ai')">AI Assistant — Write Article Proofread — Use in Publish</button><button onclick="openSec('dashboard')">Dashboard — Do Coin Wallet — Do Coin Convertible Simple Conversion Click and convert to your own currency</button></div>
+    </div>
+  </nav>
+</header>
+<div class="dot-header-overlay" id="dotOverlay"></div>
+<div class="top-strip"><span>DOTGROUP DOMEDIA V6 SIMPLE DO COIN — WRITE • READ • PUBLISH • DISCOVER • EARN — Do Coin — 2 Do Coin = 1 Dollar — Click to convert to your currency — Simple Convert — Logo 32px Whole Circle Visible</span><span id="topCoin">🪙 DO COIN WALLET — 2 = $1</span></div>
+
+<div class="container">
+
+<div style="background:white;border:2px solid #0a1931;border-radius:12px;padding:8px;margin-bottom:12px;display:flex;gap:6px;flex-wrap:wrap" class="nav" id="nav">
+<button id="navHome" class="active" onclick="openSec('home')">Home</button>
+<button id="navExplore" onclick="openSec('explore')">Explore</button>
+<button id="navCategories" onclick="openSec('categories')">23 Types</button>
+<button id="navPublish" onclick="openSec('publish')">Publish</button>
+<button id="navLibrary" onclick="openSec('library')">My Library</button>
+<button id="navAI" onclick="openSec('ai')">AI Assistant</button>
+<button id="navDashboard" onclick="openSec('dashboard')">Dashboard</button>
+</div>
+
+<div id="homeSec" class="section active">
+<div class="card" style="background:linear-gradient(135deg,#0a1931,#102a54);color:white;text-align:center;padding:24px">
+<h1 style="font-size:26px">WRITE • READ • PUBLISH • DISCOVER • EARN</h1>
+<p style="opacity:.9;margin-top:6px">Do Coin — 2 Do Coin = 1 Dollar — Click to convert to your currency</p>
+<div style="display:flex;gap:8px;margin-top:14px;max-width:700px;margin-left:auto;margin-right:auto">
+<div class="search-wrap"><input id="mainSearch" class="input" placeholder="Search title, author, keywords..." oninput="doSearchLive(this.value)" style="flex:1"><div id="mainSearchSuggest" class="search-suggest"></div></div>
+<button class="btn btn-light" onclick="doSearch()">Search</button><button class="btn btn-light" onclick="clearSearch()">Clear</button>
+</div>
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+<button class="btn btn-light" onclick="openSec('explore')">Explore</button>
+<button class="btn btn-gold" onclick="openSec('dashboard')">💰 Convert Do Coin</button>
+<button class="btn btn-green" onclick="openSec('publish')">Publish</button>
+<button class="btn btn-light" onclick="openContributor()">Become Author</button>
+<button class="btn btn-light" onclick="openSec('categories')">23 Types</button>
+<button class="btn btn-light" onclick="openSec('library')">My Library</button>
+<button class="btn btn-light" onclick="openSec('ai')">AI Writing Assistant</button>
+</div>
+</div>
+<div class="coin-card" style="margin-top:12px">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+<div><span class="coin-badge">🪙 DO COIN WALLET</span><div class="coin-balance" style="margin-top:8px"><span>🪙</span><span id="homeCoinBalance">0</span><small style="font-size:12px;color:white;margin-left:6px">Do Coins</small></div><div style="font-size:11px;opacity:.9;margin-top:4px">≈ <span id="homeCoinUSD">$0.00</span> USD • 2 Do Coin = 1 Dollar</div></div>
+<div style="background:rgba(255,255,255,.1);border-radius:12px;padding:12px;min-width:240px">
+<div style="font-size:11px;font-weight:700;margin-bottom:6px">💱 Simple Convert — Click to convert to your currency</div>
+<div style="display:flex;gap:6px"><input id="homeCoinInput" type="number" class="input" value="2" placeholder="Do Coins" style="margin:0;flex:1"><select id="homeCurrencySelect" class="select" style="margin:0;flex:1;max-width:120px"><option value="USD">USD $</option><option value="NGN">NGN ₦</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option><option value="GHS">GHS ₵</option><option value="KES">KES</option><option value="ZAR">ZAR R</option><option value="INR">INR ₹</option><option value="CAD">CAD</option><option value="AED">AED</option><option value="JPY">JPY ¥</option><option value="CNY">CNY</option><option value="BRL">BRL</option></select></div>
+<button class="btn btn-gold btn-sm" style="width:100%;margin-top:8px" onclick="convertHome()">Convert Now</button>
+<div id="homeConvertResult" class="small" style="margin-top:8px;color:#ffca28;font-weight:700"></div>
+</div>
+</div>
+</div>
+<div id="trendingList" class="grid-3" style="margin-top:12px"></div>
+</div>
+<div id="exploreSec" class="section">
+<div class="card"><h2>Explore Content</h2><p class="small">Live search — earn Do Coins</p>
+<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><div class="search-wrap" style="flex:1;min-width:200px"><input id="exploreSearch" class="input" placeholder="Search..." oninput="filterExploreLive(this.value)"><div id="exploreSearchSuggest" class="search-suggest"></div></div><select id="exploreFilterType" class="select" style="max-width:180px" onchange="filterExplore()"><option value="">All Types</option><option>Books</option><option>Articles</option></select><select id="exploreFilterPrice" class="select" style="max-width:120px" onchange="filterExplore()"><option value="">All</option><option value="free">Free</option><option value="paid">Paid</option></select></div>
+<div class="tabs" style="margin-top:12px"><div class="tab active" onclick="setExploreTab('all',this)">All</div><div class="tab" onclick="setExploreTab('free',this)">Free</div><div class="tab" onclick="setExploreTab('paid',this)">Paid</div></div>
+</div>
+<div id="exploreGrid" class="grid-3"></div>
+</div>
+<div id="categoriesSec" class="section">
+<div class="card"><h2>23 Content Types — All Listed Down</h2><p class="small">All 23 types — searchable when typing — Do THIS: Click one of 23 types below — Earn 10 Do Coins = $5</p><div class="search-wrap" style="margin-top:10px;max-width:400px"><input id="typeSearch" class="input" placeholder="Search 23 types..." oninput="searchTypesLive(this.value)"><div id="typeSearchSuggest" class="search-suggest"></div></div></div>
+<div id="typesGrid" class="grid-4"></div>
+</div>
+<div id="publishSec" class="section">
+<div class="card"><h2>Publish Your Work — Earn Do Coins</h2>
+<div class="stepper"><div class="badge b-blue" id="step1Badge">1. Type</div><div class="badge b-gray" id="step2Badge">2. Details</div><div class="badge b-gray" id="step3Badge">3. Content</div><div class="badge b-gray" id="step4Badge">4. Publish</div></div>
+<div class="instruction">Follow steps — Earn 10 Do Coins = $5 per publish — 2 Do Coin = 1 Dollar — Click to convert to your currency</div>
+</div>
+<div id="publishStep1" class="wizard active"><div class="card"><h3>Step 1: Select Type *</h3><div class="instruction-blue">👉 DO THIS: Click one of 23 types below.</div><div id="publishTypes" class="grid-4" style="margin-top:10px"></div><div style="margin-top:12px"><span class="small" id="selectedTypeLabel">No type selected</span></div><div style="margin-top:12px"><button class="btn btn-blue" onclick="goPublishStep(2)">Next → Details</button></div></div></div>
+<div id="publishStep2" class="wizard"><div class="card"><h3>Step 2: Fill Details *</h3><div class="instruction">👉 DO THIS: Fill all fields.</div><div class="grid-2"><div><label>Title *</label><input id="pubTitle" class="input" oninput="updatePreview()"></div><div><label>Author *</label><input id="pubAuthor" class="input" oninput="updatePreview()"></div></div><div class="grid-2"><div><label>Category *</label><select id="pubCategory" class="select"><option>Education</option><option>Business</option></select></div><div><label>Language *</label><select id="pubLanguage" class="select"><option>English</option></select></div></div><label>Description *</label><textarea id="pubDesc" class="input" rows="3" oninput="updatePreview()"></textarea><div class="grid-2"><div><label>Keywords</label><input id="pubKeywords" class="input"></div><div><label>Price Type *</label><select id="pubPriceType" class="select"><option value="free">Free</option><option value="paid">Paid</option></select><input id="pubPrice" class="input" placeholder="Price"></div></div><div class="preview-box" style="margin-top:12px"><h4>Live Preview</h4><div id="livePreviewSmall" class="small">Fill title...</div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-light" onclick="goPublishStep(1)">← Back</button><button class="btn btn-blue" onclick="goPublishStep(3)">Next → Content</button></div></div></div>
+<div id="publishStep3" class="wizard"><div class="card"><h3>Step 3: Write Content</h3><div class="instruction">👉 DO THIS: Write content (50+ chars).</div><label>Upload Cover</label><input type="file" id="pubCoverFile" class="input" accept="image/*" onchange="previewCover(this)"><div id="coverPreview"></div><label>Content *</label><div class="editor" id="pubContent" contenteditable="true" oninput="updatePreview()" style="min-height:220px">Start writing here... 50+ chars.</div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-light" onclick="goPublishStep(2)">← Back</button><button class="btn btn-blue" onclick="goPublishStep(4)">Next → Preview</button></div></div></div>
+<div id="publishStep4" class="wizard"><div class="card"><h3>Step 4: Preview & Publish</h3><div class="instruction">👉 DO THIS: Review, then click Publish to earn 10 Do Coins = $5 — 2 Do Coin = 1 Dollar — Simple Convert to your currency</div><div id="publishPreview" class="preview-box"></div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-light" onclick="goPublishStep(3)">← Back</button><button class="btn btn-gold" onclick="confirmPublish()">🪙 Publish & Earn 10 Do Coins</button><button class="btn btn-light" onclick="saveDraft()">💾 Save Draft</button></div></div></div>
+</div>
+<div id="librarySec" class="section"><div class="card"><h2>My Library</h2><div class="tabs"><div class="tab active" onclick="setLibraryTab('all',this)">All</div><div class="tab" onclick="setLibraryTab('published',this)">Published</div><div class="tab" onclick="setLibraryTab('drafts',this)">Drafts</div><div class="tab" onclick="setLibraryTab('saved',this)">Saved</div><div class="tab" onclick="setLibraryTab('reading',this)">Reading</div></div></div><div id="libraryGrid" class="grid-3"></div></div>
+<div id="aiSec" class="section"><div class="card"><h2>🤖 AI Assistant</h2><div class="grid-2"><div><select id="aiTask" class="select"><option value="write">Write Article</option><option value="proofread">Proofread</option></select><textarea id="aiInput" class="input" rows="6" placeholder="Prompt..."></textarea><button class="btn btn-blue" style="margin-top:8px" onclick="runAI()">Run AI</button></div><div><div id="aiOutput" class="editor" style="min-height:260px;background:#f5f7fb">AI output...</div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-light btn-sm" onclick="copyAI()">Copy</button><button class="btn btn-blue btn-sm" onclick="useAIInPublish()">Use in Publish</button></div></div></div></div></div>
+<div id="dashboardSec" class="section">
+<div class="card"><h2>Dashboard — Do Coin Wallet</h2>
+<div class="grid-4" style="margin-top:10px">
+<div class="coin-card" style="margin:0"><small style="opacity:.8">Do Coin Balance</small><div class="coin-balance"><span>🪙</span><span id="dashCoinBalance">0</span></div><small style="opacity:.8">2 Do Coin = 1 Dollar</small><div style="font-size:11px;margin-top:6px">≈ <span id="dashCoinUSD">$0.00</span> USD</div></div>
+<div class="card" style="margin:0;text-align:center"><small>Published</small><h2 id="dashPublished">0</h2><small>+10 Do Coins each</small></div>
+<div class="card" style="margin:0;text-align:center"><small>Reads</small><h2 id="dashReads">0</h2><small>+1 per 10 reads</small></div>
+<div class="card" style="margin:0;text-align:center"><small>Earnings</small><h2 id="dashEarn">🪙 0 = $0.00</h2><small>Convertible</small></div>
+</div>
+</div>
+<div class="card">
+<h3>💱 Do Coin Convertible — Simple Conversion — When person click it he will convert it to currency he want — Simple — Click and convert to your own currency</h3>
+<p class="small">When person click it he will convert it to currency he want — Simple — Click and convert to your own currency — 2 Do Coin = 1 Dollar — Anybody can know his currency — Not showing all currencies grid — Simple: Enter Do Coins → Select your currency you want → Click Convert → You see result for your currency only</p>
+<div class="coin-convert-box">
+<label>Enter Do Coins you have</label>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+<input id="coinConvertInput" type="number" class="input" placeholder="e.g. 10" value="2" style="flex:1;margin:0;min-width:100px">
+<select id="currencySelect" class="select" style="flex:1;margin:0;min-width:140px">
+<option value="USD">🇺🇸 USD - US Dollar $</option>
+<option value="NGN">🇳🇬 NGN - Naira ₦</option>
+<option value="EUR">🇪🇺 EUR - Euro €</option>
+<option value="GBP">🇬🇧 GBP - Pound £</option>
+<option value="GHS">🇬🇭 GHS - Ghana Cedi ₵</option>
+<option value="KES">🇰🇪 KES - Kenya Sh</option>
+<option value="ZAR">🇿🇦 ZAR - Rand R</option>
+<option value="INR">🇮🇳 INR - Rupee ₹</option>
+<option value="CAD">🇨🇦 CAD - Canadian $</option>
+<option value="AED">🇦🇪 AED - Dirham</option>
+<option value="JPY">🇯🇵 JPY - Yen ¥</option>
+<option value="CNY">🇨🇳 CNY - Yuan ¥</option>
+<option value="BRL">🇧🇷 BRL - Real R$</option>
+<option value="XAF">🌍 XAF - CFA FCFA</option>
+</select>
+<button class="btn btn-gold" onclick="convertCoins()" style="min-width:100px">Convert</button>
+</div>
+<div id="convertResultBox" class="convert-result">
+<div class="small">Converted Result — Simple — Your currency only</div>
+<div class="big" id="convertResult">2 Do Coins = $1.00 USD</div>
+<div class="small" id="convertResultSub">Anybody can know his currency — Click Convert to see your currency</div>
+</div>
+<div class="instruction" style="margin-top:12px">👉 Simple: Enter Do Coins → Select your currency you want → Click Convert → You see result for your currency only — Not showing all currencies grid — 2 Do Coin = 1 Dollar — When person click it he will convert it to currency he want</div>
+</div>
+</div>
+<div id="dashboardEmpty" class="card"><div class="empty-state"><div class="empty-icon">📊</div><h3>No Content Yet — Earn Do Coins</h3><p class="small" style="max-width:500px;margin:10px auto">Publish to earn Do Coins — 2 Do Coin = 1 Dollar — Simple conversion to your currency — When person click it he will convert it to currency he want — Click and convert to your own currency — Not showing all currencies grid</p><div style="display:flex;gap:8px;justify-content:center;margin-top:16px"><button class="btn btn-gold" onclick="openSec('publish')">🪙 Publish & Earn</button><button class="btn btn-light" onclick="openSec('categories')">📚 Browse Types</button></div></div></div>
+<div id="dashboardList" class="grid-3"></div>
+</div>
+</div>
+<div id="readModal" class="modal"><div class="modal-box"><div style="display:flex;justify-content:space-between"><h3 id="readTitle">Read</h3><button class="btn btn-light btn-sm" onclick="closeModal('readModal')">✕</button></div><div id="readMeta" class="small"></div><div id="readContent" style="margin-top:12px;white-space:pre-wrap"></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-light" onclick="toggleSaveCurrent()">🔖 Save</button><button class="btn btn-blue" onclick="closeModal('readModal')">Close</button></div></div></div>
+<div id="contributorModal" class="modal"><div class="modal-box"><h3>Become Author — Earn Do Coins</h3><p class="small">Join as author. 2 Do Coin = 1 Dollar.</p><input id="contribName" class="input" placeholder="Full Name *"><input id="contribEmail" class="input" placeholder="Email *"><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-gold" onclick="submitContributor()">🪙 Submit & Earn 5 Do Coins</button><button class="btn btn-light" onclick="closeModal('contributorModal')">Cancel</button></div></div></div>
+
+<footer class="dot-footer">
+  <div class="dot-footer-inner">
+    <div class="dot-footer-logo"><img src="dot-logo-small-28.png" width="28" height="28" alt="DOT"><span>DOMEDIA V6 DO COIN — Logo 32px Whole Circle Visible</span></div>
+    <div class="dot-footer-links"><a href="#" onclick="openSec('home')">Home</a><a href="#" onclick="openSec('explore')">Explore</a><a href="#" onclick="openSec('categories')">23 Types</a><a href="#" onclick="openSec('publish')">Publish</a><a href="#" onclick="openSec('dashboard')">Dashboard — Do Coin Convertible</a></div>
+  </div>
+  <div class="dot-footer-bottom">DOTGROUP DOMEDIA V6 SIMPLE DO COIN — WRITE • READ • PUBLISH • DISCOVER • EARN — Do Coin — 2 Do Coin = 1 Dollar — Click to convert to your currency — Simple Convert — When person click it he will convert it to currency he want — Simple — Click and convert to your own currency — Anybody can know his currency — Not showing all currencies grid — Simple: Enter Do Coins → Select your currency you want → Click Convert → You see result for your currency only — Do Coin Wallet — Do Coin Balance — Published +10 Do Coins each — Reads +1 per 10 reads — Earnings Convertible — Do Coin Convertible Simple Conversion — 14 Currencies: USD US Dollar $ rate 1, NGN Nigerian Naira ₦ rate 1600, EUR Euro € rate 0.92, GBP British Pound £ rate 0.79, GHS Ghanaian Cedi ₵ rate 15.5, KES Kenyan Shilling KSh rate 130, ZAR South African Rand R rate 18.5, INR Indian Rupee ₹ rate 83, CAD Canadian Dollar C$ rate 1.36, AED UAE Dirham rate 3.67, JPY Japanese Yen ¥ rate 149, CNY Chinese Yuan ¥ rate 7.2, BRL Brazilian Real R$ rate 5.0, XAF CFA Franc FCFA rate 610 — ConvertDoCoin coins currencyCode USD = coins * 0.5 * curr.rate — Home converter + Dashboard converter both sync — 23 Content Types: 1 Books Full books Education, 2 Articles Articles General, 3 Journals Journals Personal, 4 Stories Stories Fiction, 5 Poems Poems Arts, 6 Research Research Science, 7 Courses Courses Education, 8 Manuals Manuals How-to, 9 Guides Guides How-to, 10 Reports Reports Business, 11 Magazines Magazines Media, 12 Newspapers Newspapers News, 13 Comics Comics Entertainment, 14 Scripts Scripts Entertainment, 15 Lyrics Lyrics Music, 16 Blogs Blogs Online, 17 Essays Essays Writing, 18 Theses Theses Academic, 19 Whitepapers Whitepapers Business, 20 Newsletters Newsletters Marketing, 21 Novels Novels Fiction, 22 Biography Biographies Life, 23 Others Others General — All 23 types searchable when typing — Search title author keywords — Live search suggestions down — Trending sorting reads — Explore filter All Types Free Paid — Library All Published Drafts Saved Reading — Publish 4 Steps: Step1 Select Type 23 types, Step2 Fill Details Title Author Category Language Description Keywords Price Type Free/Paid Price Live Preview, Step3 Write Content Upload Cover Content 50+ chars, Step4 Preview & Publish Publish & Earn 10 Do Coins = $5 Save Draft — Be first Earn Do Coins — Become Author Earn 5 Do Coins — AI Assistant Write Article Proofread Use in Publish Earn 1 Do Coin Copy Earn 0.2 — Save Earn 0.5 Do Coin — Read Earn 0.1 — Write 50+ chars Earn 2 + 5 — Publish Earn 10 Do Coins — Simple Convert Your currency only — Logo 32px whole circle visible — Blue White Red — DOTGROUP DOMEDIA WRITE READ PUBLISH DISCOVER EARN<br>© 2026 DOTGROUP — DOMEDIA V6 SIMPLE DO COIN — WRITE • READ • PUBLISH • DISCOVER • EARN — Do Coin Wallet — 2 Do Coin = 1 Dollar — Do Coin Convertible Simple Conversion — When person click it he will convert it to currency he want — Simple — Click and convert to your own currency — Not showing all currencies grid — Enter Do Coins → Select your currency → Click Convert → Result your currency only — 23 Types — 4 Steps Publish — Search Live Suggest — Trending — Library — Dashboard — Home Converter + Dashboard Converter — Logo 32px whole circle visible</div>
+</footer>
+
+<script src="dot-header.js"></script>
+<script>
+const LS={content:'domedia_content_v1',drafts:'domedia_drafts_v1',library:'domedia_library_v1',reads:'domedia_reads_v1',coins:'domedia_do_coins_v1'};
+const DOCOIN_RATE={usdPerCoin:0.5,coinsPerDollar:2};
+const CURRENCIES={
+'USD':{symbol:'$', name:'US Dollar', rate:1, flag:'🇺🇸'},
+'NGN':{symbol:'₦', name:'Nigerian Naira', rate:1600, flag:'🇳🇬'},
+'EUR':{symbol:'€', name:'Euro', rate:0.92, flag:'🇪🇺'},
+'GBP':{symbol:'£', name:'British Pound', rate:0.79, flag:'🇬🇧'},
+'GHS':{symbol:'₵', name:'Ghanaian Cedi', rate:15.5, flag:'🇬🇭'},
+'KES':{symbol:'KSh', name:'Kenyan Shilling', rate:130, flag:'🇰🇪'},
+'ZAR':{symbol:'R', name:'South African Rand', rate:18.5, flag:'🇿🇦'},
+'INR':{symbol:'₹', name:'Indian Rupee', rate:83, flag:'🇮🇳'},
+'CAD':{symbol:'C$', name:'Canadian Dollar', rate:1.36, flag:'🇨🇦'},
+'AED':{symbol:'AED', name:'UAE Dirham', rate:3.67, flag:'🇦🇪'},
+'JPY':{symbol:'¥', name:'Japanese Yen', rate:149, flag:'🇯🇵'},
+'CNY':{symbol:'¥', name:'Chinese Yuan', rate:7.2, flag:'🇨🇳'},
+'BRL':{symbol:'R$', name:'Brazilian Real', rate:5.0, flag:'🇧🇷'},
+'XAF':{symbol:'FCFA', name:'CFA Franc', rate:610, flag:'🌍'}
+};
+function convertDoCoin(coins, currencyCode){
+ let usd = coins * DOCOIN_RATE.usdPerCoin;
+ let curr = CURRENCIES[currencyCode];
+ if(!curr) curr = CURRENCIES['USD'];
+ let converted = usd * curr.rate;
+ return {coins:coins, usd:usd, converted:converted, currency:curr, code:currencyCode};
+}
+function convertCoins(){
+ let coinsInput = document.getElementById('coinConvertInput');
+ let currencySelect = document.getElementById('currencySelect');
+ let coins = parseFloat(coinsInput.value) || 0;
+ let currencyCode = currencySelect.value || 'USD';
+ let result = convertDoCoin(coins, currencyCode);
+ let box = document.getElementById('convertResultBox');
+ let resultEl = document.getElementById('convertResult');
+ let subEl = document.getElementById('convertResultSub');
+ resultEl.textContent = `${result.currency.flag} ${coins} Do Coins = ${result.currency.symbol}${result.converted.toFixed(2)} ${currencyCode} = $${result.usd.toFixed(2)} USD`;
+ subEl.textContent = `2 Do Coin = 1 Dollar • ${coins} Do Coins converted to ${result.currency.name} (${currencyCode}) — Anybody can know his currency — Simple Convert your currency only`;
+ box.classList.add('show');
+}
+function convertHome(){
+ let coinsInput = document.getElementById('homeCoinInput');
+ let currencySelect = document.getElementById('homeCurrencySelect');
+ let coins = parseFloat(coinsInput.value) || 0;
+ let currencyCode = currencySelect.value || 'USD';
+ let result = convertDoCoin(coins, currencyCode);
+ let resultEl = document.getElementById('homeConvertResult');
+ if(resultEl) resultEl.textContent = `${coins} Do Coins = ${result.currency.symbol}${result.converted.toFixed(2)} ${currencyCode} = $${result.usd.toFixed(2)} USD — Click Convert to your currency — Simple`;
+ document.getElementById('coinConvertInput').value = coins;
+ document.getElementById('currencySelect').value = currencyCode;
+ convertCoins();
+}
+const TYPES=[{id:1,name:'Books',icon:'📚',desc:'Full books',cat:'Education'},{id:2,name:'Articles',icon:'📝',desc:'Articles',cat:'General'},{id:3,name:'Journals',icon:'📓',desc:'Journals',cat:'Personal'},{id:4,name:'Stories',icon:'📖',desc:'Stories',cat:'Fiction'},{id:5,name:'Poems',icon:'🎭',desc:'Poems',cat:'Arts'},{id:6,name:'Research',icon:'🔬',desc:'Research',cat:'Science'},{id:7,name:'Courses',icon:'🎓',desc:'Courses',cat:'Education'},{id:8,name:'Manuals',icon:'📘',desc:'Manuals',cat:'How-to'},{id:9,name:'Guides',icon:'🧭',desc:'Guides',cat:'How-to'},{id:10,name:'Reports',icon:'📊',desc:'Reports',cat:'Business'},{id:11,name:'Magazines',icon:'📰',desc:'Magazines',cat:'Media'},{id:12,name:'Newspapers',icon:'🗞',desc:'Newspapers',cat:'News'},{id:13,name:'Comics',icon:'💬',desc:'Comics',cat:'Entertainment'},{id:14,name:'Scripts',icon:'🎬',desc:'Scripts',cat:'Entertainment'},{id:15,name:'Lyrics',icon:'🎵',desc:'Lyrics',cat:'Music'},{id:16,name:'Blogs',icon:'💻',desc:'Blogs',cat:'Online'},{id:17,name:'Essays',icon:'✍',desc:'Essays',cat:'Writing'},{id:18,name:'Theses',icon:'🎓',desc:'Theses',cat:'Academic'},{id:19,name:'Whitepapers',icon:'📄',desc:'Whitepapers',cat:'Business'},{id:20,name:'Newsletters',icon:'✉',desc:'Newsletters',cat:'Marketing'},{id:21,name:'Novels',icon:'📚',desc:'Novels',cat:'Fiction'},{id:22,name:'Biography',icon:'👤',desc:'Biographies',cat:'Life'},{id:23,name:'Others',icon:'📦',desc:'Others',cat:'General'}];
+let currentPublishType=null;let currentReadId=null;let exploreTab='all';let libraryTab='all';
+function load(k,fb){try{let v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function addCoins(amount){ let current = load(LS.coins,0); current += amount; save(LS.coins, current); updateDashCoins(); return current; }
+function updateDashCoins(){ let coins = load(LS.coins,0); let usd = coins * DOCOIN_RATE.usdPerCoin; let balEl = document.getElementById('dashCoinBalance'); let usdEl = document.getElementById('dashCoinUSD'); let homeBal = document.getElementById('homeCoinBalance'); let homeUSD = document.getElementById('homeCoinUSD'); if(balEl) balEl.textContent = coins; if(usdEl) usdEl.textContent = `$${usd.toFixed(2)}`; if(homeBal) homeBal.textContent = coins; if(homeUSD) homeUSD.textContent = `$${usd.toFixed(2)}`; let earnEl = document.getElementById('dashEarn'); if(earnEl) earnEl.textContent = `🪙 ${coins} = $${usd.toFixed(2)}`; const topCoin=document.getElementById('topCoin'); if(topCoin) topCoin.textContent=`🪙 ${coins} Do Coins = $${usd.toFixed(2)} — 2 = $1 — Convert to your currency`; }
+function openSec(id){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));let navBtn=document.getElementById('nav'+id.charAt(0).toUpperCase()+id.slice(1));if(navBtn)navBtn.classList.add('active');document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));let sec=document.getElementById(id+'Sec');if(sec){sec.classList.add('active');window.scrollTo(0,0);}if(window.closeDotMenu) window.closeDotMenu(); if(id==='explore')renderExplore();else if(id==='categories')renderTypes();else if(id==='publish'){renderPublishTypes();goPublishStep(1);}else if(id==='library')renderLibrary();else if(id==='dashboard'){renderDashboard();updateDashCoins();}else if(id==='home'){renderTrending();updateDashCoins();}}
+function doSearchLive(q){let suggest=document.getElementById('mainSearchSuggest');if(!q||q.length<1){suggest.classList.remove('show');return;}let all=load(LS.content,[]);let matches=[];let low=q.toLowerCase();TYPES.forEach(t=>{if(t.name.toLowerCase().includes(low)||t.desc.toLowerCase().includes(low)) matches.push({type:'type',text:t.name,sub:t.desc,icon:t.icon});});all.forEach(item=>{if(item.title.toLowerCase().includes(low)||item.author.toLowerCase().includes(low)||(item.keywords||'').toLowerCase().includes(low)) matches.push({type:'content',text:item.title,sub:`By ${item.author} • ${item.type}`,icon:'📄'});});if(matches.length===0){suggest.innerHTML=`<div class="suggest-item"><span>No matches for "${q}"</span></div>`;suggest.classList.add('show');return;}suggest.innerHTML=matches.slice(0,8).map(m=>`<div class="suggest-item" onclick="selectSuggest('${m.text.replace(/'/g,"\\'")}')"><span><b>${m.icon} ${m.text}</b><br><small>${m.sub}</small></span><span class="badge b-gray">${m.type}</span></div>`).join('');suggest.classList.add('show');}
+function filterExploreLive(q){let suggest=document.getElementById('exploreSearchSuggest');if(!q||q.length<1){suggest.classList.remove('show');filterExplore();return;}let all=load(LS.content,[]);let matches=all.filter(item=>item.title.toLowerCase().includes(q.toLowerCase())||item.author.toLowerCase().includes(q.toLowerCase())||(item.keywords||'').toLowerCase().includes(q.toLowerCase())).slice(0,6);if(matches.length===0){suggest.innerHTML=`<div class="suggest-item"><span>No content for "${q}" — Be first! Earn 10 Do Coins</span><button class="btn btn-gold btn-sm" onclick="openSec('publish')">Publish & Earn</button></div>`;suggest.classList.add('show');filterExplore();return;}suggest.innerHTML=matches.map(m=>`<div class="suggest-item" onclick="readContent('${m.id}');document.getElementById('exploreSearchSuggest').classList.remove('show')"><span><b>${m.title}</b><br><small>By ${m.author} • ${m.type}</small></span><span class="badge ${m.priceType==='free'?'b-green':'b-orange'}">${m.priceType}</span></div>`).join('');suggest.classList.add('show');filterExplore();}
+function searchTypesLive(q){let suggest=document.getElementById('typeSearchSuggest');let grid=document.getElementById('typesGrid');if(!q||q.length<1){suggest.classList.remove('show');renderTypes();return;}let low=q.toLowerCase();let matches=TYPES.filter(t=>t.name.toLowerCase().includes(low)||t.desc.toLowerCase().includes(low)||t.cat.toLowerCase().includes(low));if(matches.length===0){suggest.innerHTML=`<div class="suggest-item">No type matches "${q}"</div>`;suggest.classList.add('show');grid.innerHTML=`<div class="card"><p class="small">No types found for "${q}"</p></div>`;return;}suggest.innerHTML=matches.slice(0,6).map(t=>`<div class="suggest-item" onclick="selectType(${t.id})"><span><b>${t.icon} ${t.name}</b><br><small>${t.desc}</small></span><span class="badge b-blue">${t.cat}</span></div>`).join('');suggest.classList.add('show');grid.innerHTML=matches.map(t=>`<div class="type-card" onclick="selectType(${t.id})"><div style="font-size:28px">${t.icon}</div><b style="font-size:13px">${t.id}. ${t.name}</b><p class="small">${t.desc}</p><button class="btn btn-light btn-sm" style="margin-top:8px" onclick="event.stopPropagation();selectType(${t.id})">Explore</button><button class="btn btn-gold btn-sm" style="margin-top:4px" onclick="event.stopPropagation();startPublishWithType('${t.name}')">Publish & Earn</button></div>`).join('');}
+function selectSuggest(text){document.getElementById('mainSearch').value=text;document.getElementById('mainSearchSuggest').classList.remove('show');doSearch();}
+function doSearch(){let q=document.getElementById('mainSearch').value.trim();if(!q){alert('Enter search term');return;}document.getElementById('exploreSearch').value=q;document.getElementById('mainSearchSuggest').classList.remove('show');openSec('explore');filterExplore();}
+function clearSearch(){document.getElementById('mainSearch').value='';document.getElementById('mainSearchSuggest').classList.remove('show');document.getElementById('exploreSearch').value='';}
+function filterExplore(){let q=(document.getElementById('exploreSearch').value||'').toLowerCase();let typeFilter=document.getElementById('exploreFilterType').value;let priceFilter=document.getElementById('exploreFilterPrice').value;let all=load(LS.content,[]);let filtered=all.filter(item=>{let matchQ=!q||item.title.toLowerCase().includes(q)||item.author.toLowerCase().includes(q)||(item.keywords||'').toLowerCase().includes(q)||item.type.toLowerCase().includes(q);let matchType=!typeFilter||item.type===typeFilter;let matchPrice=!priceFilter||item.priceType===priceFilter;let matchTab=exploreTab==='all'||(exploreTab==='free'&&item.priceType==='free')||(exploreTab==='paid'&&item.priceType==='paid');return matchQ&&matchType&&matchPrice&&matchTab;});renderExploreGrid(filtered);}
+function setExploreTab(tab,el){exploreTab=tab;document.querySelectorAll('#exploreSec .tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');filterExplore();}
+function renderExplore(){let all=load(LS.content,[]);renderExploreGrid(all);}
+function renderExploreGrid(items){let grid=document.getElementById('exploreGrid');if(!grid)return;if(items.length===0){grid.innerHTML=`<div class="card"><div class="empty-state"><div class="empty-icon">🔍</div><h3>No content found</h3><p class="small">Be first to publish! Earn 10 Do Coins = $5</p><button class="btn btn-gold" style="margin-top:12px" onclick="openSec('publish')">🪙 Publish & Earn</button></div></div>`;return;}grid.innerHTML=items.map(item=>`<div class="pub-card" onclick="readContent('${item.id}')"><div class="pub-cover">${(item.title||'D').slice(0,1).toUpperCase()}</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b style="font-size:13px">${item.title}</b><span class="badge ${item.priceType==='free'?'b-green':'b-orange'}">${item.priceType}</span></div><div class="small">By ${item.author} • ${item.type} • 👁 ${item.reads||0} • 🪙 ${item.doCoins||10}</div><p class="small" style="margin-top:6px">${(item.description||'').slice(0,100)}...</p></div></div>`).join('');}
+function renderTypes(){let grid=document.getElementById('typesGrid');if(!grid)return;grid.innerHTML=TYPES.map(t=>`<div class="type-card" onclick="selectType(${t.id})"><div style="font-size:28px">${t.icon}</div><b style="font-size:13px">${t.id}. ${t.name}</b><p class="small">${t.desc}</p><div style="margin-top:6px"><span class="badge b-gray">${t.cat}</span> <span class="badge b-gold">🪙 Earn</span></div><div style="margin-top:8px;display:flex;gap:4px;flex-direction:column"><button class="btn btn-light btn-sm" onclick="event.stopPropagation();selectType(${t.id})">🔍 Explore</button><button class="btn btn-gold btn-sm" onclick="event.stopPropagation();startPublishWithType('${t.name}')">🪙 Publish & Earn 10</button></div></div>`).join('');}
+function renderPublishTypes(){let grid=document.getElementById('publishTypes');if(!grid)return;grid.innerHTML=TYPES.map(t=>`<div class="type-card ${currentPublishType===t.name?'selected':''}" onclick="selectPublishType('${t.name}',this)"><div style="font-size:24px">${t.icon}</div><b style="font-size:12px">${t.id}. ${t.name}</b><p class="small">${t.desc}</p><div style="margin-top:4px"><span class="badge b-gold">🪙 10 Do Coins</span></div></div>`).join('');}
+function selectPublishType(name,el){currentPublishType=name;document.querySelectorAll('#publishTypes .type-card').forEach(c=>c.classList.remove('selected'));if(el)el.classList.add('selected');const lbl=document.getElementById('selectedTypeLabel'); if(lbl){ lbl.textContent=`Selected: ${name} — Earn 10 Do Coins = $5 — Now Next`; lbl.style.color='green'; }}
+function selectType(id){let t=TYPES.find(x=>x.id===id);if(!t)return;const ef=document.getElementById('exploreFilterType'); if(ef) ef.value=t.name;openSec('explore');filterExplore();}
+function startPublishWithType(typeName){currentPublishType=typeName;openSec('publish');goPublishStep(1);renderPublishTypes();}
+function goPublishStep(step){if(step===2&&!currentPublishType){alert('Step 1: Select type first!');return;}if(step===3){let title=document.getElementById('pubTitle').value.trim();let author=document.getElementById('pubAuthor').value.trim();let desc=document.getElementById('pubDesc').value.trim();if(!title||!author||!desc){alert('Step 2: Fill Title, Author, Description');return;}addCoins(2);}if(step===4){let content=document.getElementById('pubContent').innerText.trim();if(content.length<50){alert('Step 3: Write 50+ chars');return;}addCoins(5);}for(let i=1;i<=4;i++){let w=document.getElementById('publishStep'+i);let badge=document.getElementById('step'+i+'Badge');if(w) w.classList.remove('active');if(badge){badge.className='badge '+(i<step?'b-green':i===step?'b-blue':'b-gray');}}let target=document.getElementById('publishStep'+step);if(target) target.classList.add('active');let badge=document.getElementById('step'+step+'Badge');if(badge) badge.className='badge b-blue';if(step===4){let title=document.getElementById('pubTitle').value||'Untitled';let author=document.getElementById('pubAuthor').value||'Anonymous';let cat=document.getElementById('pubCategory').value;let lang=document.getElementById('pubLanguage').value;let desc=document.getElementById('pubDesc').value;let content=document.getElementById('pubContent').innerHTML;let coins=10;const pp=document.getElementById('publishPreview'); if(pp) pp.innerHTML=`<div style="display:flex;gap:12px"><div class="pub-cover">${title.slice(0,1).toUpperCase()}</div><div><h3>${title}</h3><div class="small">By ${author} • ${currentPublishType} • ${cat} • ${lang}</div><p style="margin-top:8px">${desc}</p><div style="margin-top:8px"><span class="badge b-gold">🪙 ${coins} Do Coins = $${(coins*0.5).toFixed(2)}</span></div></div></div><hr style="margin:12px 0"><div style="max-height:220px;overflow:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:white">${content.slice(0,800)}</div>`;}}
+function updatePreview(){let title=document.getElementById('pubTitle').value||'Untitled';let desc=document.getElementById('pubDesc').value||'No desc';const lps=document.getElementById('livePreviewSmall'); if(lps) lps.innerHTML=`<b>${title}</b><br><small>${desc.slice(0,100)}...</small><br><small>Type: ${currentPublishType||'Not selected'} • Earns 10 Do Coins = $5</small>`;}
+function previewCover(input){if(input.files&&input.files[0]){let r=new FileReader();r.onload=e=>{const cp=document.getElementById('coverPreview'); if(cp) cp.innerHTML=`<img src="${e.target.result}" style="width:120px;height:160px;object-fit:cover;border-radius:8px;border:2px solid var(--border)">`;};r.readAsDataURL(input.files[0]);}}
+function confirmPublish(){let title=document.getElementById('pubTitle').value.trim();let author=document.getElementById('pubAuthor').value.trim();let desc=document.getElementById('pubDesc').value.trim();let content=document.getElementById('pubContent').innerText.trim();if(!title||!author||!desc||!content){alert('Fill all fields');return;}if(!currentPublishType){alert('Select type');goPublishStep(1);return;}let all=load(LS.content,[]);let newItem={id:'domedia_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),title,author,description:desc,content:document.getElementById('pubContent').innerHTML,contentText:content,type:currentPublishType,category:document.getElementById('pubCategory').value,language:document.getElementById('pubLanguage').value,keywords:document.getElementById('pubKeywords').value,priceType:document.getElementById('pubPriceType').value,price:document.getElementById('pubPrice').value,reads:0,doCoins:10,createdAt:new Date().toISOString()};all.unshift(newItem);save(LS.content,all);let total=addCoins(10);alert(`🪙 Published! "${title}"\n\nEarned 10 Do Coins = $5.00\nTotal: ${total} Do Coins = $${(total*0.5).toFixed(2)}\nConvertible to your currency — Click Convert`);openSec('dashboard');renderExplore();renderTrending();renderDashboard();updateDashCoins();}
+function saveDraft(){let title=document.getElementById('pubTitle').value||'Untitled Draft';let drafts=load(LS.drafts,[]);drafts.unshift({id:'draft_'+Date.now(),title,content:document.getElementById('pubContent').innerHTML,type:currentPublishType||'Article',createdAt:new Date().toISOString(),description:document.getElementById('pubDesc').value});save(LS.drafts,drafts);alert(`Draft "${title}" saved — Earn 1 Do Coin`);addCoins(1);}
+function renderTrending(){let all=load(LS.content,[]);let trending=all.sort((a,b)=>(b.reads||0)-(a.reads||0)).slice(0,6);let grid=document.getElementById('trendingList');if(!grid)return;if(trending.length===0){grid.innerHTML=`<div class="card"><div class="empty-state" style="padding:16px"><div class="empty-icon">📚</div><h4>No content yet — Be first! Earn Do Coins</h4><p class="small">Type in search — suggestions down — Publish to earn 10 Do Coins = $5</p><button class="btn btn-gold" style="margin-top:8px" onclick="openSec('publish')">🪙 Publish & Earn</button></div></div>`;return;}grid.innerHTML=trending.map(item=>`<div class="card" style="cursor:pointer" onclick="readContent('${item.id}')"><div style="display:flex;gap:10px"><div class="pub-cover">${(item.title||'D').slice(0,1).toUpperCase()}</div><div><b style="font-size:12px">${item.title}</b><div class="small">By ${item.author} • ${item.type} • 👁 ${item.reads||0} • 🪙 ${item.doCoins||10}</div></div></div></div>`).join('');}
+function renderLibrary(){let all=load(LS.content,[]);let lib=load(LS.library,[]);let drafts=load(LS.drafts,[]);let reads=load(LS.reads,[]);let items=[];if(libraryTab==='all') items=[...all.slice(0,20),...drafts];else if(libraryTab==='reading') items=all.filter(i=>reads.includes(i.id));else if(libraryTab==='saved') items=all.filter(i=>lib.includes(i.id));else if(libraryTab==='published') items=all;else if(libraryTab==='drafts') items=drafts;let grid=document.getElementById('libraryGrid');if(!grid)return;if(items.length===0){grid.innerHTML=`<div class="card"><div class="empty-state"><div class="empty-icon">📚</div><h3>No items in ${libraryTab}</h3><p class="small">Publish to earn Do Coins</p></div></div>`;return;}grid.innerHTML=items.map(item=>`<div class="pub-card" onclick="readContent('${item.id}')"><div class="pub-cover">${(item.title||'D').slice(0,1).toUpperCase()}</div><div style="flex:1"><b style="font-size:13px">${item.title}</b><div class="small">By ${item.author} • ${item.type} • 🪙 ${item.doCoins||10}</div></div></div>`).join('');}
+function setLibraryTab(tab,el){libraryTab=tab;document.querySelectorAll('#librarySec .tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');renderLibrary();}
+function readContent(id){let all=load(LS.content,[]);let item=all.find(i=>i.id===id)||load(LS.drafts,[]).find(i=>i.id===id);if(!item){alert('Not found');return;}currentReadId=id;item.reads=(item.reads||0)+1;save(LS.content,all);let reads=load(LS.reads,[]);if(!reads.includes(id)){reads.push(id);save(LS.reads,reads);addCoins(0.1);}document.getElementById('readTitle').textContent=item.title;document.getElementById('readMeta').textContent=`By ${item.author} • ${item.type} • 👁 ${item.reads} reads • 🪙 ${item.doCoins||10} = $${((item.doCoins||10)*0.5).toFixed(2)}`;document.getElementById('readContent').innerHTML=item.content||item.contentText||'No content';document.getElementById('readModal').classList.add('show');renderTrending();renderDashboard();updateDashCoins();}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function toggleSaveCurrent(){if(!currentReadId)return;let lib=load(LS.library,[]);if(lib.includes(currentReadId)){lib=lib.filter(id=>id!==currentReadId);alert('Unsaved');}else{lib.push(currentReadId);alert('Saved — Earn 0.5 Do Coin');addCoins(0.5);}save(LS.library,lib);}
+function openContributor(){document.getElementById('contributorModal').classList.add('show');}
+function submitContributor(){let name=document.getElementById('contribName').value.trim();let email=document.getElementById('contribEmail').value.trim();if(!name||!email){alert('Fill Name and Email');return;}alert(`Application submitted for ${name} — Earned 5 Do Coins = $2.50`);addCoins(5);closeModal('contributorModal');openSec('publish');}
+function runAI(){let task=document.getElementById('aiTask').value;let input=document.getElementById('aiInput').value.trim();if(!input){alert('Enter prompt');return;}let output=document.getElementById('aiOutput');output.textContent=`[AI ${task.toUpperCase()} — Earn 1 Do Coin]\n\nInput: ${input.slice(0,200)}...\n\nOutput: Generated content...`;}
+function copyAI(){let out=document.getElementById('aiOutput').textContent;navigator.clipboard.writeText(out).then(()=>alert('Copied — Earned 0.2 Do Coin'));addCoins(0.2);}
+function useAIInPublish(){let out=document.getElementById('aiOutput').textContent;if(!out||out.includes('will appear')){alert('Run AI first');return;}document.getElementById('pubContent').innerHTML=out.replace(/\n/g,'<br>');openSec('publish');goPublishStep(3);addCoins(1);}
+function renderDashboard(){let all=load(LS.content,[]);const dp=document.getElementById('dashPublished'); if(dp) dp.textContent=all.length;const dr=document.getElementById('dashReads'); if(dr) dr.textContent=all.reduce((s,i)=>s+(i.reads||0),0);let totalCoins=load(LS.coins,0);const de=document.getElementById('dashEarn'); if(de) de.textContent='🪙 '+totalCoins+' = $'+(totalCoins*0.5).toFixed(2);let empty=document.getElementById('dashboardEmpty');let list=document.getElementById('dashboardList');if(all.length===0){if(empty) empty.style.display='block';if(list) list.innerHTML='';}else{if(empty) empty.style.display='none';}if(!list)return;if(all.length===0)return;list.innerHTML=all.slice(0,9).map(item=>`<div class="card"><b style="font-size:13px">${item.title}</b><div class="small">By ${item.author} • ${item.type} • 👁 ${item.reads||0} • 🪙 ${item.doCoins||10} = $${((item.doCoins||10)*0.5).toFixed(2)}</div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-light btn-sm" onclick="readContent('${item.id}')">View</button><button class="btn btn-red btn-sm" onclick="deleteContent('${item.id}')">Delete</button></div></div>`).join('');}
+function deleteContent(id){if(!confirm('Delete? Lose Do Coins'))return;let all=load(LS.content,[]);let item=all.find(i=>i.id===id);all=all.filter(i=>i.id!==id);save(LS.content,all);if(item){let current=load(LS.coins,0);current=Math.max(0,current-(item.doCoins||10));save(LS.coins,current);}alert('Deleted — Do Coins deducted');renderDashboard();renderExplore();renderTrending();updateDashCoins();}
+document.addEventListener('click',function(e){if(!e.target.closest('.search-wrap')){document.querySelectorAll('.search-suggest').forEach(s=>s.classList.remove('show'));}});
+function init(){renderTrending();renderTypes();renderPublishTypes();renderExplore();renderDashboard();updateDashCoins();}
+document.addEventListener('DOMContentLoaded',init);
+init();
+</script>
+</body>
+</html>
