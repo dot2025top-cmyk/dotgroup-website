@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0755d9">
+<title>Do Builder | Build Your Digital Future - FIXED SHAKING</title>
+  <link rel="stylesheet" href="dot-header.css">
+<link rel="stylesheet" href="dot-footer.css">
+<style>
+:root{--blue:#0755d9;--dark:#09234d;--red:#ed3348;--text:#263650;--muted:#718096}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer;border:none}
+header{width:100%;background:#fff;padding:17px 6%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 3px 20px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:var(--blue)}
+.logo-icon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:23px;background:linear-gradient(135deg,#0755d9,#38a2ff)}
+.logo span{color:var(--red)}
+.nav-buttons{display:flex;align-items:center;gap:12px}
+.btn{padding:12px 23px;border-radius:9px;font-weight:700}
+.btn-outline{color:var(--blue);background:#fff;border:1.5px solid var(--blue)}
+.btn-primary{background:var(--blue);color:#fff}
+.top-switch{position:sticky;top:77px;z-index:99;background:#0755d9;padding:10px 6%;display:flex;gap:10px}
+.top-switch button{flex:1;padding:13px;border-radius:10px;font-weight:800;font-size:14px}
+.top-switch .active{background:#fff;color:#0755d9}
+.top-switch .inactive{background:#ffffff22;color:#fff;border:1px solid #ffffff55}
+.hero{min-height:590px;padding:75px 7%;background:radial-gradient(circle at 90% 10%,#b9d9ff 0,transparent 30%),linear-gradient(120deg,#f1f7ff,#fff 60%,#fff1f3);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:35px}
+.hero-tag{display:inline-block;background:#e2edff;color:var(--blue);padding:10px 17px;border-radius:30px;font-size:13px;font-weight:bold;margin-bottom:22px}
+.hero h1{font-size:clamp(38px,5vw,65px);line-height:1.1;color:var(--dark);margin-bottom:22px;letter-spacing:-2px}
+.hero h1 span{color:var(--blue)}
+.hero p{max-width:560px;line-height:1.8;color:#5b6b82;font-size:17px;margin-bottom:28px}
+.hero-actions{display:flex;gap:13px;flex-wrap:wrap}.hero-actions button{padding:15px 25px;font-size:15px}
+.hero-visual{position:relative;min-height:390px;display:flex;align-items:center;justify-content:center}
+.browser{width:100%;max-width:490px;background:#fff;border-radius:20px;box-shadow:0 25px 65px #163b7220;overflow:hidden;transform:rotate(-2deg)}
+.browser-top{padding:14px;background:#f0f4fa;display:flex;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;background:#ff6b6b}.dot:nth-child(2){background:#ffca52}.dot:nth-child(3){background:#36c98c}
+.browser-content{padding:20px}
+.preview-banner{background:linear-gradient(120deg,#0755d9,#55a8ff);color:#fff;border-radius:13px;padding:28px 20px;min-height:170px}
+.preview-banner h3{font-size:25px;margin-bottom:12px}.preview-banner p{color:#fff;font-size:12px;margin:0}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+.preview-box{height:90px;border-radius:9px;background:#eaf1fc}.preview-box:nth-child(2){background:#ffe4e8}.preview-box:nth-child(3){background:#e4f7ee}
+.floating-card{position:absolute;background:#fff;padding:15px 19px;border-radius:13px;box-shadow:0 10px 30px #193c6b20;font-weight:bold}
+.card-one{left:-5px;top:35px;color:var(--blue)}.card-two{right:-5px;bottom:35px;color:#169c65}
+section{padding:75px 7%}
+.section-heading{text-align:center;max-width:700px;margin:0 auto 45px}
+.section-heading h2{color:var(--dark);font-size:35px;margin-bottom:14px}
+.section-heading p{color:var(--muted);line-height:1.7}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feature{padding:28px;border:1px solid #e8eef8;border-radius:16px;background:#fff;box-shadow:0 8px 30px #173d7210}
+.feature-icon{width:55px;height:55px;display:grid;place-items:center;border-radius:14px;background:#eaf2ff;font-size:26px;margin-bottom:20px}
+.feature h3{color:var(--dark);margin-bottom:12px}.feature p{color:var(--muted);line-height:1.7;font-size:14px}
+.templates{background:#f5f8ff}.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.template-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 25px #163b7210}
+.template-image{height:180px;padding:20px;display:flex;align-items:center;justify-content:center}
+.template-image div{width:100%;height:100%;border-radius:10px;background:#fff;padding:15px;box-shadow:0 5px 20px #00000015}
+.template-image h4{margin:10px 0;font-size:17px}.template-image p{font-size:10px;color:#68768a}.template-image button{margin-top:12px;background:var(--blue);color:#fff;padding:7px 12px;border-radius:5px;font-size:10px}
+.t1{background:linear-gradient(130deg,#dbeaff,#a6caff)}.t2{background:linear-gradient(130deg,#ffe2e6,#ffb5c1)}.t3{background:linear-gradient(130deg,#d9f6e6,#9de2bd)}.t4{background:linear-gradient(130deg,#eee3ff,#c9adff)}.t5{background:linear-gradient(130deg,#fff0cf,#ffd47b)}.t6{background:linear-gradient(130deg,#d9f5f5,#9ddcdd)}
+.template-info{padding:17px}.template-info h3{color:var(--dark);margin-bottom:7px}.template-info p{font-size:13px;color:var(--muted)}
+.how{background:#fff}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{text-align:center;padding:25px 15px}
+.step-number{width:55px;height:55px;border-radius:50%;background:var(--blue);color:#fff;font-size:22px;font-weight:bold;display:grid;place-items:center;margin:0 auto 18px}
+.step h3{margin-bottom:10px;color:var(--dark)}.step p{font-size:14px;line-height:1.7;color:var(--muted)}
+.pricing{background:linear-gradient(120deg,#0755d9,#07378f);color:#fff;text-align:center}
+.pricing h2{font-size:35px;margin-bottom:15px}.pricing p{line-height:1.8;color:#e0ebff;max-width:700px;margin:0 auto 25px}
+.price-box{background:#fff;color:var(--dark);display:inline-block;padding:30px 50px;border-radius:18px}
+.price{font-size:42px;color:var(--blue);font-weight:900}.price-box small{color:var(--muted)}
+.faq-list{max-width:850px;margin:auto}.faq-item{border:1px solid #e6edf7;border-radius:12px;margin-bottom:13px;overflow:hidden}
+.faq-question{width:100%;text-align:left;padding:19px;background:#fff;display:flex;justify-content:space-between;gap:15px;font-weight:bold;color:var(--dark)}
+.faq-answer{display:none;padding:0 19px 20px;color:var(--muted);line-height:1.8;font-size:14px}.faq-item.active .faq-answer{display:block}
+.cta{text-align:center;background:#f1f6ff}.cta h2{font-size:35px;color:var(--dark);margin-bottom:15px}.cta p{color:var(--muted);margin-bottom:25px;line-height:1.7}
+footer{background:#071b3b;color:#fff;padding:35px 7%;text-align:center}footer p{color:#c5d3e9;font-size:13px;line-height:2}footer strong{color:#fff}
+.modal{position:fixed;inset:0;z-index:500;background:#06152bd9;display:none;align-items:center;justify-content:center;padding:15px;overflow-y:auto}
+.modal.show{display:flex}.modal-content{background:#fff;width:100%;max-width:650px;border-radius:18px;padding:28px;margin:auto;position:relative;max-height:95vh;overflow-y:auto}
+.modal-header{text-align:center;margin-bottom:22px}.modal-header h2{color:var(--blue);font-size:28px;margin-bottom:8px}.modal-header p{color:var(--muted);font-size:13px}
+.close-modal{position:absolute;right:18px;top:15px;background:#f0f3f8;width:35px;height:35px;border-radius:50%;font-size:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.form-group{margin-bottom:15px}.form-group.full{grid-column:1/-1}
+.form-group label{display:block;font-weight:bold;color:var(--dark);font-size:13px;margin-bottom:7px}
+.form-group input,.form-group select{width:100%;padding:13px;border:1px solid #dce5f2;border-radius:8px;outline:none;background:#fff;color:#263650}
+.sponsor-options{display:flex;gap:10px;flex-wrap:wrap}.sponsor-option{flex:1;min-width:130px;padding:13px;border:1px solid #dce5f2;border-radius:9px;font-size:13px;cursor:pointer}
+.sponsor-option input{width:auto;margin-right:7px}#sponsorField{display:none;margin-top:15px}
+.sponsor-note{color:#697990;background:#f2f6ff;padding:12px;border-radius:8px;line-height:1.6;font-size:12px;margin-top:12px}
+.submit-btn{width:100%;padding:15px;background:var(--blue);color:#fff;border-radius:9px;font-weight:bold;margin-top:8px;font-size:15px}
+.form-footer{text-align:center;margin-top:17px;font-size:13px;color:var(--muted)}.form-footer a{color:var(--blue);font-weight:bold;text-decoration:none}
+.notice{display:none;padding:12px;background:#e8f8ef;color:#147a43;border-radius:8px;font-size:13px;margin-bottom:15px;line-height:1.6}
+.spin-wrap{max-width:420px;margin:auto;background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.3);text-align:center}
+.spin-wrap h1{color:#0A3D91;font-size:24px;margin:5px 0}.spin-wrap h3{color:#D60000;margin:15px 0 5px}.spin-wrap p{color:#333;font-size:15px;line-height:1.5}
+.top{color:#D60000;font-weight:bold;font-size:13px}
+.progress{height:22px;background:#E0E0E0;border-radius:10px;overflow:hidden;margin:10px 0;border:1px solid #0A3D91}
+.bar{height:100%;width:0%;background:#D60000;transition:0.5s;text-align:center;color:#fff;font-size:13px;line-height:22px;font-weight:bold}
+.btn-big{display:block;width:100%;padding:15px;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin:10px 0;text-decoration:none}
+.whatsapp{background:#0A3D91;color:#fff}.spinBtn{background:#D60000;color:#fff}.spinBtn:disabled{background:#ccc;cursor:not-allowed}
+#wheel{width:210px;height:210px;border-radius:50%;border:8px solid #0A3D91;margin:15px auto;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;color:#0A3D91;background:conic-gradient(#FFFFFF 0 25%, #FFD6D6 0 50%, #B3CCFF 0 75%, #FFFFFF 0 100%);transition:transform 3s cubic-bezier(.17,.67,.3,1)}
+.small{font-size:13px;color:#666}.win{display:none;background:#E3F2FD;padding:15px;border-radius:10px;margin-top:10px;border:2px solid #0A3D91;text-align:left;position:relative}
+.percent{font-size:24px;font-weight:bold;color:#D60000}.congrats{display:none;background:#E8F5E9;border:2px solid #0A3D91;padding:12px;border-radius:10px;color:#0A3D91;font-weight:bold;margin-top:10px}
+.plan{background:#fff;padding:12px;border-radius:8px;border:1px solid #0A3D91;margin:10px 0}.plan b{color:#0A3D91}
+.feed-box{background:#fff;border:1px solid #e8eef8;border-radius:16px;padding:16px;margin:20px 7% 0;box-shadow:0 8px 30px #173d7210}
+@keyframes shakeZoomStrong{0%,100%{transform:scale(1) rotate(0deg)}10%{transform:scale(1.10) rotate(-3deg)}20%{transform:scale(1.15) rotate(3deg)}30%{transform:scale(1.10) rotate(-3deg)}40%{transform:scale(1.15) rotate(3deg)}50%{transform:scale(1.05) rotate(0deg)}60%{transform:scale(1.12) rotate(-2deg)}70%{transform:scale(1.08) rotate(2deg)}80%{transform:scale(1.14) rotate(-2deg)}90%{transform:scale(1.06) rotate(0deg)}}
+@keyframes zoomPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.shake-zoom{animation:shakeZoomStrong 0.9s infinite !important}
+.shake-zoom-top{background:#fff !important;color:#0755d9 !important;box-shadow:0 0 0 4px #ffeb3b,0 0 20px #ffeb3b,0 8px 25px rgba(0,0,0,.4) !important;animation:shakeZoomStrong 0.9s infinite !important}
+.shake-zoom-home{background:#0755d9 !important;color:#fff !important;box-shadow:0 0 0 4px #ffeb3b,0 0 20px #ffeb3b,0 8px 25px rgba(7,85,217,.6) !important;animation:shakeZoomStrong 0.9s infinite !important}
+.wheel-shake{animation:zoomPulse 0.8s infinite !important;box-shadow:0 0 0 6px #ffeb3b,0 0 30px rgba(10,61,145,.6) !important}
+.stop-shake{animation:none !important;box-shadow:none !important}
+.close-win{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #ddd;font-size:18px;font-weight:bold;cursor:pointer}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:55px}.hero-visual{min-height:350px}.features,.template-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){header{padding:13px 4%}.logo{font-size:20px}.logo-icon{width:36px;height:36px}.nav-buttons{gap:7px}.btn{padding:10px 12px;font-size:12px}.hero{padding:55px 5%}section{padding:55px 5%}.features,.template-grid,.steps{grid-template-columns:1fr}.section-heading h2,.pricing h2,.cta h2{font-size:28px}.floating-card{font-size:11px;padding:11px}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}.modal-content{padding:23px 17px}.price-box{padding:25px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<header>
+<div class="logo"><div class="logo-icon">D</div><div>DO <span>BUILDER</span></div></div>
+<div class="nav-buttons">
+<a href="builder.html" style="text-decoration:none"><button class="btn btn-outline">Sign In</button></a>
+<button class="btn btn-primary" onclick="openSignup()">Sign Up</button>
+</div>
+</header>
+<div class="top-switch">
+<button id="btnHome" onclick="showPage('home')">🏠 HOME</button>
+<button id="btnSpin" class="shake-zoom-top" onclick="goToSpinFromTop()">🎡 SPIN & WIN $100</button>
+</div>
+<div id="page-home" style="display:block">
+<div class="feed-box" id="homeFeedBox">
+<b>🎉 Latest Winners - Home Feed</b>
+<p style="font-size:13px;color:#718096;margin-top:6px;">After you spin, your win go show here.</p>
+<div id="homeFeedList" style="margin-top:10px;font-size:14px;line-height:1.7;">No win yet. Be the first to spin!</div>
+<button class="btn btn-primary shake-zoom-home" id="homeSpinBtn" style="margin-top:12px;width:100%;padding:15px;font-size:16px;" onclick="goToSpinFromHome()">🎡 Go Spin Now →</button>
+</div>
+<div class="hero">
+<div>
+<div class="hero-tag">🚀 YOUR DIGITAL FUTURE STARTS HERE</div>
+<h1>Your Ideas.<br>Your Website.<br><span>Your Digital World.</span></h1>
+<p>You don't need to be a programmer to own a professional website. With Do Builder, simply tell us what you want. Let intelligent technology help bring your ideas to life.</p>
+<div class="hero-actions">
+<button class="btn btn-primary" onclick="openSignup()">Start Building For Free →</button>
+<a href="builder.html" style="text-decoration:none"><button class="btn btn-outline">Sign In</button></a>
+</div>
+</div>
+<div class="hero-visual">
+<div class="floating-card card-one">✨ AI Website Creation</div>
+<div class="browser"><div class="browser-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="browser-content"><div class="preview-banner"><h3>Build Something Amazing!</h3><p>Your business deserves a beautiful online presence.</p></div><div class="preview-grid"><div class="preview-box"></div><div class="preview-box"></div><div class="preview-box"></div></div></div></div>
+<div class="floating-card card-two">🌍 Your Business Online</div>
+</div>
+</div>
+<section><div class="section-heading"><h2>Why Should You Have a Website?</h2><p>The world is becoming increasingly digital. Your customers, audience and opportunities are online. Don't let your business remain invisible.</p></div>
+<div class="features">
+<div class="feature"><div class="feature-icon">🌍</div><h3>Reach More People</h3><p>Let people discover your business, services, products and ideas from different parts of the world.</p></div>
+<div class="feature"><div class="feature-icon">🏢</div><h3>Build Your Credibility</h3><p>A professional website helps people understand your business and gives your brand a stronger online presence.</p></div>
+<div class="feature"><div class="feature-icon">🛍️</div><h3>Showcase Your Products</h3><p>Display your products and services in an organised and attractive way for potential customers.</p></div>
+<div class="feature"><div class="feature-icon">📱</div><h3>Mobile Friendly</h3><p>Give visitors a smooth browsing experience on smartphones, tablets and computers.</p></div>
+<div class="feature"><div class="feature-icon">💡</div><h3>Bring Your Ideas to Life</h3><p>Turn your personal ideas, projects, organisations and business concepts into websites.</p></div>
+<div class="feature"><div class="feature-icon">🤖</div><h3>AI Assistance</h3><p>Describe what you need and let Do Builder's AI assistance help you create your website.</p></div>
+</div></section>
+<section class="templates"><div class="section-heading"><h2>Explore Beautiful Website Designs</h2><p>Whatever your profession, business or passion, your website should reflect your identity. Explore the possibilities.</p></div>
+<div class="template-grid">
+<div class="template-card"><div class="template-image t1"><div><h4>My Business</h4><p>Professional business website</p><button>Explore</button></div></div><div class="template-info"><h3>Business Website</h3><p>For companies, entrepreneurs and organisations.</p></div></div>
+<div class="template-card"><div class="template-image t2"><div><h4>Fashion House</h4><p>Style. Beauty. Confidence.</p><button>Explore</button></div></div><div class="template-info"><h3>Fashion & Beauty</h3><p>For fashion designers, salons and beauty brands.</p></div></div>
+<div class="template-card"><div class="template-image t3"><div><h4>Learning Academy</h4><p>Knowledge for everyone.</p><button>Explore</button></div></div><div class="template-info"><h3>Education Website</h3><p>For schools, tutors, trainers and academies.</p></div></div>
+<div class="template-card"><div class="template-image t4"><div><h4>Creative Portfolio</h4><p>Show the world your talent.</p><button>Explore</button></div></div><div class="template-info"><h3>Personal Portfolio</h3><p>For freelancers, professionals and creatives.</p></div></div>
+<div class="template-card"><div class="template-image t5"><div><h4>Online Store</h4><p>Discover amazing products.</p><button>Explore</button></div></div><div class="template-info"><h3>Online Store</h3><p>For retailers, wholesalers and product sellers.</p></div></div>
+<div class="template-card"><div class="template-image t6"><div><h4>Travel & Tourism</h4><p>Discover the world.</p><button>Explore</button></div></div><div class="template-info"><h3>Travel Website</h3><p>For travel agencies, tourism and hospitality businesses.</p></div></div>
+</div></section>
+<section class="how"><div class="section-heading"><h2>How Do Builder Works</h2><p>Getting your website started should be simple.</p></div>
+<div class="steps">
+<div class="step"><div class="step-number">1</div><h3>Create an Account</h3><p>Sign up and access your personal Do Builder dashboard.</p></div>
+<div class="step"><div class="step-number">2</div><h3>Describe Your Idea</h3><p>Tell the AI what kind of website you want to create.</p></div>
+<div class="step"><div class="step-number">3</div><h3>Review Your Website</h3><p>Explore the generated design and request changes until you are satisfied.</p></div>
+<div class="step"><div class="step-number">4</div><h3>Activate Your Website</h3><p>Approve the design, complete the payment requirements and proceed to launch.</p></div>
+</div></section>
+<section class="pricing"><h2>Professional Website. Simple Pricing.</h2><p>Do Builder offers a straightforward monthly website arrangement. Review your generated website first. If you are satisfied, proceed with the ₦6,000 payment arrangement.</p><div class="price-box"><div class="price">₦6,000</div><strong>Monthly Website Subscription</strong><br><br><small>One complete month of website usage after activation. The next monthly payment is required before the next month's launch or renewal.</small></div></section>
+<section><div class="section-heading"><h2>Frequently Asked Questions</h2><p>Everything you should know about getting started with Do Builder.</p></div>
+<div class="faq-list">
+<div class="faq-item"><button class="faq-question">Why should I have a website?<span>＋</span></button><div class="faq-answer">A website gives your business, organisation or personal brand an online presence. It helps people discover what you offer, learn about you and contact you.</div></div>
+<div class="faq-item"><button class="faq-question">Why should I choose Do Builder?<span>＋</span></button><div class="faq-answer">Do Builder is designed to make website creation easier. You can describe your idea, explore website designs and receive AI assistance without needing to know how to code.</div></div>
+<div class="faq-item"><button class="faq-question">Do I need programming knowledge?<span>＋</span></button><div class="faq-answer">No. The platform is designed for people who want to create websites without writing programming code.</div></div>
+<div class="faq-item"><button class="faq-question">Can I see my website before paying?<span>＋</span></button><div class="faq-answer">Yes. The intended process allows you to review the website generated for you before deciding whether to proceed with the payment and activation process.</div></div>
+<div class="faq-item"><button class="faq-question">How much does it cost?<span>＋</span></button><div class="faq-answer">The monthly subscription arrangement is ₦6,000. Payment and activation details will be displayed in your dashboard.</div></div>
+<div class="faq-item"><button class="faq-question">What happens after I pay ₦6,000?<span>＋</span></button><div class="faq-answer">Under the proposed Do Builder arrangement, the payment is credited to your Do Wallet and provides one complete month of website usage. Your next monthly payment is required before the following month's launch or renewal.</div></div>
+<div class="faq-item"><button class="faq-question">Can I use my website on a mobile phone?<span>＋</span></button><div class="faq-answer">Yes. Websites created through Do Builder are intended to support mobile phones, tablets and desktop computers.</div></div>
+<div class="faq-item"><button class="faq-question">Can I change my website after creating it?<span>＋</span></button><div class="faq-answer">The platform is intended to allow users to request modifications and improve their website with AI assistance.</div></div>
+<div class="faq-item"><button class="faq-question">Who can create a website?<span>＋</span></button><div class="faq-answer">Entrepreneurs, business owners, freelancers, professionals, educators, organisations, creators and individuals can create websites for their different needs.</div></div>
+</div></section>
+<section class="cta"><h2>Your Idea Deserves a Website!</h2><p>Don't wait until you become a programmer.<br>Start building your digital future today.</p><button class="btn btn-primary" onclick="openSignup()">Create Your Account →</button></section>
+</div>
+<div id="page-spin" style="display:none;background:#0A3D91;padding:15px 10px 30px;">
+<div class="spin-wrap">
+<div class="top">🌍 GLOBAL PROMO • BLUE • WHITE • RED</div>
+<h1>SPIN & WIN $100!</h1>
+<p>Win up to <b>$100</b> + <b>$3 Daily Reward</b><br>Open to everyone worldwide</p>
+<h3>STEP 1: Send To WhatsApp Groups</h3>
+<p class="small">Send this link to WhatsApp Groups</p>
+<div class="percent" id="percentText">0%</div>
+<div class="progress"><div class="bar" id="bar">0%</div></div>
+<button class="btn-big whatsapp" id="shareBtn" onclick="shared()">📲 SEND TO WHATSAPP GROUPS</button>
+<div class="congrats" id="congratsBox">🎉 CONGRATULATIONS! You don complete am! Spin now 👇</div>
+<h3>STEP 2: Spin The Wheel</h3>
+<div id="wheel" class="wheel-shake">🎡 SPIN</div>
+<button class="btn-big spinBtn shake-zoom" id="spinBtn" disabled onclick="spin()">SPIN NOW - LOCKED 🔒</button>
+<div class="win" id="winBox">
+<button class="close-win" onclick="closeWinBox()">×</button>
+<h2 style="color:#0A3D91;text-align:center">🎉 Congratulations! You Win!</h2>
+<p style="text-align:center">You won: <b id="prize" style="color:#D60000">$3 Daily Reward</b></p>
+<p><b>HOW TO CLAIM & EARN:</b><br>Build your website, get your own affiliate link, share am. Your reward go dey inside your Do Builder wallet.</p>
+<div class="plan"><b>PLAN A - You Register But No Pay Yet</b><br>- Mr. B registers through your link = <b>$0.0015</b><br>- Mr. B pays for website = <b>$0.15</b><br>- No reward from Mr. B's referrals. Level 1 only.</div>
+<div class="plan"><b>PLAN B - You Register AND Pay For Website</b><br>- Mr. B registers through your link = <b>$0.10</b><br>- Mr. B pays for website = <b>$1.00</b><br>- Plus <b>10% of rewards</b> from Mr. B down to <b>5th Level</b><br>- If you get <b>100 paying persons in 1 month</b> = Extra <b>$100 Bonus</b><br>- Link valid for <b>1 Month Only</b> from registration. After 1 month, link deactivates.</div>
+<p class="small">Your Plan go upgrade automatically from Plan A to Plan B once your payment is confirmed. System tracks everything through your ?ref= link.</p>
+<p style="text-align:center"><b>Get me registered to start earning.</b><br>After the registration, you will be asked to create a free website then publish it in order to earn big.</p>
+<button class="btn-big btn-primary shake-zoom" id="registerBtn" onclick="openSignup()" style="background:#0A3D91">GET ME REGISTERED</button>
+<p class="small" style="text-align:center">Terms apply. Rewards are credited after verification.</p>
+<p style="text-align:center;color:#0A3D91;font-weight:bold;margin-top:10px;">👆 Click GET ME REGISTERED to continue. This box go stay here, e no go move.</p>
+</div>
+<button class="btn-big" style="background:#f0f3f8;color:#0755d9;" onclick="showPage('home')">← Back to Home</button>
+</div>
+</div>
+<footer>
+<div class="logo" style="justify-content:center;color:#fff;margin-bottom:15px"><div class="logo-icon">D</div><div>DO <span>BUILDER</span></div></div>
+<p>Powered by <strong>DOTGROUP</strong><br>D.O.T 👉 Let's DO it together!<br>We Are Target Achievers!<br><br>© <span id="year"></span> Do Builder. All Rights Reserved.<br><a href="admin_manual.html" style="color:#fff;font-weight:800">🛡 Admin</a> • <a href="builder.html" style="color:#fff">Dashboard</a></p>
+</footer>
+<div class="modal" id="signupModal">
+<div class="modal-content">
+<button class="close-modal" onclick="closeSignup()">×</button>
+<div class="modal-header"><h2>Join Do Builder</h2><p>Create your account and start your digital journey.</p></div>
+<div class="notice" id="formNotice"></div>
+<form id="signupForm">
+<div class="form-grid">
+<div class="form-group"><label>First Name *</label><input type="text" name="first_name" placeholder="Enter first name" required></div>
+<div class="form-group"><label>Middle Name</label><input type="text" name="middle_name" placeholder="Enter middle name"></div>
+<div class="form-group"><label>Last Name / Surname *</label><input type="text" name="last_name" placeholder="Enter surname" required></div>
+<div class="form-group"><label>Country *</label><input type="text" name="country" placeholder="Enter your country" required></div>
+<div class="form-group"><label>Sex *</label><select name="sex" required><option value="">Select sex</option><option value="Male">Male</option><option value="Female">Female</option><option value="Prefer not to say">Prefer not to say</option></select></div>
+<div class="form-group"><label>Date of Birth *</label><input type="date" name="date_of_birth" required></div>
+<div class="form-group full"><label>Choose Your Username *</label><input type="text" name="username" placeholder="Create a unique username" required minlength="3"></div>
+<div class="form-group full"><label>WhatsApp Number *</label><input type="tel" name="whatsapp" placeholder="Include your country code e.g. +234..." required></div>
+<div class="form-group full"><label>Do You Have a Sponsor? *</label><div class="sponsor-options"><label class="sponsor-option"><input type="radio" name="has_sponsor" value="yes" required onchange="toggleSponsor()"> I Have a Sponsor</label><label class="sponsor-option"><input type="radio" name="has_sponsor" value="no" required onchange="toggleSponsor()"> I Have No Sponsor</label></div><div id="sponsorField"><label style="margin-top:15px">Sponsor's Username *</label><input type="text" name="sponsor_username" id="sponsorUsername" placeholder="Enter sponsor username"></div><div class="sponsor-note"><strong>How sponsorship works:</strong><br>If you have a sponsor, enter their username. If you do not have one, the platform will be designed to search its membership database and assign an eligible nearby or closest available member.</div></div>
+<div class="form-group full"><label>Create Password *</label><input type="password" name="password" placeholder="Create a secure password" required minlength="8"></div>
+<div class="form-group full"><label>Confirm Password *</label><input type="password" name="confirm_password" placeholder="Confirm your password" required minlength="8"></div>
+</div>
+<button type="submit" class="submit-btn">Create My Do Builder Account →</button>
+</form>
+<div class="form-footer">Already have an account? <a href="builder.html">Sign In</a></div>
+</div>
+</div>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+function isRegistered(){ return localStorage.getItem('dot_registered') === 'yes'; }
+function hideSpinForever(){
+  var spinBtn = document.getElementById('btnSpin');
+  if(spinBtn) spinBtn.style.display = 'none';
+  var homeSpin = document.getElementById('homeSpinBtn');
+  if(homeSpin) homeSpin.style.display = 'none';
+  showPage('home');
+}
+function goToSpinFromTop(){
+  var b = document.getElementById('btnSpin');
+  if(b){ b.classList.remove('shake-zoom-top'); b.classList.add('stop-shake'); }
+  showPage('spin');
+}
+function goToSpinFromHome(){
+  var b = document.getElementById('homeSpinBtn');
+  if(b){ b.classList.remove('shake-zoom-home'); b.classList.add('stop-shake'); }
+  showPage('spin');
+}
+function showPage(page){
+  if(isRegistered() && page === 'spin'){ showPage('home'); return; }
+  document.getElementById('page-home').style.display = page === 'home' ? 'block' : 'none';
+  document.getElementById('page-spin').style.display = page === 'spin' ? 'block' : 'none';
+  document.getElementById('btnHome').className = page === 'home' ? 'active' : 'inactive';
+  var sb = document.getElementById('btnSpin');
+  if(sb && !isRegistered()){
+    if(page === 'spin'){ sb.style.background = '#fff'; sb.style.color = '#0755d9'; }
+  }
+  window.scrollTo(0,0);
+  updateHomeFeed();
+}
+function updateHomeFeed(){
+  let feed = JSON.parse(localStorage.getItem('dot_home_feed') || '[]');
+  let list = document.getElementById('homeFeedList');
+  if(feed.length === 0){ list.innerHTML = 'No win yet. Be the first to spin!'; }
+  else { list.innerHTML = feed.slice(-5).reverse().map(function(f){ return '<div style="padding:8px;border-bottom:1px solid #eee;">🎉 ' + f + '</div>'; }).join(''); }
+}
+updateHomeFeed();
+let shares = parseInt(localStorage.getItem('my_shares') || '0');
+let total = 6;
+function updateUI(){
+  let pct = Math.round((shares/total)*100); if(pct > 100) pct = 100;
+  document.getElementById('percentText').innerText = pct + "%";
+  document.getElementById('bar').style.width = pct + "%";
+  document.getElementById('bar').innerText = pct + "%";
+  if(shares >= total){
+    document.getElementById('congratsBox').style.display = "block";
+    let b = document.getElementById('spinBtn'); b.disabled = false; b.innerText = "SPIN NOW - UNLOCKED ✅";
+    b.classList.add('shake-zoom');
+    document.getElementById('shareBtn').innerText = "✅ DONE - THANK YOU";
+  }
+}
+updateUI();
+function shared(){
+  if(shares < total){ shares++; localStorage.setItem('my_shares', shares); updateUI(); }
+  let myRef = localStorage.getItem('dot_username') || 'founder';
+  let realLink = window.location.origin + window.location.pathname + '?ref=' + myRef;
+  let text = "🌍 SPIN & WIN $100! I just got my spin. Try your own now 👉 " + realLink;
+  let url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(text);
+  window.open(url, "_blank");
+  if(typeof supabase !== 'undefined'){
+    supabase.from('spin_logs').insert({username: myRef, action: 'Share to WhatsApp Groups ' + shares + '/6', status: 'Completed'});
+  }
+}
+function spin(){
+  let wheel = document.getElementById('wheel');
+  wheel.classList.remove('wheel-shake');
+  let deg = 1800 + Math.floor(Math.random()*360);
+  wheel.style.transform = "rotate("+deg+"deg)";
+  let btn = document.getElementById('spinBtn'); btn.disabled = true; btn.innerText = "Spinning..."; btn.classList.remove('shake-zoom');
+  setTimeout(()=>{
+    document.getElementById('winBox').style.display = "block";
+    document.getElementById('prize').innerText = "$3 Daily Reward";
+    wheel.innerText = "YOU WIN!";
+    btn.innerText = "YOU DON WIN ✅";
+    btn.classList.remove('shake-zoom');
+    let feed = JSON.parse(localStorage.getItem('dot_home_feed') || '[]');
+    feed.push('Someone won $3 Daily Reward from Spin & Win!');
+    localStorage.setItem('dot_home_feed', JSON.stringify(feed));
+    updateHomeFeed();
+    document.getElementById('registerBtn').classList.add('shake-zoom');
+    document.getElementById('winBox').scrollIntoView({behavior:'smooth', block:'center'});
+    if(typeof supabase !== 'undefined'){
+      supabase.from('spin_logs').insert({username: localStorage.getItem('dot_username') || 'guest', action: 'Spin Wheel — Win $3 Daily Reward', status: 'Success'});
+    }
+  }, 3000);
+}
+function closeWinBox(){
+  document.getElementById('winBox').style.display = 'none';
+  document.getElementById('registerBtn').classList.remove('shake-zoom');
+}
+function openSignup(){
+  document.getElementById("signupModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeSignup(){ document.getElementById("signupModal").classList.remove("show"); document.body.style.overflow = ""; }
+function toggleSponsor(){
+  const selected = document.querySelector('input[name="has_sponsor"]:checked');
+  const field = document.getElementById("sponsorField"); const input = document.getElementById("sponsorUsername");
+  if(!selected) return;
+  if(selected.value === "yes"){ field.style.display = "block"; input.required = true; } else { field.style.display = "none"; input.required = false; input.value = ""; }
+}
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const item = button.parentElement; const wasActive = item.classList.contains("active");
+    document.querySelectorAll(".faq-item").forEach(faq => { faq.classList.remove("active"); faq.querySelector("span").textContent = "＋"; });
+    if(!wasActive){ item.classList.add("active"); button.querySelector("span").textContent = "−"; }
+  });
+});
+document.getElementById("signupForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const form = new FormData(this); const data = Object.fromEntries(form.entries());
+  const notice = document.getElementById("formNotice");
+  if(data.password !== data.confirm_password){ notice.style.display = "block"; notice.style.background = "#fff0f0"; notice.style.color = "#c62828"; notice.textContent = "Your passwords do not match."; return; }
+  if(data.has_sponsor === "yes" && !data.sponsor_username.trim()){ notice.style.display = "block"; notice.textContent = "Please enter your sponsor's username."; return; }
+  localStorage.setItem('dot_registered','yes');
+  localStorage.setItem('dot_username', data.username || '');
+  // ===== LINKED TO ADMIN + SUPABASE =====
+  if(typeof supabase !== 'undefined'){
+    supabase.from('users').upsert({username: data.username, first_name: data.first_name, last_name: data.last_name, whatsapp: data.whatsapp, country: data.country, sponsor_username: data.sponsor_username || '', created_at: new Date().toISOString()}, {onConflict:'username'});
+    supabase.from('spin_logs').insert({username: data.username, action: 'Registered from Spin', status: 'Completed'});
+  }
+  notice.style.display = "block"; notice.style.background = "#e8f8ef"; notice.style.color = "#147a43";
+  notice.textContent = "✅ Welcome! You don register! Spin go disappear now, you go see only main Do Builder work.";
+  setTimeout(function(){
+    closeSignup();
+    hideSpinForever();
+    alert("🎉 Welcome " + (data.username||'') + "! You don register. Spin don disappear. Now na main work - Build your website!");
+  }, 1200);
+});
+if(isRegistered()){ hideSpinForever(); } else { showPage('home'); }
+</script>
+</body>
+</html>

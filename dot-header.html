@@ -1,0 +1,57 @@
+<header id="dotHeader" class="dot-header">
+  <div class="dot-header-left">
+    <img src="dot-logo-small-32.png"
+         srcset="dot-logo-small-28.png 28w, dot-logo-small-32.png 32w, dot-logo-small-48.png 48w"
+         sizes="32px"
+         alt="DOTGROUP Logo - Whole Circle Visible"
+         class="dot-logo-small"
+         width="32" height="32">
+    <div class="dot-brand">
+      <div class="dot-brand-title"><span class="c-blue">DOT</span><span class="c-dark">GROUP</span> <span class="c-red">DOCOIN</span></div>
+      <div class="dot-brand-sub">DO WALLET • DOCHAT V3.0</div>
+    </div>
+  </div>
+
+  <div class="dot-header-right">
+    <button class="dot-hamburger" id="dotHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="dot-dropdown" id="dotDropdown">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <strong style="font-size:11px;color:#073b8c">MENU — 3-LINE DROPDOWN — DOCOIN</strong>
+      <button id="ddClose" style="border:1px solid #e2e8f0;background:#f8fafc;padding:5px 10px;border-radius:8px;font-weight:800">✕</button>
+    </div>
+    <div class="dd-grid">
+      <div class="dd-group">
+        <h4>💬 DOCHAT</h4>
+        <button onclick="goTab('chats')">Chats — Private 1-to-1</button>
+        <button onclick="goTab('calls')">Calls — Voice & Video</button>
+        <button onclick="goTab('status')">Status — 24h</button>
+        <button onclick="goTab('contacts')">Contacts</button>
+        <button onclick="goTab('dobot')">DOBOT — One AI Only</button>
+      </div>
+      <div class="dd-group">
+        <h4>💳 DO WALLET — DOCOIN</h4>
+        <button onclick="openSection('overview')">Wallet Overview</button>
+        <button onclick="openSection('mainbalance')">Main Balance</button>
+        <button onclick="openSection('rewardbalance')">Reward Balance</button>
+        <button onclick="openSection('converter')">Converter — 1 DOCOIN = Rate</button>
+        <button onclick="openSection('transfer')">Send DOCOIN</button>
+        <button onclick="openSection('deposit')">Deposit</button>
+      </div>
+      <div class="dd-group">
+        <h4>⚙️ SETTINGS</h4>
+        <button onclick="goTab('settings')">Settings</button>
+        <button onclick="openSection('security')">Wallet Security</button>
+        <button onclick="lockWallet()">Lock Wallet</button>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:#073b8c;color:#fff;padding:8px 10px;border-radius:8px;font-size:9px;display:flex;align-items:center;gap:8px">
+      <img src="dot-logo-small-28.png" width="20" height="20" style="border-radius:50%;background:#fff;border:1px solid #fff;object-fit:contain" alt="">
+      <span>DOTGROUP — Blue Trust • Red Action • White Transparency — Logo 32px small whole circle</span>
+    </div>
+  </nav>
+</header>
+<div class="dot-header-overlay" id="dotOverlay"></div>

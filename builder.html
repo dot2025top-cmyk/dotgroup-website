@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Do Builder | DOTGROUP - FINAL</title>
+  <link rel="stylesheet" href="dot-header.css">
+<link rel="stylesheet" href="dot-footer.css">
+<style>
+:root{--b:#0756b5;--r:#e32636;--ink:#17243a;--muted:#68758a;--line:#e3eaf2}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:var(--ink)}button,input,textarea,select{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;background:white;border-bottom:1px solid var(--line);padding:13px 5%;display:flex;justify-content:space-between;align-items:center;z-index:4}.brand{font-weight:900;font-size:22px;color:var(--b)}.brand span{color:var(--r)}.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:1.5px}.btn{border:0;border-radius:9px;padding:11px 15px;font-weight:bold}.primary{background:var(--b);color:white}.light{background:#eaf2ff;color:var(--b)}.outline{background:white;border:1px solid var(--line)}.wrap{max-width:1150px;margin:25px auto;padding:0 16px}.hero{padding:28px;border-radius:18px;color:white;background:linear-gradient(120deg,#073b7b,#0875d8)}.hero h1{font-size:clamp(26px,4vw,38px);margin:9px 0}.hero p{line-height:1.6;max-width:720px;color:#e4efff}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}.step{background:white;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:13px;font-weight:bold}.step.active{border-color:var(--b);color:var(--b)}.step b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#edf2f8;margin-right:5px}.step.active b{background:var(--b);color:white}.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:22px;margin-bottom:18px}.panel h2{margin:0 0 8px}.sub{color:var(--muted);line-height:1.55;margin:0 0 18px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;padding:11px;border:1px solid #d7e0eb;border-radius:9px;background:white}.field textarea{min-height:100px}.full{grid-column:1/-1}.checks{display:flex;flex-wrap:wrap;gap:9px}.checks label{background:#f5f8fc;border:1px solid var(--line);padding:9px;border-radius:8px;font-size:13px}.actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+.designs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.design{border:2px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:white}.design.selected{border-color:var(--b);box-shadow:0 0 0 3px #0756b51a}.mock{height:130px;padding:12px}.mockhero{height:65px;border-radius:7px;margin-bottom:9px}.mockrow{display:flex;gap:7px}.mockrow i{height:26px;background:white;border-radius:4px;flex:1}.dinfo{padding:13px}.dinfo h3{margin:0 0 5px;font-size:14px}.dinfo p,.muted{color:var(--muted);font-size:12px;line-height:1.5}.badge{display:inline-block;background:#eaf2ff;color:var(--b);padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800}
+.builder{display:grid;grid-template-columns:minmax(270px,.9fr) minmax(0,1.1fr);gap:17px}.preview{width:100%;height:550px;border:1px solid var(--line);border-radius:10px}.notice{background:#fff7e7;border:1px solid #f0dfb6;color:#75530b;border-radius:10px;padding:13px;line-height:1.5;font-size:13px}.count{display:inline-block;padding:6px 9px;border-radius:20px;background:#eaf2ff;color:var(--b);font-size:12px;font-weight:bold}.products{display:grid;gap:8px;margin-top:10px}.product{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);padding:9px;border-radius:8px;font-size:13px}.hidden{display:none!important}.price{font-size:30px;color:var(--b);font-weight:900}.success{background:#edfff4;border:1px solid #b8e8c9;color:#12683b;padding:17px;border-radius:12px}.refbox{background:#f1f6ff;border:1px solid #d7e6ff;padding:15px;border-radius:12px;margin-top:15px;line-height:1.5}.footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}
+.filterBar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.filterBar button{border:1px solid var(--line);background:white;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:700}.filterBar button.active{background:var(--b);color:white}
+.logoBox{width:92px;height:92px;border-radius:18px;background:#0756b5;color:white;display:grid;place-items:center;cursor:pointer;overflow:hidden;font-size:32px;font-weight:900;border:2px solid #e2e8f0;flex-shrink:0}.logoBox img{width:100%;height:100%;object-fit:contain;background:white}.coverBox{width:150px;height:84px;border-radius:12px;background:#e2e8f0;display:grid;place-items:center;cursor:pointer;overflow:hidden;font-size:11px;color:#64748b;font-weight:700;text-align:center;padding:6px}.coverBox img{width:100%;height:100%;object-fit:cover}
+@media(max-width:780px){.grid,.builder{grid-template-columns:1fr}.designs{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(2,1fr)}.preview{height:440px}.panel{padding:16px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<header class="top"><div class="brand">DO<span>BUILDER</span><small>POWERED BY DOTGROUP • FINAL</small></div><div><button class="btn outline" onclick="dashboard()">My Dashboard</button> <button class="btn outline" onclick="location.href='admin_manual.html'">🛡 Admin</button> <button class="btn light" onclick="saveDraft()">Save Draft</button></div></header>
+<main class="wrap">
+<section class="hero"><span>AI-ASSISTED • 30 TEMPLATES + SPECIAL</span><h1>Let's build a website for your idea.</h1><p>Tell us about your business, choose from 30 templates, add your logo, pick 3 colours, edit anything, preview before publishing.</p></section>
+<nav class="steps"><div class="step active" id="n1"><b>1</b> Tell us</div><div class="step" id="n2"><b>2</b> Choose Template</div><div class="step" id="n3"><b>3</b> Logo + Customize</div><div class="step" id="n4"><b>4</b> Publish</div></nav>
+<section class="panel" id="s1"><h2>Tell me about your website</h2><p class="sub">Complete these details so suitable template go show.</p><div class="grid">
+<div class="field"><label>Business category</label><select id="category" onchange="onCategory()"><option value="">Choose category</option><option value="products">Physical Products</option><option value="services">Services</option><option value="school">School / Health / Community</option><option value="professional">Professional / Business</option><option value="all">Show All 30</option></select></div>
+<div class="field"><label>Business / website name</label><input id="name" placeholder="e.g. David's Fashion House" oninput="syncLogoLetter()"></div>
+<div class="field"><label>Slogan or tagline</label><input id="tagline" placeholder="A short memorable message"></div>
+<div class="field"><label>Who are your customers?</label><input id="audience" placeholder="Students, families, businesses..."></div>
+<div class="field full"><label>Describe your business</label><textarea id="description" placeholder="What do you offer?"></textarea></div>
+<div class="field"><label>Main website purpose</label><select id="goal"><option>Promote my business</option><option>Sell products online</option><option>Get customer enquiries</option><option>Showcase services or portfolio</option><option>Share news and information</option><option>Teach courses or training</option><option>Build a community</option></select></div>
+<div class="field"><label>Colour 1 — Main</label><input id="colour" type="color" value="#0756b5" oninput="sync3Colours()"></div>
+<div class="field"><label>Colour 2 — Second</label><input id="colour2" type="color" value="#e32636" oninput="sync3Colours()"></div>
+<div class="field"><label>Colour 3 — Accent</label><input id="colour3" type="color" value="#FCD116" oninput="sync3Colours()"></div>
+<div class="field"><label>WhatsApp number</label><input id="whatsapp" placeholder="2348012345678"></div>
+<div class="field"><label>Business email</label><input id="email" type="email" placeholder="you@example.com"></div>
+<div class="field"><label>Social media URL</label><input id="social" placeholder="https://..."></div>
+<div class="field"><label>Upload logo (optional)</label><input id="logo" type="file" accept="image/*"></div>
+<div class="field"><label>Upload business photo (optional)</label><input id="cover" type="file" accept="image/*"></div>
+<div class="field full"><label>Pages and features</label><div class="checks" id="pages"><label><input type="checkbox" value="Home" checked> Home</label><label><input type="checkbox" value="About Us" checked> About Us</label><label><input type="checkbox" value="Products / Services"> Products / Services</label><label><input type="checkbox" value="Gallery"> Gallery</label><label><input type="checkbox" value="Testimonials"> Testimonials</label><label><input type="checkbox" value="FAQ"> FAQ</label><label><input type="checkbox" value="Contact" checked> Contact</label><label><input type="checkbox" value="News / Blog"> News / Blog</label></div></div>
+<div class="field full" style="background:#fff7e7;border:2px solid #f0dfb6;border-radius:14px;padding:16px">
+<b>✨ Do you need a SPECIAL website?</b>
+<div style="background:#fee2e2;border:1px solid #fecaca;border-radius:10px;padding:12px;margin:10px 0">
+<b style="color:#991b1b">⚠️ IMPORTANT: Special Website Needs EXTRA PAYMENT</b>
+<p style="font-size:13px;color:#7f1d1d;margin:6px 0 0">Special website <b>NO be part of normal ₦6,000</b>. E go cost extra. We go discuss price for Telegram before we start.</p>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<label style="background:white;border:1px solid #e3eaf2;padding:10px 14px;border-radius:999px;font-weight:700"><input type="radio" name="special" value="no" checked onclick="toggleSpecial(false)"> No, Normal 30 — ₦6,000 only</label>
+<label style="background:#111;color:white;padding:10px 14px;border-radius:999px;font-weight:700"><input type="radio" name="special" value="yes" onclick="toggleSpecial(true)"> Yes, SPECIAL ✨ — Extra Payment</label>
+</div>
+<div id="specialBox" class="hidden" style="margin-top:14px;background:white;border-radius:12px;padding:14px">
+<b>Step 1: Join Telegram</b><p style="font-size:13px">Join Telegram, see special designs, ask for price, I go give you Special Code after we agree price.</p>
+<a href="https://t.me/dobuilder" target="_blank" style="display:inline-block;background:#229ED9;color:white;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:800">📲 Join Telegram — @dobuilder →</a>
+<p style="font-size:12px;color:#68758a">Telegram: <b>https://t.me/dobuilder</b></p>
+<div style="background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:10px;font-size:12px">1. Join Telegram → 2. Chat me → Agree price → 3. Pay ₦6,000 + Extra → 4. I give you Code → Template 31 unlock</div>
+<b style="display:block;margin-top:12px">Step 2: Put Special Code</b>
+<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><input id="specialCode" placeholder="e.g. SPECIAL-001" style="flex:1;min-width:180px;padding:11px;border:1px solid #d7e0eb;border-radius:9px;font-weight:800;text-transform:uppercase"><button class="btn primary" type="button" onclick="checkSpecialCode()">Unlock Special →</button></div>
+<p id="specialMsg" style="font-size:13px;font-weight:700;margin-top:8px"></p>
+<div id="specialUnlocked" class="hidden" style="margin-top:10px;background:#edfff4;border:1px solid #b8e8c9;border-radius:10px;padding:12px"><b>✅ Special Unlocked: <span id="specialName"></span></b><br><span id="specialDesc" style="font-size:12px;color:#12683b"></span><br><small>⚠️ Remember: Extra Special Fee still needed. Normal ₦6,000 no cover Special.</small></div>
+</div>
+</div>
+</div><div class="actions"><span class="muted">You can edit later.</span><button class="btn primary" onclick="prepare()">Prepare my templates →</button></div></section>
+<section class="panel hidden" id="s2"><h2>Choose your template — <span id="tplCount">30 Templates</span></h2><p class="sub">We show only templates wey match your category.</p>
+<div class="filterBar" id="filterBar">
+<button class="active" data-f="all" onclick="setFilter('all',this)">All 30</button>
+<button data-f="products" onclick="setFilter('products',this)">🛒 Products (8)</button>
+<button data-f="services" onclick="setFilter('services',this)">✂️ Services (7)</button>
+<button data-f="school" onclick="setFilter('school',this)">🎓 School/Health (6)</button>
+<button data-f="professional" onclick="setFilter('professional',this)">💼 Professional (9)</button>
+<button data-f="special" onclick="setFilter('special',this)">✨ Special</button>
+</div>
+<div class="designs" id="designs"></div>
+<div class="actions"><button class="btn outline" onclick="show(1)">← Back</button><button class="btn primary" onclick="editor()">Customize this template →</button></div></section>
+<section class="panel hidden" id="s3"><h2>Customize — <span id="customTpl" style="color:var(--b)"></span></h2><p class="sub" id="customDesc">Add your logo, edit anything, preview live.</p>
+<div style="background:#f8fafc;border:2px dashed #cbd5e1;border-radius:16px;padding:16px;margin-bottom:14px">
+<b>🏷️ YOUR LOGO — Click box to Change Logo</b><p class="muted" style="margin:6px 0 12px">If you no get logo image, we go use your first letter.</p>
+<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+<div class="logoBox" id="logoBox" onclick="document.getElementById('logoEdit').click()"><span id="logoPreviewText">D</span><img id="logoPreviewImg" style="display:none"></div>
+<div style="flex:1;min-width:220px">
+<input type="file" id="logoEdit" accept="image/*" style="display:none" onchange="changeLogo(this)">
+<button class="btn primary" onclick="document.getElementById('logoEdit').click()">📤 Upload Logo</button>
+<button class="btn outline" onclick="removeLogo()">❌ Remove Logo</button><br><br>
+<label style="font-size:12px;font-weight:700">Letters for logo:</label> <input id="logoText" value="D" oninput="updateLogoText()" style="width:70px;padding:8px;border:1px solid #d7e0eb;border-radius:8px;text-align:center;font-weight:900">
+<label style="font-size:12px;font-weight:700;margin-left:8px">Logo Background:</label> <input type="color" id="logoBg" value="#0756b5" oninput="updateLogoText()" style="width:42px;height:34px;border:none;vertical-align:middle">
+<br><small class="muted">JPG / PNG • Max 3MB</small>
+</div></div></div>
+<div style="background:#fff7ed;border:1px solid #f0dfb6;border-radius:16px;padding:16px;margin-bottom:16px">
+<b>🖼️ COVER PHOTO — Click to Change</b>
+<div style="display:flex;gap:12px;align-items:center;margin-top:10px;flex-wrap:wrap">
+<div class="coverBox" id="coverBox" onclick="document.getElementById('coverEdit').click()">+ ADD COVER PHOTO</div>
+<input type="file" id="coverEdit" accept="image/*" style="display:none" onchange="changeCover(this)">
+<div><button class="btn light" onclick="document.getElementById('coverEdit').click()">📤 Upload Cover Photo</button> <button class="btn outline" onclick="removeCover()">Remove</button><br><small class="muted">This big photo go show under your headline</small></div>
+</div></div>
+<div class="builder"><div>
+<div style="background:#f8fafc;border:1px solid #e3eaf2;border-radius:14px;padding:14px;margin-bottom:14px">
+<b>🎨 YOUR 3 COLOURS — Edit Anytime</b>
+<div class="grid" style="margin-top:10px">
+<div class="field"><label>Colour 1 — Main</label><input id="eColour" type="color" value="#0756b5" oninput="preview();updateSwatches()"></div>
+<div class="field"><label>Colour 2 — Second</label><input id="eColour2" type="color" value="#e32636" oninput="preview();updateSwatches()"></div>
+<div class="field"><label>Colour 3 — Accent</label><input id="eColour3" type="color" value="#FCD116" oninput="preview();updateSwatches()"></div>
+</div>
+<div style="display:flex;gap:8px;margin-top:10px"><div style="flex:1;height:32px;border-radius:8px;background:#0756b5" id="sw1"></div><div style="flex:1;height:32px;border-radius:8px;background:#e32636" id="sw2"></div><div style="flex:1;height:32px;border-radius:8px;background:#FCD116" id="sw3"></div></div>
+<p class="muted" style="margin:8px 0 0">Pick 3 colours → Preview for right go change immediately.</p>
+</div>
+<div class="field"><label>Website name — Edit Anything</label><input id="eName" oninput="preview();syncLogoLetter()"></div><br><div class="field"><label>Headline / slogan</label><input id="eTagline" oninput="preview()"></div><br><div class="field"><label>Business description</label><textarea id="eDescription" oninput="preview()"></textarea></div><br><div class="field"><label>WhatsApp number</label><input id="eWhatsapp" oninput="preview()"></div><br><div class="field"><label>Contact email</label><input id="eEmail" oninput="preview()"></div><br><div class="field"><label>Social media URL</label><input id="eSocial" oninput="preview()"></div><br><div class="field"><label>Page names (comma-separated)</label><input id="ePages" oninput="preview()"></div>
+<hr style="border:0;border-top:1px solid var(--line);margin:20px 0"><h3 id="prodTitle">Your products / services</h3><p class="muted">Maximum 50. You fit Add, Edit, Delete, Change Price.</p><span class="count" id="count">0 / 50 Products Added</span>
+<div class="grid" style="margin-top:12px"><div class="field"><label id="prodLabel">Product name</label><input id="pName"></div><div class="field"><label>Price</label><input id="pPrice" placeholder="e.g. ₦15,000"></div><div class="field full"><label>Description</label><input id="pDesc"></div></div><button class="btn light" style="margin-top:10px" onclick="addProduct()" id="addBtn">+ Add item</button><button class="btn outline hidden" id="cancelEditBtn" onclick="cancelEdit()" style="margin-top:10px;margin-left:6px">Cancel Edit</button><div class="products" id="productList"></div>
+</div><div><strong>Live website preview</strong><iframe class="preview" id="frame" title="Website preview" sandbox="allow-scripts"></iframe><p class="muted">This preview is not a public website.</p><button class="btn light" onclick="preview()" style="width:100%">🔄 Refresh Preview</button></div></div><div class="actions"><button class="btn outline" onclick="show(2)">← Back</button><button class="btn primary" onclick="review()">Continue to publishing →</button></div></section>
+<section class="panel hidden" id="s4"><h2>Publish your website</h2><p class="sub">Review the renewal savings deposit before continuing.</p><div class="notice"><b>First month free.</b> A ₦6,000 deposit is required in your Website Renewal Savings to activate hosting. This reserve is intended for your next monthly subscription.</div><p style="margin-top:20px">Required deposit</p><div class="price">₦6,000</div><p>Monthly subscription after the free first month: <b>₦6,000</b>.</p><p><b>Website:</b> <span id="reviewName"></span></p><p><b>Template:</b> <span id="reviewDesign"></span></p><p><b>Products:</b> <span id="reviewCount">0</span> / 50</p><p><b>Logo:</b> <span id="reviewLogo">No logo image — using letter</span></p><p><b>Colours:</b> <span id="reviewColours"></span></p>
+<div id="specialPayNotice" class="hidden" style="background:#fee2e2;border:1px solid #fecaca;border-radius:10px;padding:12px;margin-top:12px">
+<b style="color:#991b1b">✨ You Choose SPECIAL Website — EXTRA PAYMENT NEEDED</b>
+<p style="font-size:13px;color:#7f1d1d;margin:6px 0 0">This website needs <b>EXTRA PAYMENT</b> on top of ₦6,000. Please chat us on Telegram <b>https://t.me/dobuilder</b> to confirm your Special price before you pay.</p>
+<a href="https://t.me/dobuilder" target="_blank" style="display:inline-block;margin-top:8px;background:#229ED9;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:800">Chat on Telegram for Special Price →</a>
+</div>
+<div class="notice" style="background:#eef5ff;border-color:#d5e5ff;color:#254b7a">This standalone HTML cannot verify Paystack payments or publish a live website. Your programmer must connect a secure backend that verifies payment before crediting renewal savings and publishing your website.</div><div class="actions"><button class="btn outline" onclick="show(3)">← Back to edit</button><button class="btn primary" onclick="pay()">Pay ₦6,000 and continue</button></div></section>
+<section class="panel hidden" id="success"><div class="success"><h2>Congratulations!</h2><p><b>Congratulations, now you can start making use of your website and also start making money.</b></p><p>Your live website link will appear after DOTGROUP's server confirms payment and publication.</p><div id="liveArea" class="hidden"><p><b>Published website:</b> <a id="liveLink" target="_blank" rel="noopener"></a></p><button class="btn primary" onclick="copyLive()">Copy Website Link</button> <button class="btn light" onclick="visitLive()">Visit My Website</button> <button class="btn outline" onclick="dashboard()">Go to My Dashboard</button></div></div><div class="refbox"><h3>Grow through eligible referrals</h3><p>Invite people through your unique referral link once your member account is connected. Eligible registrations may generate commissions under DOTGROUP programme rules. Earnings are not guaranteed.</p><ul><li>Level 1: ₦1,500 per eligible direct registration.</li><li>Levels 2–5: 10% of the commission allocated to the preceding level, where eligible.</li></ul><p class="muted">Illustration: L1 ₦1,500; L2 ₦150; L3 ₦15; L4 ₦1.50; L5 ₦0.15. Actual commissions depend on verified backend calculations and programme rules.</p><div id="refArea" class="hidden"><b>Your referral link:</b><p id="refLink"></p><button class="btn light" onclick="copyRef()">Copy referral link</button></div></div><div class="actions"><button class="btn primary" onclick="dashboard()">Go to My Dashboard</button></div></section>
+</main><footer class="footer">D.O.T 👉 Let's DO it together! | We Are Target Achievers!<br>Do Builder is powered by DOTGROUP.<br><a href="admin_manual.html" style="font-weight:800;color:#0756b5">🛡 Admin</a> • <a href="dashboard.html">Dashboard</a> • <a href="index.html">Home</a></footer>
+<script>
+const API_BASE="",PAYSTACK_SHOP_URL="https://paystack.shop/pay/u96vgf4oc4",DASHBOARD_URL="dashboard.html";
+const TEMPLATES=[
+{id:1,group:'products',icon:'👗',name:'Fashion Store',desc:'Clothes, Ankara, shoes, bags',color:'#111111',cta:'Shop Now',itemLabel:'Product',extra:'Fashion • New Arrivals'},
+{id:2,group:'products',icon:'🍔',name:'Food & Restaurant',desc:'Jollof, shawarma, pizza, mama put',color:'#EA580C',cta:'Order Now',itemLabel:'Menu Item',extra:'Hot • 30mins Delivery'},
+{id:3,group:'products',icon:'🛒',name:'Supermarket / Provision',desc:'Rice, oil, drinks, provisions',color:'#0A7A42',cta:'Shop Groceries',itemLabel:'Product',extra:'Fresh • Daily'},
+{id:4,group:'products',icon:'📱',name:'Electronics Shop',desc:'Phones, TV, laptops',color:'#0756b5',cta:'Buy Now',itemLabel:'Product',extra:'Original • Warranty'},
+{id:5,group:'products',icon:'💊',name:'Pharmacy Store',desc:'Drugs, vitamins, health',color:'#1E40AF',cta:'Buy Medicine',itemLabel:'Medicine',extra:'24hrs • Original'},
+{id:6,group:'products',icon:'🛋️',name:'Furniture & Home',desc:'Chairs, beds, kitchen',color:'#92400E',cta:'Shop Furniture',itemLabel:'Product',extra:'Home • Quality'},
+{id:7,group:'products',icon:'🍰',name:'Bakery & Cake Shop',desc:'Bread, cake, snacks',color:'#DB2777',cta:'Order Cake',itemLabel:'Cake / Bread',extra:'Fresh Daily'},
+{id:8,group:'products',icon:'🏪',name:'General Market',desc:'Person wey sell everything mixed',color:'#CE1126',cta:'Shop Now',itemLabel:'Product',extra:'Market • Cheap'},
+{id:9,group:'services',icon:'💇🏾‍♀️',name:'Salon & Beauty',desc:'Hair, makeup, nails, barbing',color:'#BE185D',cta:'Book Now',itemLabel:'Service',extra:'Book • No Queue'},
+{id:10,group:'services',icon:'🏨',name:'Hotel & Lodge',desc:'Rooms, booking',color:'#0F172A',cta:'Book Room',itemLabel:'Room',extra:'Rooms • Booking'},
+{id:11,group:'services',icon:'🏠',name:'Real Estate',desc:'Land, house for sale / rent',color:'#92400E',cta:'View Property',itemLabel:'Property',extra:'Verified • No Scam'},
+{id:12,group:'services',icon:'🛵',name:'Logistics / Delivery',desc:'Dispatch rider, transport',color:'#EA580C',cta:'Book Delivery',itemLabel:'Service',extra:'Fast • Tracking'},
+{id:13,group:'services',icon:'🧹',name:'Cleaning & Laundry',desc:'House cleaning, dry cleaning',color:'#0891B2',cta:'Book Cleaning',itemLabel:'Service',extra:'Clean • Fast'},
+{id:14,group:'services',icon:'🎉',name:'Event Planning',desc:'Wedding, party, decoration',color:'#7C3AED',cta:'Plan My Event',itemLabel:'Package',extra:'Wedding • Party'},
+{id:15,group:'services',icon:'📸',name:'Photography / Studio',desc:'Photoshoot, video',color:'#111111',cta:'Book Shoot',itemLabel:'Package',extra:'Studio • Video'},
+{id:16,group:'school',icon:'🎓',name:'School',desc:'Nursery, primary, secondary, university, lesson',color:'#8B0000',cta:'Apply / Join',itemLabel:'Class / Course',extra:'Results • Fees • Timetable'},
+{id:17,group:'school',icon:'🏥',name:'Hospital / Clinic',desc:'Hospital, dental, eye clinic',color:'#1E40AF',cta:'Book Doctor',itemLabel:'Service',extra:'Doctor • Lab • 24hrs'},
+{id:18,group:'school',icon:'🙏',name:'Church / Mosque',desc:'Church, mosque, ministry',color:'#14532D',cta:'Join Us',itemLabel:'Event / Program',extra:'Community • Prayer'},
+{id:19,group:'school',icon:'❤️',name:'NGO / Foundation',desc:'Charity, foundation',color:'#0A7A42',cta:'Donate / Join',itemLabel:'Program',extra:'Charity • Help'},
+{id:20,group:'school',icon:'💪',name:'Gym / Fitness',desc:'Gym, yoga, trainer',color:'#111111',cta:'Join Gym',itemLabel:'Plan',extra:'Fitness • Trainer'},
+{id:21,group:'school',icon:'🌾',name:'Farming / Agro',desc:'Farm produce, poultry, fish',color:'#65A30D',cta:'Order Farm Produce',itemLabel:'Product',extra:'Fresh Farm'},
+{id:22,group:'professional',icon:'⚖️',name:'Lawyer / Law Firm',desc:'Law, legal advice',color:'#1E3A8A',cta:'Book Consultation',itemLabel:'Service',extra:'Law • Trusted'},
+{id:23,group:'professional',icon:'📊',name:'Accountant / Consultant',desc:'Accounting, business advice',color:'#0756b5',cta:'Book Consultation',itemLabel:'Service',extra:'Business • Tax'},
+{id:24,group:'professional',icon:'👨🏾‍⚕️',name:'Doctor / Private Practice',desc:'Private doctor',color:'#0E7490',cta:'Book Appointment',itemLabel:'Service',extra:'Private • Fast'},
+{id:25,group:'professional',icon:'💻',name:'Tech / IT Company',desc:'Website designer, app developer',color:'#0756b5',cta:'Start Project',itemLabel:'Service',extra:'Tech • Websites'},
+{id:26,group:'professional',icon:'✂️',name:'Fashion Designer / Tailor',desc:'Tailor wey sew',color:'#9D174D',cta:'Order Sewing',itemLabel:'Style',extra:'Tailor • Ankara'},
+{id:27,group:'professional',icon:'🚗',name:'Car Dealer / Mechanic',desc:'Car sale, car wash, mechanic',color:'#111111',cta:'View Cars',itemLabel:'Car / Service',extra:'Cars • Repair'},
+{id:28,group:'professional',icon:'✈️',name:'Travel Agency',desc:'Visa, flight, tour',color:'#0369A1',cta:'Book Trip',itemLabel:'Trip / Visa',extra:'Visa • Flight'},
+{id:29,group:'professional',icon:'🏦',name:'Bank / Fintech / POS',desc:'Bank, POS, fintech',color:'#0A7A42',cta:'Open Account',itemLabel:'Service',extra:'Money • Safe'},
+{id:30,group:'professional',icon:'⭐',name:'Personal Portfolio',desc:'Musician, artist, influencer, CV',color:'#7C3AED',cta:'Book Me / Hire Me',itemLabel:'Work / Project',extra:'Portfolio • CV'},
+];
+const SPECIAL_CODES={
+"SPECIAL-001":{name:"Special Luxury Shop",desc:"Luxury design, video hero, premium checkout — Extra Payment Required",color:"#111111"},
+"SPECIAL-002":{name:"Special School Portal Pro",desc:"School + Results + Fees + Parent Login — Extra Payment Required",color:"#8B0000"},
+"SPECIAL-003":{name:"Special Hotel Booking Pro",desc:"Hotel + Booking Calendar + Payment — Extra Payment Required",color:"#0F172A"},
+"SPECIAL-004":{name:"Special Church Pro",desc:"Church + Live Stream + Donation — Extra Payment Required",color:"#14532D"},
+"DOT-SPECIAL":{name:"DOTGROUP Special",desc:"Custom special design wey you discuss for Telegram — Extra Payment Required",color:"#0756b5"},
+};
+let design="",selectedTpl=null,items=[],logoData="",coverData="",liveUrl="",refUrl="",currentFilter='all',editIndex=-1,logoTextVal="D",logoBgVal="#0756b5",specialUnlockedTpl=null;
+const $=id=>document.getElementById(id),val=id=>$(id).value.trim();
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function show(n){[1,2,3,4].forEach(i=>{$("s"+i).classList.toggle("hidden",i!==n);$("n"+i).classList.toggle("active",i===n)});$("success").classList.add("hidden");scrollTo({top:0,behavior:"smooth"})}
+function file(id,cb){let f=$(id).files[0];if(!f){cb("");return}if(f.size>3145728){alert("Choose an image smaller than 3 MB.");$(id).value="";cb("");return}let r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(f)}
+function onCategory(){let c=val("category");if(c&&c!=='all')setFilter(c,null);else setFilter('all',null)}
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll("#filterBar button").forEach(b=>b.classList.toggle("active",b.dataset.f===f));renderTemplates()}
+function renderTemplates(){let list=TEMPLATES.filter(t=>currentFilter==='all'||t.group===currentFilter);$("tplCount").textContent=list.length+" Templates";$("designs").innerHTML=list.map(t=>`<article class="design ${selectedTpl&&selectedTpl.id===t.id?'selected':''}" onclick="chooseTpl(${t.id},this)"><div class="mock" style="background:${t.color}22"><div style="display:flex;justify-content:space-between"><span class="badge">${t.group.toUpperCase()}</span><span style="font-size:22px">${t.icon}</span></div><div class="mockhero" style="background:linear-gradient(120deg,${t.color},#172b45)"></div><div class="mockrow"><i></i><i></i><i></i></div></div><div class="dinfo"><h3>${t.id}. ${t.icon} ${esc(t.name)}</h3><p>${esc(t.desc)}</p><p style="color:${t.color};font-weight:800;margin-top:6px">${esc(t.extra)} • ${esc(t.cta)} →</p></div></article>`).join("")}
+function chooseTpl(id,el){selectedTpl=TEMPLATES.find(t=>t.id===id);design=selectedTpl.name;document.querySelectorAll(".design").forEach(x=>x.classList.remove("selected"));if(el)el.classList.add("selected")}
+function prepare(){if(!val("category")||!val("name")||!val("description")){alert("Enter your category, website name and business description.");return}file("logo",x=>{logoData=x;if(x)syncLogoUI();file("cover",y=>{coverData=y;if(y)syncCoverUI();show(2)})})}
+function editor(){if(!selectedTpl){alert("Choose a template first.");return}let pairs={name:"eName",tagline:"eTagline",description:"eDescription",whatsapp:"eWhatsapp",email:"eEmail",social:"eSocial"};Object.entries(pairs).forEach(([a,b])=>$(b).value=val(a));$("eTagline").value=$("eTagline").value||val("name");$("ePages").value=[...document.querySelectorAll("#pages input:checked")].map(x=>x.value).join(", ");$("customTpl").textContent=selectedTpl.id+". "+selectedTpl.icon+" "+selectedTpl.name;$("customDesc").textContent=selectedTpl.desc+" • "+selectedTpl.extra+" • Button: "+selectedTpl.cta;$("prodTitle").textContent="Your "+selectedTpl.itemLabel+"s";$("prodLabel").textContent=selectedTpl.itemLabel+" name";sync3Colours();syncLogoUI();syncCoverUI();draw();show(3);preview()}
+function sync3Colours(){let c1=$("colour")?.value||"#0756b5",c2=$("colour2")?.value||"#e32636",c3=$("colour3")?.value||"#FCD116";if($("eColour"))$("eColour").value=c1;if($("eColour2"))$("eColour2").value=c2;if($("eColour3"))$("eColour3").value=c3;updateSwatches()}
+function updateSwatches(){let c1=$("eColour")?.value||"#0756b5",c2=$("eColour2")?.value||"#e32636",c3=$("eColour3")?.value||"#FCD116";if($("sw1"))$("sw1").style.background=c1;if($("sw2"))$("sw2").style.background=c2;if($("sw3"))$("sw3").style.background=c3;}
+function toggleSpecial(isSpecial){$("specialBox").classList.toggle('hidden',!isSpecial);if(!isSpecial){specialUnlockedTpl=null;}}
+function checkSpecialCode(){let code=($("specialCode").value||"").trim().toUpperCase();let msg=$("specialMsg");if(!code){msg.textContent="Put your Special Code first.";msg.style.color="#b21e2b";return}if(SPECIAL_CODES[code]){let s=SPECIAL_CODES[code];specialUnlockedTpl={id:31,group:'special',icon:'✨',name:s.name,desc:s.desc+" • SPECIAL CODE: "+code,color:s.color,cta:'Unlocked — Extra Payment',itemLabel:'Product',extra:'SPECIAL • Telegram Verified • Extra Payment'};$("specialName").textContent=s.name;$("specialDesc").textContent=s.desc;$("specialUnlocked").classList.remove('hidden');msg.textContent="✅ Code correct! Go to Step 2, you go see Template 31 — SPECIAL. Remember: Special needs EXTRA payment.";msg.style.color="#12683b";if(!TEMPLATES.find(t=>t.id===31))TEMPLATES.push(specialUnlockedTpl);renderTemplates();}else{msg.textContent="❌ Code no correct. Join Telegram https://t.me/dobuilder, chat me, agree price, I go give you correct code.";msg.style.color="#b21e2b";$("specialUnlocked").classList.add('hidden');}}
+function syncLogoLetter(){let n=val("name")||val("eName")||"D";logoTextVal=n.charAt(0).toUpperCase();let lt=$("logoText");if(lt)lt.value=logoTextVal;updateLogoText()}
+function updateLogoText(){logoTextVal=$("logoText")?$("logoText").value.slice(0,2).toUpperCase()||"D":"D";logoBgVal=$("logoBg")?$("logoBg").value:"#0756b5";let txt=$("logoPreviewText"),box=$("logoBox"),img=$("logoPreviewImg");if(!txt)return;if(logoData){img.src=logoData;img.style.display='block';txt.style.display='none';box.style.background='white';}else{img.style.display='none';txt.style.display='block';txt.textContent=logoTextVal;txt.style.color='white';box.style.background=logoBgVal;}preview()}
+function changeLogo(input){let f=input.files[0];if(!f)return;if(f.size>3145728){alert("Logo too big, choose less than 3MB");input.value="";return}let r=new FileReader();r.onload=()=>{logoData=r.result;syncLogoUI();preview()};r.readAsDataURL(f)}
+function removeLogo(){logoData="";syncLogoLetter();preview()}
+function syncLogoUI(){let txt=$("logoPreviewText"),box=$("logoBox"),img=$("logoPreviewImg");if(!txt)return;if(logoData){img.src=logoData;img.style.display='block';txt.style.display='none';box.style.background='white';}else{img.style.display='none';txt.style.display='block';txt.textContent=logoTextVal||"D";box.style.background=logoBgVal;}}
+function changeCover(input){let f=input.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{coverData=r.result;syncCoverUI();preview()};r.readAsDataURL(f)}
+function removeCover(){coverData="";syncCoverUI();preview()}
+function syncCoverUI(){let b=$("coverBox");if(!b)return;if(coverData)b.innerHTML='<img src="'+coverData+'" style="width:100%;height:100%;object-fit:cover">';else b.innerHTML='+ ADD COVER PHOTO';}
+function data(){return{name:val("eName"),tagline:val("eTagline"),description:val("eDescription"),colour:val("eColour"),colour2:val("eColour2"),colour3:val("eColour3"),whatsapp:val("eWhatsapp"),email:val("eEmail"),social:val("eSocial"),pages:val("ePages").split(",").map(x=>x.trim()).filter(Boolean),category:val("category"),design,templateId:selectedTpl?selectedTpl.id:null,templateName:selectedTpl?selectedTpl.name:"",products:items,logo:logoData,logoText:logoTextVal,logoBg:logoBgVal,cover:coverData,specialCode:$("specialCode")?$("specialCode").value:"",isSpecial:!!specialUnlockedTpl}}
+function preview(){let d=data(),t=selectedTpl||TEMPLATES[0],c1=d.colour||"#0756b5",c2=d.colour2||"#e32636",c3=d.colour3||"#FCD116",wa=d.whatsapp.replace(/\D/g,""),waurl=wa?"https://wa.me/"+encodeURIComponent(wa):"#",social=/^https?:\/\//i.test(d.social)?d.social:"#",links=d.pages.map(p=>`<a href="#">${esc(p)}</a>`).join(" "),cards=items.map(p=>`<article class="item"><h3>${t.icon} ${esc(p.name)}</h3><p>${esc(p.desc)}</p><b style="color:${c2}">${esc(p.price)}</b><br><span style="font-size:12px;color:${c1};font-weight:800">${esc(t.cta)} →</span></article>`).join("");
+let logoHTML=d.logo?`<img class="logo" src="${d.logo}">`:`<span style="display:inline-grid;place-items:center;width:42px;height:42px;border-radius:12px;background:${d.logoBg||c1};color:white;font-weight:900;font-size:20px">${esc(d.logoText||(d.name||"D").charAt(0))}</span>`;
+let extraHTML="";if(t.id===16)extraHTML=`<section class="section"><h2>📊 Results & 💰 Fees</h2><p>Check results, pay fees with MoMo, see timetable.</p></section>`;if(t.id===10)extraHTML=`<section class="section"><h2>🏨 Book A Room</h2><p>Check-in, Check-out, Rooms available. Book via WhatsApp.</p></section>`;if(t.id===17)extraHTML=`<section class="section"><h2>👨🏾‍⚕️ Book Doctor</h2><p>General Doctor • Lab • Pharmacy — Book in 1 minute.</p></section>`;if(t.id===9)extraHTML=`<section class="section"><h2>💇🏾‍♀️ Book Appointment</h2><p>No queue. Pick service, pick time, we confirm on WhatsApp.</p></section>`;if(t.id===31)extraHTML=`<section class="section" style="background:#fff7e7"><h2>✨ SPECIAL Website — Extra Payment</h2><p>This special design needs extra payment. Chat us on Telegram: https://t.me/dobuilder</p></section>`;
+let doc=`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}body{margin:0;font:15px Arial;color:#203047;line-height:1.6}header{padding:15px 6%;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:3px solid ${c3}}header strong{color:${c1};font-size:20px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:12px;color:#445;text-decoration:none}.logo{max-width:42px;max-height:42px;object-fit:contain}.hero{padding:48px 8%;background:linear-gradient(120deg,${c1},${c2});color:white}.hero h1{font-size:clamp(30px,6vw,50px);line-height:1.1}.btn{display:inline-block;background:${c3};color:#111;padding:10px 15px;border-radius:7px;text-decoration:none;font-weight:bold}.cover{width:100%;max-height:230px;object-fit:cover}.section{padding:30px 8%}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.item{border:1px solid #e4eaf0;border-radius:9px;padding:13px;border-top:4px solid ${c3}}.item h3{margin:0}footer{background:#152238;color:white;padding:22px 8%}</style></head><body><header>${logoHTML}<strong>${t.icon} ${esc(d.name)}</strong><nav>${links}</nav></header><section class="hero"><span style="background:rgba(255,255,255,.2);padding:5px 10px;border-radius:999px;font-size:11px">${esc(t.name)} • TEMPLATE ${t.id} / 30 ${t.id===31?'+ SPECIAL':''}</span><h1>${esc(d.tagline||d.name)}</h1><p>${esc(d.description)}</p><p style="font-size:12px;opacity:.9">${esc(t.extra)}</p><a class="btn" href="${waurl}" target="_blank">${esc(t.cta)} on WhatsApp</a></section>${d.cover?`<img class="cover" src="${d.cover}">`:""}<section class="section"><h2>About ${esc(d.name)}</h2><p>${esc(d.description)}</p></section>${extraHTML}<section class="section"><h2>${esc(t.itemLabel)}s & Services</h2><div class="cards">${cards||"<p>Items will appear here.</p>"}</div></section><section class="section"><h2>Contact</h2><p>${esc(d.email)}</p><a href="${waurl}">WhatsApp</a> | <a href="${social}" target="_blank">Social media</a></section><footer>© ${new Date().getFullYear()} ${esc(d.name)} • ${esc(t.name)} • Powered by DOTGROUP</footer></body></html>`;$("frame").srcdoc=doc}
+function addProduct(){let name=val("pName");if(!name){alert("Enter a name.");return}if(editIndex>=0){items[editIndex]={name,price:val("pPrice"),desc:val("pDesc")};editIndex=-1;$("addBtn").textContent="+ Add item";$("cancelEditBtn").classList.add("hidden");}else{if(items.length>=50){alert("Maximum 50 products reached.");return}items.push({name,price:val("pPrice"),desc:val("pDesc")});}["pName","pPrice","pDesc"].forEach(x=>$(x).value="");draw();preview()}
+function editProduct(i){editIndex=i;let p=items[i];$("pName").value=p.name;$("pPrice").value=p.price;$("pDesc").value=p.desc;$("addBtn").textContent="💾 Save Changes";$("cancelEditBtn").classList.remove("hidden");$("pName").focus()}
+function cancelEdit(){editIndex=-1;["pName","pPrice","pDesc"].forEach(x=>$(x).value="");$("addBtn").textContent="+ Add item";$("cancelEditBtn").classList.add("hidden")}
+function removeProduct(i){if(!confirm("Delete this item?"))return;items.splice(i,1);if(editIndex===i)cancelEdit();draw();preview()}
+function draw(){$("count").textContent=items.length+" / 50 Products Added";$("reviewCount").textContent=items.length;$("productList").innerHTML=items.map((p,i)=>`<div class="product"><span><b>${esc(p.name)}</b><br>${esc(p.price)} • ${esc(p.desc||"")}</span><span><button class="btn light" onclick="editProduct(${i})">Edit</button> <button class="btn" style="background:#fff0f1;color:#b21e2b" onclick="removeProduct(${i})">Remove</button></span></div>`).join("")}
+function review(){$("reviewName").textContent=val("eName");$("reviewDesign").textContent=selectedTpl?selectedTpl.id+". "+selectedTpl.name:"";$("reviewCount").textContent=items.length;$("reviewLogo").textContent=logoData?"✅ Logo image uploaded":"Using letter: "+logoTextVal;$("reviewColours").textContent=(val("eColour")||"")+" • "+(val("eColour2")||"")+" • "+(val("eColour3")||"");$("specialPayNotice").classList.toggle('hidden',!specialUnlockedTpl);show(4)}
+
+/* ===== FIXED BY DOTGROUP - FULL SAVE, NO DELETION ===== */
+async function syncBuilderToAdmin(d){
+  try{
+    if(typeof window.saveWebsiteToDB === 'function'){
+      const res = await window.saveWebsiteToDB(d, 'draft');
+      if(res.ok) console.log('✅ Saved to Supabase DATABASE');
+      else console.log('⚠️ Supabase fail, localStorage backup kept:', res.msg);
+      return;
+    }
+    console.log('saveWebsiteToDB not loaded yet, using localStorage backup');
+  }catch(e){ console.log('Builder sync offline:', e.message); }
+}
+async function saveDraft(){
+  let d=data();
+  if(!d.name){alert("Enter your website details first.");return}
+  localStorage.setItem("dobuilder_draft",JSON.stringify(d));
+  await syncBuilderToAdmin(d);
+  alert("✅ Draft saved to DATABASE + this device. E no go loss again.");
+}
+async function pay(){
+  let d=data();
+  localStorage.setItem("dobuilder_pending_publish",JSON.stringify(d));
+  await syncBuilderToAdmin(d);
+  if(API_BASE){fetch(API_BASE+"/api/payments/initialize",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({purpose:"website_renewal_savings",amount:600000,currency:"NGN",website:d})}).then(r=>{if(!r.ok)throw Error("Payment initialization failed");return r.json()}).then(x=>{if(!x.authorization_url)throw Error("No Paystack authorization URL returned");location.href=x.authorization_url}).catch(e=>alert(e.message))}else{alert("You will be redirected to the supplied Paystack Shop. This standalone file cannot verify payment or publish your website. Connect a secure DOTGROUP backend before activating real customers.");location.href=PAYSTACK_SHOP_URL}
+}
+async function verifyAndPublish(reference){if(!API_BASE||!reference)return;try{let r=await fetch(API_BASE+"/api/payments/verify-and-publish",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({reference,website:JSON.parse(localStorage.getItem("dobuilder_pending_publish")||"{}")})});let x=await r.json();if(!r.ok||x.payment_status!=="verified"||!x.publishedUrl)throw Error(x.message||"Payment or publication not confirmed");liveUrl=x.publishedUrl;refUrl=x.referralUrl||"";$("liveLink").href=liveUrl;$("liveLink").textContent=liveUrl;$("liveArea").classList.remove("hidden");if(refUrl){$("refLink").textContent=refUrl;$("refArea").classList.remove("hidden")}[1,2,3,4].forEach(i=>$("s"+i).classList.add("hidden"));$("success").classList.remove("hidden")}catch(e){alert("Could not confirm publication: "+e.message)}}
+function copyLive(){if(liveUrl)navigator.clipboard.writeText(liveUrl).then(()=>alert("Website link copied."))}function visitLive(){if(liveUrl)window.open(liveUrl,"_blank","noopener")}function copyRef(){if(refUrl)navigator.clipboard.writeText(refUrl).then(()=>alert("Referral link copied."))}function dashboard(){location.href=DASHBOARD_URL}
+(function(){renderTemplates();let q=new URLSearchParams(location.search),ref=q.get("reference")||q.get("trxref");if(ref&&API_BASE){verifyAndPublish(ref);return}try{let d=JSON.parse(localStorage.getItem("dobuilder_draft")||"null");if(d){$("category").value=d.category||"";$("name").value=d.name||"";$("tagline").value=d.tagline||"";$("description").value=d.description||"";$("colour").value=d.colour||"#0756b5";if($("colour2"))$("colour2").value=d.colour2||"#e32636";if($("colour3"))$("colour3").value=d.colour3||"#FCD116";$("whatsapp").value=d.whatsapp||"";$("email").value=d.email||"";$("social").value=d.social||"";if(d.templateId)selectedTpl=TEMPLATES.find(t=>t.id===d.templateId);design=d.design||"";items=d.products||[];logoData=d.logo||"";logoTextVal=d.logoText||"D";logoBgVal=d.logoBg||"#0756b5";coverData=d.cover||"";if($("logoText"))$("logoText").value=logoTextVal;if($("logoBg"))$("logoBg").value=logoBgVal;if($("specialCode"))$("specialCode").value=d.specialCode||"";renderTemplates();syncLogoUI();syncCoverUI()}}catch(e){}draw()})();
+  </script>
+  <div id="dot-footer"></div>
+<script src="dot-header.js"></script>
+<script>
+  fetch('dot-header.html')
+    .then(r => r.text())
+    .then(html => {
+      const el = document.getElementById('dot-header');
+      if (el) el.innerHTML = html;
+    });
+  fetch('dot-footer.html')
+    .then(r => r.text())
+    .then(html => {
+      const el = document.getElementById('dot-footer');
+      if (el) el.innerHTML = html;
+    });
+</script>
+</body>
+</html>
