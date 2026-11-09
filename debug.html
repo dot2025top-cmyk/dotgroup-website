@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOTGROUP DEBUG</title>
+<style>
+body{font-family:Arial;padding:16px;background:#fff}
+h2{color:#0756b5}
+.box{border:1px solid #ddd;padding:12px;border-radius:10px;margin:10px 0}
+.ok{color:green;font-weight:bold}
+.bad{color:red;font-weight:bold}
+button{padding:12px 18px;background:#0756b5;color:#fff;border:0;border-radius:8px;font-size:16px}
+pre{white-space:pre-wrap;background:#f4f4f4;padding:10px;border-radius:8px}
+</style>
+</head>
+<body>
+<h2>DOTGROUP DEBUG TEST</h2>
+<p>This page go tell us where mistake dey.</p>
+
+<div class="box">
+<b>1. SUPABASE_URL:</b><br><span id="url">...</span>
+</div>
+
+<div class="box">
+<b>2. API_BASE:</b><br><span id="api">...</span>
+</div>
+
+<div class="box">
+<b>3. Check adyc:</b><br><span id="adyc">...</span>
+</div>
+
+<div class="box">
+<b>4. Supabase Connect:</b><br><span id="conn">Testing...</span>
+</div>
+
+<div class="box">
+<b>5. Websites Table:</b><br><span id="table">Testing...</span>
+</div>
+
+<button onclick="testSave()">TEST SAVE WEBSITE</button>
+<div class="box"><pre id="saveResult">Press button to test save...</pre></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+document.getElementById('url').textContent = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'NOT FOUND';
+document.getElementById('api').textContent = typeof API_BASE !== 'undefined' ? API_BASE : 'NOT FOUND';
+
+let u = (typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : '');
+let a = (typeof API_BASE !== 'undefined' ? API_BASE : '');
+if(u.includes('adyc') && a.includes('adyc')){
+  document.getElementById('adyc').innerHTML = '<span class="ok">✅ BOTH GET adyc - CORRECT</span>';
+} else {
+  document.getElementById('adyc').innerHTML = '<span class="bad">❌ MISSING adyc - WRONG. URL: '+u+' | API: '+a+'</span>';
+}
+
+async function run(){
+  try{
+    const {data, error} = await supabaseClient.from('websites').select('username,site_name').limit(1);
+    if(error){
+      document.getElementById('conn').innerHTML = '<span class="bad">❌ Connect fail: '+error.message+'</span>';
+      document.getElementById('table').innerHTML = '<span class="bad">❌ Table fail: '+error.message+'</span>';
+    } else {
+      document.getElementById('conn').innerHTML = '<span class="ok">✅ Supabase Connected</span>';
+      document.getElementById('table').innerHTML = '<span class="ok">✅ Websites table dey work. Found: '+(data?data.length:0)+'</span>';
+    }
+  }catch(e){
+    document.getElementById('conn').innerHTML = '<span class="bad">❌ Error: '+e.message+'</span>';
+  }
+}
+run();
+
+async function testSave(){
+  document.getElementById('saveResult').textContent = 'Saving...';
+  let d = {name:'DEBUG-TEST-'+Date.now(), tagline:'test', description:'debug test', category:'test', templateId:null, templateName:'test', design:'test', colour:'#0756b5', colour2:'#e32636', colour3:'#FCD116', whatsapp:'', email:'', social:'', pages:[], products:[], logo:'', logoText:'D', logoBg:'#0756b5', cover:'', specialCode:'', isSpecial:false};
+  let r = await saveWebsiteToDB(d, 'draft');
+  document.getElementById('saveResult').textContent = JSON.stringify(r, null, 2);
+}
+</script>
+</body>
+</html>
