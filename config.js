@@ -1,4 +1,7 @@
 const SUPABASE_URL = 'https://adycwduqmsiisvsaidha.supabase.co';
+const API_BASE = "https://wduqmsiisvsaidha.supabase.co/functions/v1";
+window.API_BASE = API_BASE;
+window.API_BASE = API_BASE;
 const SUPABASE_KEY = 'sb_publishable_5YEiDpjh530pymNIw2j63g_zMHgIczk';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 window.supabaseClient = supabaseClient;
