@@ -684,7 +684,7 @@ var _oldShowPage = window.showPage;
 var _winTime = 0;
 var _origSpin = window.spin;
 if(_origSpin){
-  window.spin = function(){ _winTime = Date.now() + 10000; return _origSpin.apply(this, arguments); };
+  window.spin = function(){ _winTime = Date.now() + 0; return _origSpin.apply(this, arguments); };
 }
 window.showPage = function(page){
   var winBox = document.getElementById('winBox');
